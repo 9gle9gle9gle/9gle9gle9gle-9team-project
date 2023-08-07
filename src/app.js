@@ -1,5 +1,6 @@
 import express from 'express';
-import boardsRouter from './routes/boards.route.js';
+import boardsRouter from './routes/boards.routes.js';
+import columsRouter from './routes/colums.routes.js';
 
 export class ExpressApp {
   app = express();
