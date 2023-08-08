@@ -9,5 +9,9 @@ class BoardsRepository {
     });
     return makeBoard;
   };
+  getBoards = async userId => {
+    const getBoards = await Boards.findAll({ where: { userId } });
+    return getBoards;
+  };
 }
 export default BoardsRepository;
