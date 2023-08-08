@@ -1,5 +1,4 @@
 import express from 'express';
-import boardsRouter from './routes/boards.routes.js';
 import columsRouter from './routes/colums.routes.js';
 
 export class ExpressApp {
@@ -13,7 +12,7 @@ export class ExpressApp {
     this.app.use(express.json());
   };
   setAppRouter = () => {
-    this.app.use('/api', [boardsRouter], (error, request, response, next) => {
+    this.app.use('/api', [columsRouter], (error, request, response, next) => {
       response.status(400).json({
         success: false,
         error: error.message,
