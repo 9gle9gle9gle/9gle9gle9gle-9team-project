@@ -9,6 +9,7 @@ const sequelize = new Sequelize({
   password: env.password,
   host: env.mysqlhost,
   dialect: env.dialect,
+  logging: false
 });
 
 export default sequelize;
