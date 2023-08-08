@@ -1,5 +1,5 @@
 import express from 'express';
-import columsRouter from './routes/colums.routes.js';
+import columsRouter from './routes/columns.routes.js';
 
 export class ExpressApp {
   app = express();
