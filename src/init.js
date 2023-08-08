@@ -25,7 +25,7 @@ export class Server {
   sequelizeSync = () => {
     return sequelize.sync({ force: false });
   };
-  sihunjang225;
+
   runServer = async () => {
     try {
       await this.databaseConnection();
