@@ -11,6 +11,9 @@ class CommentsService {
       //   if (!existCard) {
       //     return { status: 400, message: '카드가 존재하지 않습니다.' };
       //   }
+      if (!content) {
+        return { status: 400, message: '내용을 입력해주세요.' };
+      }
 
       await CommentsRepository.createComment(cardId, userId, content);
       return { status: 200, message: '댓글 작성에 성공하였습니다.' };
@@ -40,6 +43,27 @@ class CommentsService {
       return { status: 200, message: comments };
     } catch (error) {
       return { status: 400, message: '댓글 조회에 실패하였습니다.' };
+    }
+  }
+
+  // 댓글 수정
+  static async updateComment(cardId, commentId, content) {
+    try {
+      // 카드 유무 조회
+      //   const existCard = await CardsRepository.existCard(cardId);
+
+      //   if (!existCard) {
+      //     return { status: 400, message: '카드가 존재하지 않습니다.' };
+      //   }
+      if (!content) {
+        return { status: 400, message: '내용을 입력해주세요.' };
+      }
+
+      await CommentsRepository.updateComment(commentId, content);
+
+      return { status: 200, message: '댓글 수정에 성공하였습니다.' };
+    } catch (error) {
+      return { status: 400, message: '댓글 수정에 실패하였습니다.' };
     }
   }
 }

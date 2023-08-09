@@ -14,6 +14,15 @@ class CommentsRepository {
     });
     return comments;
   }
+
+  // 댓글 수정
+  static async updateComment(commentId, content) {
+    const updateComment = await Comments.update(
+      { content },
+      { where: { commentId } },
+    );
+    return updateComment;
+  }
 }
 
 export default CommentsRepository;

@@ -25,6 +25,20 @@ class CommentsController {
 
     return res.status(status).json({ message });
   }
+
+  // 댓글 수정
+  static async updateComment(req, res) {
+    const { cardId, commentId } = req.params;
+    const { content } = req.body;
+
+    const { status, message } = await CommentsService.updateComment(
+      cardId,
+      commentId,
+      content,
+    );
+
+    return res.status(status).json({ message });
+  }
 }
 
 export default CommentsController;
