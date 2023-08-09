@@ -28,13 +28,15 @@ class CardsService {
       const cards = await CardsRepository.getCards();
 
       if (cards.length === 0) {
-        throw new Error('카드가 없습니다.  카드 생성을 진행해 주세요.');
+        return {
+          status: 200,
+          message: '카드가 없습니다.  카드 생성을 진행해 주세요.',
+        };
       }
 
-      return cards;
+      return { status: 200, message: cards };
     } catch (error) {
-      console.log(error);
-      throw new Error('카드 조회에 실패하였습니다.');
+      return { status: 400, message: '카드 조회에 실패하였습니다.' };
     }
   }
 
