@@ -9,17 +9,16 @@ class CardsService {
       const existColumn = await CardsRepository.findColumn(columnId);
 
       if (!existColumn) {
-        throw new Error('존재하지 않는 컬림입니다.');
+        return { status: 400, message: '존재하지 않는 컬림입니다.' };
       }
       if (!cardData.cardName || !cardData.cardContent) {
-        throw new Error('카드 제목과 내용을 입력해주세요.');
+        return { status: 400, message: '카드 제목과 내용을 입력해주세요.' };
       }
 
-      const card = await CardsRepository.createCard(userId, cardData);
-      return card;
+      await CardsRepository.createCard(userId, cardData);
+      return { status: 201, message: '카드 작성에 성공하였습니다.' };
     } catch (error) {
-      console.log(error);
-      throw new Error('카드 작성에 실패하였습니다.');
+      return { status: 400, message: '카드 작성에 실패하였습니다.' };
     }
   }
 
