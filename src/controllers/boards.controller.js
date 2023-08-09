@@ -50,9 +50,11 @@ class BoardsController {
   // =====보드 삭제=====
   removeBoard = async (req, res) => {
     const { boardId } = req.params;
+    const { deletedAt } = req.body;
     const { status, message } = await this.boardsService.removeBoard(
       this.userId,
       boardId,
+      deletedAt,
     );
     return res.status(status).json({ message });
   };

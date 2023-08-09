@@ -125,7 +125,7 @@ class BoardsService {
   };
 
   // =====보드 삭제=====
-  removeBoard = async (userId, boardId) => {
+  removeBoard = async (userId, boardId, deletedAt) => {
     const messages = new Messages('보드 삭제');
     const isAccessable = await this.accessRepository.isAccessable(
       userId,
@@ -134,7 +134,10 @@ class BoardsService {
     if (!isAccessable) return messages.status400();
 
     try {
-      const removeBoard = await this.boardsRepository.removeBoard(boardId);
+      const removeBoard = await this.boardsRepository.removeBoard(
+        boardId,
+        deletedAt,
+      );
       if (!removeBoard) return messages.status400();
       else return messages.status200();
     } catch (err) {
