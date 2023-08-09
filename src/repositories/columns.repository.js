@@ -1,109 +1,117 @@
 import Columns from '../db/models/columns';
 import { Op } from 'sequelize';
+import Access from '../db/models/access';
+import sequelize from '../db/sequelize';
 
 class ColumnsRepository {
-  async createColumn({ boardId, columnName, columnOrder }) {
+  async createColumn(boardId, columnName, columnOrder) {
     return Columns.create({
       boardId,
       columnName,
       columnOrder,
     });
   }
-  async getColumns(userId, boardId) {
+  async getColumns(boardId) {
     return Columns.findAll({
-      where: { userId, boardId },
+      where: { boardId, deletedAt: null },
     });
   }
 
   async updateColumn(columnId, columnName) {
-    const [updatedRowCount, updatedColumns] = await Columns.update(
+    const updateColumn = await Columns.update(
       { columnName },
-      { where: { columnId }, returning: true },
+      { where: { columnId, deletedAt: null } },
     );
 
-    return updatedRowCount === 1 ? updatedColumns[0] : null;
+    return updateColumn;
   }
 
   async deleteColumn(columnId, deletedAt) {
-    const rowCount = await Columns.destroy({
-      where: { columnId, deletedAt: null }, // deletedAt이 null인 경우에만 삭제
-    });
+    const rowCount = await Columns.update(
+      {
+        deletedAt,
+      },
+      { where: { columnId } },
+    );
 
     return rowCount;
   }
 
   async moveColumnUp(columnId) {
-    const currentColumn = await Columns.findByPk(columnId);
-    if (!currentColumn) {
-      return null;
-    }
-
-    const prevColumn = await Columns.findOne({
-      where: {
-        boardId: currentColumn.boardId,
-        columnOrder: {
-          [Op.lt]: currentColumn.columnOrder,
-        },
-      },
-      order: [['columnOrder', 'DESC']],
-    });
-
-    if (!prevColumn) {
-      return currentColumn;
-    }
-
-    const tempOrder = currentColumn.columnOrder;
-    currentColumn.columnOrder = prevColumn.columnOrder;
-    prevColumn.columnOrder = tempOrder;
-
-    const transaction = await Columns.sequelize.transaction();
+    const t = await sequelize.transaction();
     try {
-      await currentColumn.save({ transaction });
-      await prevColumn.save({ transaction });
-      await transaction.commit();
+      const currentColumn = await Columns.findByPk(columnId, {
+        transaction: t,
+      });
+      const currentOrder = currentColumn.columnOrder;
+      const columnOrder = currentOrder + 1;
+      const targetColumn = await Columns.findOne(
+        {
+          where: { columnOrder },
+        },
+        { transaction: t },
+      );
+      const targetId = targetColumn.columnId;
 
-      return currentColumn;
-    } catch (error) {
-      await transaction.rollback();
-      throw error;
+      await Columns.update(
+        { columnOrder: columnOrder },
+        { where: { columnId } },
+        { transaction: t },
+      );
+      await Columns.update(
+        { columnOrder: currentOrder },
+        { where: { columnId: targetId } },
+        { transaction: t },
+      );
+
+      await t.commit();
+      return 1;
+    } catch (err) {
+      console.log(err);
+      await t.rollback();
+      return 0;
     }
   }
 
   async moveColumnDown(columnId) {
-    const currentColumn = await Columns.findByPk(columnId);
-    if (!currentColumn) {
-      return null;
-    }
-
-    const nextColumn = await Columns.findOne({
-      where: {
-        boardId: currentColumn.boardId,
-        columnOrder: {
-          [Op.gt]: currentColumn.columnOrder,
-        },
-      },
-      order: [['columnOrder', 'ASC']],
-    });
-
-    if (!nextColumn) {
-      return currentColumn;
-    }
-
-    const tempOrder = currentColumn.columnOrder;
-    currentColumn.columnOrder = nextColumn.columnOrder;
-    nextColumn.columnOrder = tempOrder;
-
-    const transaction = await Columns.sequelize.transaction();
+    const t = await sequelize.transaction();
     try {
-      await currentColumn.save({ transaction });
-      await nextColumn.save({ transaction });
-      await transaction.commit();
+      const currentColumn = await Columns.findByPk(columnId, {
+        transaction: t,
+      });
+      const currentOrder = currentColumn.columnOrder;
+      const columnOrder = currentOrder - 1;
+      const targetColumn = await Columns.findOne(
+        {
+          where: { columnOrder },
+        },
+        { transaction: t },
+      );
+      const targetId = targetColumn.columnId;
 
-      return currentColumn;
-    } catch (error) {
-      await transaction.rollback();
-      throw error;
+      await Columns.update(
+        { columnOrder: columnOrder },
+        { where: { columnId } },
+        { transaction: t },
+      );
+      await Columns.update(
+        { columnOrder: currentOrder },
+        { where: { columnId: targetId } },
+        { transaction: t },
+      );
+
+      await t.commit();
+      return 1;
+    } catch (err) {
+      console.log(err);
+      await t.rollback();
+      return 0;
     }
+  }
+
+  async getUserId(userId, boardId) {
+    const getUserId = await Access.findOne({ where: { userId, boardId } });
+    return getUserId;
   }
 }
 
