@@ -4,6 +4,7 @@ import sequelize from '../db/sequelize.js';
 import { QueryTypes } from 'sequelize';
 
 class BoardsRepository {
+  // =====보드 생성=====
   makeBoard = async (userId, boardName, boardColor, boardContent) => {
     const t = await sequelize.transaction();
     try {
@@ -29,10 +30,13 @@ class BoardsRepository {
     }
   };
 
+  // =====보드 전체 조회=====
   getBoards = async userId => {
     const getBoards = await Boards.findAll({ where: { userId } });
     return getBoards;
   };
+
+  // =====보드 개별 조회=====
   showABoard = async boardId => {
     const getBoards = await sequelize.query(
       `SELECT * 
@@ -44,12 +48,18 @@ class BoardsRepository {
     );
     return getBoards;
   };
+
+  // =====보드 수정=====
   updateBoard = async (boardId, boardName, boardColor, boardContent) => {
     const updateBoard = await Boards.update(
       { boardName, boardColor, boardContent },
       { where: { boardId } },
     );
     return updateBoard;
+  };
+  removeBoard = async boardId => {
+    const removeBoard = await Boards.destroy({ where: { boardId } });
+    return removeBoard;
   };
 }
 export default BoardsRepository;
