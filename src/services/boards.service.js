@@ -84,6 +84,38 @@ class BoardsService {
       };
     }
   };
+  updateBoard = async (
+    userId,
+    boardId,
+    boardName,
+    boardColor,
+    boardContent,
+  ) => {
+    const messages = new Messages('보드 수정');
+    if (!boardName || !boardColor || !boardContent || !boardId) {
+      return messages.status400();
+    }
+    const isAccessable = await this.accessRepository.isAccessable(
+      userId,
+      boardId,
+    );
+    if (!isAccessable) return messages.status400();
+
+    try {
+      const updateBoard = await this.boardsRepository.updateBoard(
+        boardId,
+        boardName,
+        boardColor,
+        boardContent,
+      );
+      if (updateBoard) {
+        return messages.status200();
+      } else return messages.status400();
+    } catch (err) {
+      console.log(err);
+      return messages.status400();
+    }
+  };
 }
 
 export default BoardsService;

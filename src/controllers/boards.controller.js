@@ -28,6 +28,18 @@ class BoardsController {
     );
     return res.status(status).json({ message, showABoard });
   };
+  updateBoard = async (req, res) => {
+    const { boardId } = req.params;
+    const { boardName, boardColor, boardContent } = req.body;
+    const { status, message } = await this.boardsService.updateBoard(
+      this.userId,
+      boardId,
+      boardName,
+      boardColor,
+      boardContent,
+    );
+    return res.status(status).json({ message });
+  };
 }
 
 export default BoardsController;

@@ -1,14 +1,11 @@
 import Boards from '../db/models/boards.js';
 import Access from '../db/models/access.js';
 import sequelize from '../db/sequelize.js';
-import { Transaction } from 'sequelize';
 import { QueryTypes } from 'sequelize';
 
 class BoardsRepository {
   makeBoard = async (userId, boardName, boardColor, boardContent) => {
-    const t = await sequelize.transaction({
-      isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
-    });
+    const t = await sequelize.transaction();
     try {
       const makeBoard = await Boards.create(
         {
@@ -46,6 +43,13 @@ class BoardsRepository {
       { replacements: { boardId }, type: QueryTypes.SELECT },
     );
     return getBoards;
+  };
+  updateBoard = async (boardId, boardName, boardColor, boardContent) => {
+    const updateBoard = await Boards.update(
+      { boardName, boardColor, boardContent },
+      { where: { boardId } },
+    );
+    return updateBoard;
   };
 }
 export default BoardsRepository;
