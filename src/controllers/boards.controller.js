@@ -20,6 +20,14 @@ class BoardsController {
     );
     return res.status(status).json({ message, getBoards });
   };
+  showABoard = async (req, res) => {
+    const { boardId } = req.params;
+    const { status, message, showABoard } = await this.boardsService.showABoard(
+      this.userId,
+      boardId,
+    );
+    return res.status(status).json({ message, showABoard });
+  };
 }
 
 export default BoardsController;
