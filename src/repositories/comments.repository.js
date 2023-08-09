@@ -6,6 +6,14 @@ class CommentsRepository {
     const createComment = await Comments.create({ cardId, userId, content });
     return createComment;
   }
+
+  // 댓글 전체 조회
+  static async getComments() {
+    const comments = await Comments.findAll({
+      order: [['createdAt', 'desc']],
+    });
+    return comments;
+  }
 }
 
 export default CommentsRepository;

@@ -16,6 +16,15 @@ class CommentsController {
 
     return res.status(status).json({ message });
   }
+
+  // 댓글 전체 조회
+  static async getComments(req, res) {
+    const { cardId } = req.params;
+
+    const { status, message } = await CommentsService.getComments(cardId);
+
+    return res.status(status).json({ message });
+  }
 }
 
 export default CommentsController;
