@@ -39,6 +39,12 @@ class CardsRepository {
     );
     return updateCard;
   }
+
+  // 카드 삭제
+  static async deleteCard(cardId) {
+    const deleteCard = await Cards.destroy({ where: { cardId } });
+    return deleteCard;
+  }
 }
 
 export default CardsRepository;

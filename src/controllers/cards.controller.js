@@ -66,6 +66,22 @@ class CardsController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  // 카드 삭제
+  static async deleteCard(req, res) {
+    const { cardId } = req.params;
+    const { deletedAt } = req.body;
+    const userId = 1;
+    //   const userId = req.locals.user;
+
+    const { status, message } = await CardsService.deleteCard(
+      cardId,
+      userId,
+      deletedAt,
+    );
+
+    return res.status(status).json({ message });
+  }
 }
 
 export default CardsController;

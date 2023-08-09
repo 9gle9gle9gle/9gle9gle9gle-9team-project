@@ -74,6 +74,30 @@ class CardsService {
       throw new Error('카드 수정에 실패하였습니다.');
     }
   }
+
+  // 카드 삭제
+  static async deleteCard(cardId, userId, deletedAt) {
+    try {
+      // 카드 유무 조회
+      const existCard = await CardsRepository.existCard(cardId);
+
+      if (!existCard) {
+        return { status: 400, message: '카드가 존재하지 않습니다.' };
+      }
+      if (!deletedAt) {
+        return { status: 400, message: '삭제일을 입력해주세요.' };
+      }
+      if (userId !== existCard.userId) {
+        return { status: 400, message: ' 삭제 권한이 존재하지 않습니다.' };
+      }
+
+      await CardsRepository.deleteCard(cardId);
+
+      return { status: 200, message: '카드 삭제에 성공하였습니다.' };
+    } catch (error) {
+      return { status: 400, message: '카드 삭제에 실패하였습니다.' };
+    }
+  }
 }
 
 export default CardsService;
