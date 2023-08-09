@@ -62,4 +62,4 @@ const defaultValidate = {
   ],
 };
 
-module.exports = defaultValidate;
+export default defaultValidate;

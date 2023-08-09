@@ -18,39 +18,43 @@ class UserController {
       (signup.status === 201) ? res.status(201).json({message: '회원 가입에 성공하였습니다.'})
                                : res.status(400).json({message: signup.errorMessage});
     } 
+
+  // 로그인
+  loginUser = async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      const token = await this.userService.loginUser(email, password);
+      
+      await res.cookie('authorization', `Bearer ${token}`); // 토큰 수정
+
+      return res.status(200).json({ message: '로그인에 성공하였습니다.' });
+    } catch (error) {
+      console.error('Login Error:', error);
+      res.status(401).json({ message: '로그인에 실패하였습니다.' });
+    }
   };
-
-
-export default UserController;
-
-
-  // // 로그인
-  // loginUser = async (req, res) => {
-  //   try {
-  //     const { email, password } = req.body;
-  //     const token = await this.userService.loginUser(email, password);
-  //     await res.cookie('authorization', `Bearer ${token}`); // 토큰 수정
-
-  //     return res.status(200).json({ message: '로그인이 완료되었습니다.' });
-  //   } catch (error) {
-  //     console.error('Login Error:', error);
-  //     res.status(401).json({ message: '로그인이 실패하였습니다.' });
-  //   }
-  // };
 
   // // 회원정보 수정
   // updateUser = async (req, res) => {
   //   try {
-  //     const { email, password, nickname, address, role, phone } = req.body;
-  //     const { userId } = req.params;
-  //     await this.userService.updateUser(userId, email, password, nickname, address, role, phone);
+  //     const { nickname, sentence } = req.body;
+  //     await this.userService.updateUser(nickname, sentence);
 
-  //     return res.status(200).json({ message: '회원정보 수정이 완료되었습니다.' });
+  //     return res.status(200).json({ message: '회원 정보 수정에 성공하였습니다.' });
   //   } catch (error) {
   //     console.error('Update Error:', error);
-  //     res.status(500).json({ errorMessage: '회원정보 수정이 실패했습니다.' });
+  //     res.status(400).json({ errorMessage: '회원 정보 수정에 실패하였습니다.' });
   //   }
   // };
+
+  };
+
+export default UserController;
+
+
+
+
+  
 
   // // 회원정보 삭제
   // deleteUser = async (req, res) => {
