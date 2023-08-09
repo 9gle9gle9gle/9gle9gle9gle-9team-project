@@ -5,6 +5,7 @@ class BoardsService {
   boardsRepository = new BoardsRepository();
   accessRepository = new AccessRepository();
 
+  // =====보드 생성=====
   makeBoard = async (userId, boardName, boardColor, boardContent) => {
     const messages = new Messages('보드 생성');
     if (!boardName || !boardColor || !boardContent) {
@@ -25,6 +26,8 @@ class BoardsService {
       return messages.status400();
     }
   };
+
+  // =====보드 전체 조회=====
   getBoards = async userId => {
     try {
       const getBoards = await this.boardsRepository.getBoards(userId);
@@ -49,6 +52,8 @@ class BoardsService {
       };
     }
   };
+
+  // =====보드 개별 조회=====
   showABoard = async (userId, boardId) => {
     const isAccessable = await this.accessRepository.isAccessable(
       userId,
@@ -84,6 +89,8 @@ class BoardsService {
       };
     }
   };
+
+  // =====보드 수정=====
   updateBoard = async (
     userId,
     boardId,
@@ -111,6 +118,23 @@ class BoardsService {
       if (updateBoard) {
         return messages.status200();
       } else return messages.status400();
+    } catch (err) {
+      console.log(err);
+      return messages.status400();
+    }
+  };
+  removeBoard = async (userId, boardId) => {
+    const messages = new Messages('보드 삭제');
+    const isAccessable = await this.accessRepository.isAccessable(
+      userId,
+      boardId,
+    );
+    if (!isAccessable) return messages.status400();
+
+    try {
+      const removeBoard = await this.boardsRepository.removeBoard(boardId);
+      if (!removeBoard) return messages.status400();
+      else return messages.status200();
     } catch (err) {
       console.log(err);
       return messages.status400();
