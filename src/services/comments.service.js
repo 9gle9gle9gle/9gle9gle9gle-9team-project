@@ -51,10 +51,15 @@ class CommentsService {
     try {
       // 카드 유무 조회
       //   const existCard = await CardsRepository.existCard(cardId);
+      // 댓글 유무 조회
+      const existComment = await CommentsRepository.existComment(commentId);
 
       //   if (!existCard) {
       //     return { status: 400, message: '카드가 존재하지 않습니다.' };
       //   }
+      if (!existComment) {
+        return { status: 400, message: '댓글이 존재하지 않습니다.' };
+      }
       if (!content) {
         return { status: 400, message: '내용을 입력해주세요.' };
       }
@@ -72,10 +77,15 @@ class CommentsService {
     try {
       // 카드 유무 조회
       //   const existCard = await CardsRepository.existCard(cardId);
+      // 댓글 유무 조회
+      const existComment = await CommentsRepository.existComment(commentId);
 
       //   if (!existCard) {
       //     return { status: 400, message: '카드가 존재하지 않습니다.' };
       //   }
+      if (!existComment) {
+        return { status: 400, message: '댓글이 존재하지 않습니다.' };
+      }
       if (!deletedAt) {
         return { status: 400, message: '삭제일을 입력해주세요.' };
       }

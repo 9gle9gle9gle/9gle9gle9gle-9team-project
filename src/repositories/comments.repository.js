@@ -15,6 +15,12 @@ class CommentsRepository {
     return comments;
   }
 
+  // 댓글 유무 조회
+  static async existComment(commentId) {
+    const existComment = await Comments.findOne({ where: { commentId } });
+    return existComment;
+  }
+
   // 댓글 수정
   static async updateComment(commentId, content) {
     const updateComment = await Comments.update(
