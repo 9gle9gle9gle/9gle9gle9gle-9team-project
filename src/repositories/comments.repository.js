@@ -23,6 +23,12 @@ class CommentsRepository {
     );
     return updateComment;
   }
+
+  // 댓글 삭제
+  static async deleteComment(commentId) {
+    const deleteComment = await Comments.destroy({ where: { commentId } });
+    return deleteComment;
+  }
 }
 
 export default CommentsRepository;

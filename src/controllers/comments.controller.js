@@ -39,6 +39,20 @@ class CommentsController {
 
     return res.status(status).json({ message });
   }
+
+  // 댓글 삭제
+  static async deleteComment(req, res) {
+    const { cardId, commentId } = req.params;
+    const { deletedAt } = req.body;
+
+    const { status, message } = await CommentsService.deleteComment(
+      cardId,
+      commentId,
+      deletedAt,
+    );
+
+    return res.status(status).json({ message });
+  }
 }
 
 export default CommentsController;

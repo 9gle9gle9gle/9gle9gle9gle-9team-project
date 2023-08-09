@@ -14,4 +14,10 @@ router.patch(
   CommentsController.updateComment,
 );
 
+// 댓글 삭제
+router.delete(
+  '/cards/:cardId/comments/:commentId',
+  CommentsController.deleteComment,
+);
+
 export default router;

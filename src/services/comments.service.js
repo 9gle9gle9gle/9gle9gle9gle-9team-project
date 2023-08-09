@@ -66,6 +66,27 @@ class CommentsService {
       return { status: 400, message: '댓글 수정에 실패하였습니다.' };
     }
   }
+
+  // 댓글 삭제
+  static async deleteComment(cardId, commentId, deletedAt) {
+    try {
+      // 카드 유무 조회
+      //   const existCard = await CardsRepository.existCard(cardId);
+
+      //   if (!existCard) {
+      //     return { status: 400, message: '카드가 존재하지 않습니다.' };
+      //   }
+      if (!deletedAt) {
+        return { status: 400, message: '삭제일을 입력해주세요.' };
+      }
+
+      await CommentsRepository.deleteComment(commentId);
+
+      return { status: 200, message: '댓글 삭제에 성공하였습니다.' };
+    } catch (error) {
+      return { status: 400, message: '댓글 삭제에 실패하였습니다.' };
+    }
+  }
 }
 
 export default CommentsService;
