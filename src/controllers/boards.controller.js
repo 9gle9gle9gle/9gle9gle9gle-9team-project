@@ -22,6 +22,8 @@ class BoardsController {
     );
     return res.status(status).json({ message, getBoards });
   };
+
+  // =====보드 개별 조회=====
   showABoard = async (req, res) => {
     const { boardId } = req.params;
     const { status, message, showABoard } = await this.boardsService.showABoard(
@@ -30,6 +32,8 @@ class BoardsController {
     );
     return res.status(status).json({ message, showABoard });
   };
+
+  // =====보드 수정=====
   updateBoard = async (req, res) => {
     const { boardId } = req.params;
     const { boardName, boardColor, boardContent } = req.body;
@@ -42,6 +46,8 @@ class BoardsController {
     );
     return res.status(status).json({ message });
   };
+
+  // =====보드 삭제=====
   removeBoard = async (req, res) => {
     const { boardId } = req.params;
     const { status, message } = await this.boardsService.removeBoard(
