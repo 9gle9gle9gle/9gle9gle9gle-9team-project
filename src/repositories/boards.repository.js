@@ -57,6 +57,8 @@ class BoardsRepository {
     );
     return updateBoard;
   };
+
+  // =====보드 삭제=====
   removeBoard = async boardId => {
     const removeBoard = await Boards.destroy({ where: { boardId } });
     return removeBoard;

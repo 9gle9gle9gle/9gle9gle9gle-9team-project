@@ -123,6 +123,8 @@ class BoardsService {
       return messages.status400();
     }
   };
+
+  // =====보드 삭제=====
   removeBoard = async (userId, boardId) => {
     const messages = new Messages('보드 삭제');
     const isAccessable = await this.accessRepository.isAccessable(
