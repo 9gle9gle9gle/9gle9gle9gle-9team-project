@@ -7,64 +7,71 @@ class UserController {
 
   // 회원가입 기능
   signup = async (req, res, next) => {
-      const { email, password, confirm, nickname } = req.body;
-      const signup = await this.userService.createUser(
-        email,
-        password,
-        nickname
-      );
-      console.log('Look here:', signup);
-      // 삼항 연산자로 처리 
-      (signup.status === 201) ? res.status(201).json({message: '회원 가입에 성공하였습니다.'})
-                               : res.status(400).json({message: signup.errorMessage});
-    } 
+    const { email, password, confirm, nickname } = req.body;
+    const signup = await this.userService.createUser(email, password, nickname);
+    // 삼항 연산자로 처리
+    signup.status === 201
+      ? res.status(201).json({ message: '회원 가입에 성공하였습니다.' })
+      : res.status(400).json({ message: signup.errorMessage });
+  };
 
   // 로그인
   loginUser = async (req, res) => {
     try {
       const { email, password } = req.body;
       const token = await this.userService.loginUser(email, password);
-      
-      await res.cookie('authorization', `Bearer ${token}`); // 토큰 수정
 
-      return res.status(200).json({ message: '로그인에 성공하였습니다.' });
+      res.header('authorization', `Bearer ${token}`);
+      res.status(200).json({ message: '로그인에 성공하였습니다.' });
     } catch (error) {
-      console.error('Login Error:', error);
       res.status(401).json({ message: '로그인에 실패하였습니다.' });
     }
   };
 
-  // // 회원정보 수정
-  // updateUser = async (req, res) => {
-  //   try {
-  //     const { nickname, sentence } = req.body;
-  //     await this.userService.updateUser(nickname, sentence);
-
-  //     return res.status(200).json({ message: '회원 정보 수정에 성공하였습니다.' });
-  //   } catch (error) {
-  //     console.error('Update Error:', error);
-  //     res.status(400).json({ errorMessage: '회원 정보 수정에 실패하였습니다.' });
-  //   }
-  // };
-
+  // 로그아웃
+  logoutUser = async (req, res, next) => {
+    try {
+      res
+        .clearCookie('Authorization')
+        .json({ message: '로그아웃 성공하였습니다.' });
+    } catch (err) {
+      return res.status(400).json({ message: '로그아웃 실패하였습니다.' });
+    }
   };
 
+  // 회원정보 수정
+  updateUser = async (req, res) => {
+    try {
+      const { nickname, sentence } = req.body;
+
+      const userId = res.locals.user;
+      await this.userService.updateUser(userId, nickname, sentence);
+      return res
+        .status(200)
+        .json({ message: '회원 정보 수정에 성공하였습니다.' });
+    } catch (error) {
+      console.error('Update Error:', error);
+      return res
+        .status(400)
+        .json({ message: '회원 정보 수정에 실패하였습니다.' });
+    }
+  };
+
+  deleteUser = async (req, res) => {
+    try {
+      const { deletedAt } = req.body;
+      const userId = res.locals.user;
+      await this.userService.deleteUser(userId, deletedAt);
+      return res
+        .status(200)
+        .json({ message: '회원 정보 탈퇴에 성공하였습니다.' });
+    } catch (error) {
+      console.error('Delete Error:', error);
+      return res
+        .status(400)
+        .json({ message: '회원 정보 탈퇴에 실패하였습니다.' });
+    }
+  };
+}
+
 export default UserController;
-
-
-
-
-  
-
-  // // 회원정보 삭제
-  // deleteUser = async (req, res) => {
-  //   try {
-  //     const { userId } = req.params;
-  //     await this.userService.deleteUser(userId);
-
-  //     return res.status(200).json({ message: '회원정보 삭제가 정상적으로 처리되었습니다.' });
-  //   } catch (error) {
-  //     console.error('Delete Error:', error);
-  //     res.status(500).json({ errorMessage: '회원정보 삭제가 실패했습니다.' });
-  //   }
-  // };

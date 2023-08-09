@@ -1,32 +1,33 @@
-// import jwt from 'jsonwebtoken';
-// import { JWT_SECRET } from '../constants';
-// import Users from '../db';
+const jwt = require('jsonwebtoken');
 
-// const authmiddlewares = async (req, res, next) => {
-//   try {
-//     const { token } = req.headers;
-//     console.log("여기를 봐주어어ㅓ어어어 : ", token)
-//     if (!token) {
-//       return res.status(401).json({ message: 'authorization error' });
-//     }
+async function authmiddleware(req, res, next) {
+  try {
+    const token = req.headers.authorization;
+    console.log(req.headers.authorization);
 
-//     const decodedToken = jwt.verify(token, JWT_SECRET);
-//     const userId = decodedToken.id;
+    if (!token) {
+      return res
+        .status(403)
+        .json({ errorMessage: '권한이 존재하지 않습니다.' });
+    }
+    const [authType, authToken] = (token ?? '').split(' ');
+    console.log(authToken);
+    if (!authToken || authType !== 'Bearer') {
+      return res.status(401).send({
+        errorMessage: '로그인 후 이용 가능한 기능입니다.',
+      });
+    }
 
-//     const user = await Users.findOne({ where: { id: userId }, attributes: ['email'] });
-//     if (!user) {
-//       return res.status(404).json({ message: 'user not found' });
-//     }
-//     req.user = { id: user.id, email: user.email };
-//     res.locals.user = user;
+    const { userId } = jwt.verify(authToken, process.env.JWT_SECRET);
 
-//     next();
-//   } catch (error) {
-//     return res.status(500).json({
-//       message: 'Internal Server error',
-//     });
-//   }
-// };
+    res.locals.user = userId;
+    next();
+  } catch (err) {
+    console.log(err);
+    return res.status(401).send({
+      errorMessage: '로그인 후 이용 가능한 기능입니다.',
+    });
+  }
+}
 
-
-// export default authmiddlewares;
+export default authmiddleware;

@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 import UserRepository from '../repositories/users.repository.js';
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../constants';
 
 class UserService {
   constructor() {
@@ -23,15 +22,13 @@ class UserService {
         password: hashedPassword,
         nickname,
       });
-      // 정상적인 데이터를 반환할 떄의 리턴 값과 중복 이메일을 받는 리턴 값으로 코드 작성
       return { status: 201, data: user };
     } catch (error) {
-      // console.log("확인용 :", e)
       return { status: 400, errorMessage: '중복 이메일을 사용할 수 없습니다.' };
     }
   };
 
-    // 로그인
+  // 로그인
   loginUser = async (email, password) => {
     const user = await this.userRepository.findByEmail(email);
     const passwordsMatch = await bcrypt.compare(password, user.password);
@@ -45,32 +42,36 @@ class UserService {
       {
         userId: user.userId,
       },
-      JWT_SECRET,
-      // JWT_SECRET, // Use imported JWT_SECRET
+      process.env.JWT_SECRET,
       {
         expiresIn: '1h',
-      }
+      },
     );
     return token;
   };
 
-  //   // 회원정보 수정
-  // updateUser = async (nickname, sentence) => {
-  //   // const hashedPassword = await bcrypt.hash(password, 10);
+  // 회원정보 수정
+  updateUser = async (userId, nickname, sentence) => {
+    // const hashedPassword = await bcrypt.hash(password, 10);
+    const updateUser = await this.userRepository.update(
+      userId,
+      nickname,
+      sentence,
+    );
+    if (!updateUser) {
+      return { status: 400, errorMessage: '회원 정보를 수정할 수 없습니다.' };
+    } else return { status: 200, message: '회원 정보를 수정되었습니다.' };
+  };
 
-  //   const user = await this.userRepository.update(usersId, {
-  //     nickname,
-  //     sentence
-  //   });
-
-  //     }
-    
-    }
-
+  deleteUser = async (userId, deletedAt) => {
+    const deleteUser = await this.userRepository.delete(userId, deletedAt);
+    if (!deleteUser) {
+      return { status: 400, errorMessage: '회원 정보를 탈퇴할 수 없습니다.' };
+    } else return { status: 200, message: '회원 정보가 탈퇴 되었습니다.' };
+  };
+}
 
 export default UserService;
-
-
 
 //   // 회원정보 삭제
 //   deleteUser = async userId => {

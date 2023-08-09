@@ -1,8 +1,8 @@
 import express from 'express';
 import boardsRouter from './routes/boards.routes.js';
-import columsRouter from './routes/colums.routes.js';
-// users 라우터
-import usersRouter from './routes/users.routes.js';
+
+import columsRouter from './routes/columns.routes.js';
+
 
 export class ExpressApp {
   app = express();
@@ -15,7 +15,9 @@ export class ExpressApp {
     this.app.use(express.json());
   };
   setAppRouter = () => {
-    this.app.use('/api', [boardsRouter, usersRouter], (error, request, response, next) => {
+
+    this.app.use('/api', [columsRouter], (error, request, response, next) => {
+
       response.status(400).json({
         success: false,
         error: error.message,
