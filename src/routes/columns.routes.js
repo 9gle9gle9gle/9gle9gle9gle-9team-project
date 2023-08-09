@@ -1,18 +1,13 @@
 import { Router } from 'express';
-import ColumnsController from '../controllers/columns.controller';
 
 const router = Router();
 
-router.post('/columns', ColumnsController.createColumn);
+// router.post('/api/columns', auth.verify, ColumsController.createColums);
 
-router.get('/columns', ColumnsController.getColumns);
+// router.get('/api/columns', );
 
-router.patch('/columns/:columnId', ColumnsController.updateColumn);
+// router.put('/api/columns/:columnId', auth.verify, ColumsController.updateColums);
 
-router.delete('/columns/:columnId', ColumnsController.deleteColumn);
-
-router.patch('/columns/:columnId/up', ColumnsController.moveColumnUp);
-
-router.patch('/columns/:columnId/down', ColumnsController.moveColumnDown);
+// router.delete('/api/columns/:columnId', auth.verify, ColumsController.deleteColums);
 
 export default router;
