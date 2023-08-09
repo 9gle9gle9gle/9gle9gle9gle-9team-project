@@ -13,5 +13,6 @@ Access.init(
     modelName: 'Access',
   },
 );
+Access.removeAttribute('id');
 
 export default Access;

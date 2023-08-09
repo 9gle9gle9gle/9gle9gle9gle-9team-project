@@ -6,10 +6,10 @@ class AccessController {
   // =====초대=====
   giveAccess = async (req, res) => {
     const loginuserId = res.locals.user;
-    const { userId, boardId } = req.body;
+    const { email, boardId } = req.body;
     const { status, message } = await this.accessService.giveAccess(
       loginuserId,
-      userId,
+      email,
       boardId,
     );
     return res.status(status).json({ message });

@@ -4,11 +4,11 @@ import Messages from './message';
 class AccessService {
   accessRepository = new AccessRepository();
   // ======초대=====
-  giveAccess = async (loginuserId, userId, boardId) => {
+  giveAccess = async (loginuserId, email, boardId) => {
     const messages = new Messages('초대');
 
     // userId와 boardId가 없으면 status 400
-    if (!userId || !boardId) {
+    if (!email || !boardId) {
       return messages.status400();
     }
 
@@ -20,6 +20,10 @@ class AccessService {
     if (!isMyBoard.boardId) {
       return messages.status400();
     }
+
+    const targetUser = await this.accessRepository.searchEmail(email);
+
+    const userId = targetUser.userId;
 
     // 이미 초대한 회원 확인
     const isAccessable = await this.accessRepository.isAccessable(
