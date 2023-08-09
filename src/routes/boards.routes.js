@@ -6,5 +6,6 @@ const boardsController = new BoardsController();
 
 router.post('/boards', boardsController.makeBoard);
 router.get('/boards', boardsController.getBoards);
+router.get('/boards/:boardId', boardsController.showABoard);
 
 export default router;
