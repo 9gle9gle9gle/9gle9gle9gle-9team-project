@@ -13,6 +13,12 @@ class CardsRepository {
     const card = await Cards.create({ userId, ...cardData });
     return card;
   }
+
+  // 카드 전체 조회
+  static async getCards() {
+    const cards = await Cards.findAll({});
+    return cards;
+  }
 }
 
 export default CardsRepository;

@@ -32,6 +32,17 @@ class CardsController {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  // 카드 전체 조회
+  static async getCards(req, res) {
+    try {
+      const cards = await CardsService.getCards();
+
+      return res.status(200).json({ cards });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  }
 }
 
 export default CardsController;
