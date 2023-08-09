@@ -54,13 +54,13 @@ class CardsService {
       const existCard = await CardsRepository.existCard(cardId);
 
       if (!existCard) {
-        throw new Error('카드가 존재하지 않습니다.');
+        return { status: 400, message: '카드가 존재하지 않습니다.' };
       }
       if (!cardName || !cardContent) {
-        throw new Error('카드 제목과 내용을 입력해주세요.');
+        return { status: 400, message: '카드 제목과 내용을 입력해주세요.' };
       }
       if (userId !== existCard.userId) {
-        throw new Error('수정 권한이 존재하지 않습니다.');
+        return { status: 400, message: '수정 권한이 존재하지 않습니다.' };
       }
 
       await CardsRepository.updateCard(
@@ -70,9 +70,10 @@ class CardsService {
         cardContent,
         cardOrder,
       );
+
+      return { status: 200, message: '카드 수정에 성공하였습니다.' };
     } catch (error) {
-      console.log(error);
-      throw new Error('카드 수정에 실패하였습니다.');
+      return { status: 400, message: '카드 수정에 실패하였습니다.' };
     }
   }
 

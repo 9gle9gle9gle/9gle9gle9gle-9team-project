@@ -38,25 +38,21 @@ class CardsController {
 
   // 카드 수정
   static async updateCard(req, res) {
-    try {
-      const { cardId } = req.params;
-      const userId = 1;
-      //   const userId = req.locals.user;
-      const { cardName, cardColor, cardContent, cardOrder } = req.body;
+    const { cardId } = req.params;
+    const userId = 1;
+    //   const userId = req.locals.user;
+    const { cardName, cardColor, cardContent, cardOrder } = req.body;
 
-      await CardsService.updateCard(
-        cardId,
-        userId,
-        cardName,
-        cardColor,
-        cardContent,
-        cardOrder,
-      );
+    const { status, message } = await CardsService.updateCard(
+      cardId,
+      userId,
+      cardName,
+      cardColor,
+      cardContent,
+      cardOrder,
+    );
 
-      return res.status(200).json({ message: '카드 수정에 성공하였습니다.' });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
+    return res.status(status).json({ message });
   }
 
   // 카드 삭제
