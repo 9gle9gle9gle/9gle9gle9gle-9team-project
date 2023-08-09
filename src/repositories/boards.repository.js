@@ -32,7 +32,9 @@ class BoardsRepository {
 
   // =====보드 전체 조회=====
   getBoards = async userId => {
-    const getBoards = await Boards.findAll({ where: { userId } });
+    const getBoards = await Boards.findAll({
+      where: { userId, deletedAt: null },
+    });
     return getBoards;
   };
 
@@ -43,7 +45,7 @@ class BoardsRepository {
           FROM Cards 
               LEFT JOIN Columns on Columns.columnId = Cards.columnId
               LEFT JOIN Boards on Boards.boardId = Columns.boardId
-          WHERE Boards.boardId = :boardId`,
+          WHERE Boards.boardId = :boardId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL`,
       { replacements: { boardId }, type: QueryTypes.SELECT },
     );
     return getBoards;
@@ -59,8 +61,11 @@ class BoardsRepository {
   };
 
   // =====보드 삭제=====
-  removeBoard = async boardId => {
-    const removeBoard = await Boards.destroy({ where: { boardId } });
+  removeBoard = async (boardId, deletedAt) => {
+    const removeBoard = await Boards.update(
+      { deletedAt },
+      { where: { boardId } },
+    );
     return removeBoard;
   };
 }
