@@ -1,8 +1,7 @@
 import express from 'express';
 import boardsRouter from './routes/boards.routes.js';
-
 import columsRouter from './routes/columns.routes.js';
-import commentRouter from './routes/comments.routes.js';
+import cardsRouter from './routes/cards.routes.js';
 
 export class ExpressApp {
   app = express();
@@ -17,7 +16,7 @@ export class ExpressApp {
   setAppRouter = () => {
     this.app.use(
       '/api',
-      [boardsRouter, columsRouter, commentRouter],
+      [boardsRouter, columsRouter, cardsRouter],
       (error, request, response, next) => {
         response.status(400).json({
           success: false,
