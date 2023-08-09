@@ -8,4 +8,7 @@ router.post('/cards', CardsController.createCard);
 //  카드 전체 조회
 router.get('/cards', CardsController.getCards);
 
+// 카드 수정
+router.patch('/cards/:cardId', CardsController.updateCard);
+
 export default router;

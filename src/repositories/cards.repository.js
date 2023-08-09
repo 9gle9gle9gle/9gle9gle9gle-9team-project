@@ -19,6 +19,26 @@ class CardsRepository {
     const cards = await Cards.findAll({});
     return cards;
   }
+
+  // 카드 유무 조회
+  static async existCard(cardId) {
+    const existCard = await Cards.findOne({ where: { cardId } });
+    return existCard;
+  }
+
+  // 카드 수정
+  static async updateCard(cardId, cardName, cardColor, cardContent, cardOrder) {
+    const updateCard = await Cards.update(
+      {
+        cardName,
+        cardColor,
+        cardContent,
+        cardOrder,
+      },
+      { where: { cardId } },
+    );
+    return updateCard;
+  }
 }
 
 export default CardsRepository;
