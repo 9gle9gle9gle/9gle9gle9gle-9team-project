@@ -1,7 +1,14 @@
 import Cards from '../db/models/cards';
 import Columns from '../db/models/columns';
+import Access from '../db/models/access';
 
 class CardsRepository {
+  // 보드 권한 확인
+  static async isAccessable(userId, boardId) {
+    const isAccessable = await Access.findOne({ where: { userId, boardId } });
+    return isAccessable;
+  }
+
   // 컬럼 조회
   static async findColumn(columnId) {
     const existColumn = await Columns.findOne({ where: { columnId } });
@@ -14,10 +21,10 @@ class CardsRepository {
     return card;
   }
 
-  // 카드 전체 조회
-  static async getCards() {
-    const cards = await Cards.findAll({});
-    return cards;
+  // 카드 개별 조회
+  static async getCard(cardId) {
+    const card = await Cards.findByPk(cardId);
+    return card;
   }
 
   // 카드 유무 조회

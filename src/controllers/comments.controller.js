@@ -5,7 +5,7 @@ class CommentsController {
   static async createComment(req, res) {
     const { cardId } = req.params;
     const { content } = req.body;
-    const userId = 1;
+    const userId = res.locals.user;
     //   const userId = req.locals.user;
 
     const { status, message } = await CommentsService.createComment(

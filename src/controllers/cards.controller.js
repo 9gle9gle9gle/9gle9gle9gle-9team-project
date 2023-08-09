@@ -3,7 +3,7 @@ import CardsService from '../services/cards.service';
 class CardsController {
   // 카드 생성
   static async createCard(req, res) {
-    const userId = 1;
+    const userId = res.locals.user;
     //   const userId = req.locals.user;
     const {
       cardName,
@@ -13,6 +13,7 @@ class CardsController {
       endAt,
       columnId,
       deletedAt,
+      boardId,
     } = req.body;
     const cardData = {
       cardName,
@@ -24,14 +25,20 @@ class CardsController {
       deletedAt,
     };
 
-    const { status, message } = await CardsService.createCard(userId, cardData);
+    const { status, message } = await CardsService.createCard(
+      userId,
+      cardData,
+      boardId,
+    );
 
     return res.status(status).json({ message });
   }
 
-  // 카드 전체 조회
-  static async getCards(req, res) {
-    const { status, message } = await CardsService.getCards();
+  // 카드 개별 조회
+  static async getCard(req, res) {
+    const userId = res.locals.user;
+    const { cardId } = req.params;
+    const { status, message } = await CardsService.getCard(userId, cardId);
 
     return res.status(status).json({ message });
   }
@@ -39,7 +46,7 @@ class CardsController {
   // 카드 수정
   static async updateCard(req, res) {
     const { cardId } = req.params;
-    const userId = 1;
+    const userId = res.locals.user;
     //   const userId = req.locals.user;
     const { cardName, cardColor, cardContent, cardOrder } = req.body;
 
@@ -59,7 +66,7 @@ class CardsController {
   static async deleteCard(req, res) {
     const { cardId } = req.params;
     const { deletedAt } = req.body;
-    const userId = 1;
+    const userId = res.locals.user;
     //   const userId = req.locals.user;
 
     const { status, message } = await CardsService.deleteCard(

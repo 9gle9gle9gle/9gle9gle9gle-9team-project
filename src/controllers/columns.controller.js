@@ -3,14 +3,13 @@ import ColumnsService from '../services/columns.service';
 const ColumnsController = {
   async createColumn(req, res) {
     try {
-      const userId = 1;
-      const { boardId, columnName, columnOrder } = req.body;
+      const userId = res.locals.user;
+      const { boardId, columnName } = req.body;
 
       const newColumn = await ColumnsService.createColumn(
         userId,
         boardId,
         columnName,
-        columnOrder,
       );
 
       res.status(201).json({
@@ -24,7 +23,7 @@ const ColumnsController = {
 
   async getColumns(req, res) {
     try {
-      const userId = 1;
+      const userId = res.locals.user;
       const { boardId } = req.body;
 
       const columns = await ColumnsService.getColumns(userId, boardId);
@@ -37,7 +36,7 @@ const ColumnsController = {
 
   async updateColumn(req, res) {
     try {
-      const userId = 1;
+      const userId = res.locals.user;
       const { columnId } = req.params;
       const { boardId, columnName } = req.body;
 
@@ -59,7 +58,7 @@ const ColumnsController = {
 
   async deleteColumn(req, res) {
     try {
-      const userId = 1;
+      const userId = res.locals.user;
       const { columnId } = req.params;
       const { boardId, deletedAt } = req.body;
 
@@ -73,7 +72,7 @@ const ColumnsController = {
 
   async moveColumnUp(req, res) {
     try {
-      const userId = 1;
+      const userId = res.locals.user;
       const { columnId } = req.params;
       const { boardId } = req.body;
       const updatedColumn = await ColumnsService.moveColumnUp(
@@ -94,7 +93,7 @@ const ColumnsController = {
   async moveColumnDown(req, res) {
     try {
       const { columnId } = req.params;
-
+      const userId = res.locals.user;
       const updatedColumn = await ColumnsService.moveColumnDown(columnId);
 
       res.status(200).json({

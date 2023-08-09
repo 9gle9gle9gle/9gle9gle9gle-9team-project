@@ -1,15 +1,18 @@
 import ColumnsRepository from '../repositories/columns.repository';
 
 const columnsService = {
-  async createColumn(userId, boardId, columnName, columnOrder) {
+  async createColumn(userId, boardId, columnName) {
     try {
-      if (!boardId || !columnName || !columnOrder) {
+      if (!boardId || !columnName) {
         throw new Error('잘못된 접근입니다.');
       }
       const getUserId = await ColumnsRepository.getUserId(userId, boardId);
       if (!getUserId) {
         throw new Error('잘못된 접근입니다=>.'); // 수정
       }
+      const getColumns = await ColumnsRepository.getColumns(boardId);
+      const columnOrder = getColumns.length + 1;
+
       const newColumn = await ColumnsRepository.createColumn(
         boardId,
         columnName,

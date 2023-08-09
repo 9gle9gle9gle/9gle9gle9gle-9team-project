@@ -1,14 +1,14 @@
 import AccessService from '../services/access.service';
 
 class AccessController {
-  loginuserId = 1;
   accessService = new AccessService();
 
   // =====초대=====
   giveAccess = async (req, res) => {
+    const loginuserId = res.locals.user;
     const { userId, boardId } = req.body;
     const { status, message } = await this.accessService.giveAccess(
-      this.loginuserId,
+      loginuserId,
       userId,
       boardId,
     );
@@ -17,18 +17,20 @@ class AccessController {
 
   // =====권한 조회=====
   showAccess = async (req, res) => {
+    const loginuserId = res.locals.user;
     const { boardId } = req.body;
     const { status, message, showAccess } = await this.accessService.showAccess(
-      this.loginuserId,
+      loginuserId,
       boardId,
     );
     return res.status(status).json({ message, showAccess });
   };
   // =====권한 삭제=====
   removeAccess = async (req, res) => {
+    const loginuserId = res.locals.user;
     const { userId, boardId } = req.body;
     const { status, message } = await this.accessService.removeAccess(
-      this.loginuserId,
+      loginuserId,
       userId,
       boardId,
     );

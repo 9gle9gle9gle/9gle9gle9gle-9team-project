@@ -2,7 +2,7 @@ import CardsRepository from '../repositories/cards.repository.js';
 
 class CardsService {
   // 카드 생성
-  static async createCard(userId, cardData) {
+  static async createCard(userId, cardData, boardId) {
     try {
       const columnId = cardData.columnId;
       // column 존재 확인
@@ -15,27 +15,32 @@ class CardsService {
         return { status: 400, message: '카드 제목과 내용을 입력해주세요.' };
       }
 
+      const isAccessable = await CardsRepository.isAccessable(userId, boardId);
+
+      if (!isAccessable)
+        return { status: 400, message: '접근 권한이 없습니다.' };
+
       await CardsRepository.createCard(userId, cardData);
       return { status: 201, message: '카드 작성에 성공하였습니다.' };
     } catch (error) {
+      console.log(error);
       return { status: 400, message: '카드 작성에 실패하였습니다.' };
     }
   }
 
-  // 카드 전체 조회
-  static async getCards() {
+  // 카드 상세 조회
+  static async getCard(userId, cardId) {
     try {
-      const cards = await CardsRepository.getCards();
+      const existCard = await CardsRepository.existCard(cardId);
+      if (!existCard)
+        return { status: 400, message: '카드 조회에 실패하였습니다.' };
 
-      if (cards.length === 0) {
-        return {
-          status: 200,
-          message: '카드가 없습니다.  카드 생성을 진행해 주세요.',
-        };
-      }
+      const card = await CardsRepository.getCard(cardId);
 
-      return { status: 200, message: cards };
+      if (card) return { status: 200, message: card };
+      else return { status: 400, message: '카드 조회에 실패하였습니다.' };
     } catch (error) {
+      console.log(error);
       return { status: 400, message: '카드 조회에 실패하였습니다.' };
     }
   }
