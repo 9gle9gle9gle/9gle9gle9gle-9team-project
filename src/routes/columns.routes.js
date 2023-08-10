@@ -6,7 +6,11 @@ const router = Router();
 
 router.post('/columns', authmiddleware, ColumnsController.createColumn);
 
-router.get('/columns', authmiddleware, ColumnsController.getColumns);
+router.get(
+  '/boards/:boardId/columns',
+  authmiddleware,
+  ColumnsController.getColumns,
+);
 
 router.patch(
   '/columns/:columnId',

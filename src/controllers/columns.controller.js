@@ -24,7 +24,7 @@ const ColumnsController = {
   async getColumns(req, res) {
     try {
       const userId = res.locals.user;
-      const { boardId } = req.body;
+      const { boardId } = req.params;
 
       const columns = await ColumnsService.getColumns(userId, boardId);
 
