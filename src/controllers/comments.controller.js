@@ -20,9 +20,9 @@ class CommentsController {
 
   // 댓글 전체 조회
   static async getComments(req, res) {
-    const { cardId } = req.params;
+    const { cardId, boardId } = req.params;
     const userId = res.locals.user;
-    const { boardId } = req.body;
+
     const { status, message } = await CommentsService.getComments(
       cardId,
       userId,
