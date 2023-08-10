@@ -44,17 +44,18 @@ class ColumnsRepository {
         transaction: t,
       });
       const currentOrder = currentColumn.columnOrder;
-      const columnOrder = currentOrder + 1;
+
       const targetColumn = await Columns.findOne(
         {
-          where: { columnOrder },
+          where: { [Op.gt]: currentOrder },
         },
         { transaction: t },
       );
+      const targetOrder = targetColumn.columnOrder;
       const targetId = targetColumn.columnId;
 
       await Columns.update(
-        { columnOrder: columnOrder },
+        { columnOrder: targetOrder },
         { where: { columnId } },
         { transaction: t },
       );
