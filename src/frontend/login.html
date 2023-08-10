@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>login</title>
+  </head>
+  <body>
+    <header>
+      <h1>9글9글9글</h1>
+      <div class="header-buttons">
+        <button id="loginButton">로그인</button>
+        <button id="signupButton">회원가입</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <h2>로그인</h2>
+      <form action="#" method="post">
+        <div class="form-group">
+          <label for="email">이메일</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="이메일을 입력해주세요"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">비밀번호</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="비밀번호를 입력해주세요"
+            required
+          />
+        </div>
+        <button type="submit">로그인</button>
+      </form>
+    </div>
+  </body>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+      background-color: #ffa3a7;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 2rem;
+      letter-spacing: -0.2rem;
+      margin-left: 30px;
+      cursor: pointer;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    button {
+      background-color: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: white;
+      color: #333;
+    }
+
+    body {
+      background-color: #f1e0e4;
+      background-image: url(./로그인\ 배경.png);
+      background-size: 40%;
+      background-repeat: no-repeat;
+      background-position: 100% 220%;
+    }
+    .container {
+      padding: 20px;
+      border-radius: 5px;
+      border: 3px solid #fff;
+      width: 300px;
+      margin: 0 auto;
+      margin-top: 130px;
+    }
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: -0.1rem;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      letter-spacing: -0.1rem;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    input[type='text'],
+    input[type='password'] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      box-sizing: border-box;
+    }
+    .container button {
+      background-color: #ffa3a7;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .container button:hover {
+      background-color: #fff;
+      color: #000;
+    }
+  </style>
+</html>

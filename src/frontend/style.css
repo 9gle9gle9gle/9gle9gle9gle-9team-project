@@ -179,10 +179,15 @@ button {
 
 .commentsInput {
   margin-right: 0.5em;
+  width: 420px;
+}
+
+.commentsButton.btn-save {
+  width: 55px;
 }
 
 .btn-save {
-  background-color: #5aac44;
+  background-color: #ffa3a7;
   color: white;
   border: none;
   border-radius: 4px;

@@ -133,12 +133,20 @@ class Card {
       }
     });
 
+    this.commentsInput.addEventListener('keyup', e => {
+      if (e.key === 'Enter' && this.commentsInput.value.trim() !== '') {
+        this.state.comments.push(this.commentsInput.value);
+        this.renderComments();
+        this.commentsInput.value = '';
+      }
+    });
+
     //Append
     this.menu.append(this.menuTitle);
     this.menu.append(this.menuDescription);
+    this.menu.append(this.menuComments);
     this.menu.append(this.commentsInput);
     this.menu.append(this.commentsButton);
-    this.menu.append(this.menuComments);
     this.menuContainer.append(this.menu);
     root.append(this.menuContainer);
 
