@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   boardlist();
+  showACard();
+  showComments();
 });
 
 async function boardlist() {

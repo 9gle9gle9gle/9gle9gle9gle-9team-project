@@ -12,7 +12,7 @@ router.post(
 
 // 댓글 전체 조회
 router.get(
-  '/cards/:cardId/comments',
+  '/boards/:boardId/cards/:cardId/comments',
   authmiddleware,
   CommentsController.getComments,
 );

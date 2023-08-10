@@ -20,6 +20,7 @@ class CardsController {
       endAt,
       columnId,
       deletedAt,
+      boardId,
     };
 
     const { status, message } = await CardsService.createCard(
