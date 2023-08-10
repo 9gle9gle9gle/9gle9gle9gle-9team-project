@@ -2,6 +2,7 @@ import Cards from '../db/models/cards';
 import Columns from '../db/models/columns';
 import Access from '../db/models/access';
 import sequelize from '../db/sequelize';
+import { Op } from 'sequelize';
 
 class CardsRepository {
   // 보드 권한 확인
@@ -62,41 +63,74 @@ class CardsRepository {
 
   // 카드 순서 UP
   static async cardUp(cardId) {
+    const t = await sequelize.transaction();
     try {
-      const transaction = await sequelize.transaction();
-      const card = await Cards.findByPk(cardId, { transaction });
-      const cardOrder = card.cardOrder;
-      const newCardOrder = cardOrder + 1;
-
-      await Cards.update(
-        { cardOrder: newCardOrder },
-        { where: { cardId } },
-        { transaction },
+      const card = await Cards.findByPk(cardId, { transaction: t });
+      const currentOrder = card.cardOrder;
+      const targetCard = await Cards.findAll(
+        {
+          where: { cardOrder: { [Op.gt]: currentOrder } },
+          order: [['cardOrder']],
+          limit: 1,
+        },
+        { transaction: t },
       );
 
-      await transaction.commit();
+      const targetOrder = targetCard[0].cardOrder;
+      const targetId = targetCard[0].cardId;
+
+      await Cards.update(
+        { cardOrder: targetOrder },
+        { where: { cardId } },
+        { transaction: t },
+      );
+      await Cards.update(
+        { cardOrder: currentOrder },
+        { where: { cardId: targetId } },
+        { transaction: t },
+      );
+
+      await t.commit();
     } catch (error) {
-      await transaction.rollback();
+      await t.rollback();
     }
   }
 
   // 카드 순서 DOWN
   static async cardDown(cardId) {
+    const t = await sequelize.transaction();
     try {
-      const transaction = await sequelize.transaction();
-      const card = await Cards.findByPk(cardId, { transaction });
+      const card = await Cards.findByPk(cardId, { transaction: t });
       const cardOrder = card.cardOrder;
-      const newCardOrder = cardOrder - 1;
-
-      await Cards.update(
-        { cardOrder: newCardOrder },
-        { where: { cardId } },
-        { transaction },
+      const targetCard = await Cards.findAll(
+        {
+          where: {
+            cardOrder: { [Op.lt]: cardOrder },
+          },
+          order: [['cardOrder', 'DESC']],
+          limit: 1,
+        },
+        { transaction: t },
       );
 
-      await transaction.commit();
+      const targetOrder = targetCard[0].cardOrder;
+      const targetId = targetCard[0].cardId;
+
+      await Cards.update(
+        { cardOrder },
+        { where: { cardId: targetId } },
+        { transaction: t },
+      );
+
+      await Cards.update(
+        { cardOrder: targetOrder },
+        { where: { cardId } },
+        { transaction: t },
+      );
+
+      await t.commit();
     } catch (error) {
-      await transaction.rollback();
+      await t.rollback();
     }
   }
 }
