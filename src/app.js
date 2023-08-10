@@ -15,6 +15,7 @@ export class ExpressApp {
 
   setAppSettings = async () => {
     this.app.use(express.json());
+    this.app.use(express.static('public'));
   };
   setAppRouter = () => {
     this.app.use(

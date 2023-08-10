@@ -9,37 +9,41 @@
     <header>
       <h1>9글9글9글</h1>
       <div class="header-buttons">
-        <button id="loginButton">로그인</button>
-        <button id="signupButton">회원가입</button>
+        <button id="loginButton" onclick="location.href='index.html'">
+          로그인
+        </button>
+        <button id="signupButton" onclick="location.href='signup.html'">
+          회원가입
+        </button>
       </div>
     </header>
 
     <div class="container">
       <h2>로그인</h2>
-      <form action="#" method="post">
-        <div class="form-group">
-          <label for="email">이메일</label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            placeholder="이메일을 입력해주세요"
-            required
-          />
-        </div>
-        <div class="form-group">
-          <label for="password">비밀번호</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="비밀번호를 입력해주세요"
-            required
-          />
-        </div>
-        <button type="submit">로그인</button>
-      </form>
+
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input
+          type="text"
+          id="email"
+          name="email"
+          placeholder="이메일을 입력해주세요"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">비밀번호</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="비밀번호를 입력해주세요"
+          required
+        />
+      </div>
+      <button type="button" onclick="login()">로그인</button>
     </div>
+    <script src="./js/login.js"></script>
   </body>
   <style>
     * {
@@ -83,10 +87,6 @@
 
     body {
       background-color: #f1e0e4;
-      background-image: url(./로그인\ 배경.png);
-      background-size: 40%;
-      background-repeat: no-repeat;
-      background-position: 100% 220%;
     }
     .container {
       padding: 20px;

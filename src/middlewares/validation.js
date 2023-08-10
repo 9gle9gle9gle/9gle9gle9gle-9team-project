@@ -13,7 +13,7 @@ const validate = function (req, res, next) {
   else {
     res.status(400).json({
       //에러 메세지는 errors배열을 순회하며 오류 메시지를 생성.
-      errorMessage: errors.array().map((v, idx) => `${v.msg}`),
+      message: errors.array().map((v, idx) => `${v.msg}`),
     });
   }
 };
@@ -21,7 +21,10 @@ const validate = function (req, res, next) {
 // 회원가입 설정
 const defaultValidate = {
   createUser: [
-    body('nickname').trim().notEmpty().withMessage('미입력된 항목이 있습니다. 모두 입력하여 주세요.'),
+    body('nickname')
+      .trim()
+      .notEmpty()
+      .withMessage('미입력된 항목이 있습니다. 모두 입력하여 주세요.'),
     body('email')
       .isEmail()
       .normalizeEmail()
@@ -35,9 +38,7 @@ const defaultValidate = {
         }
       })
       .matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/)
-      .withMessage(
-        '비밀번호는 최소 8자 이상 16자 이하입니다.'
-      ),    
+      .withMessage('비밀번호는 최소 8자 이상 16자 이하입니다.'),
     validate,
   ],
   updateUser: [
@@ -55,9 +56,7 @@ const defaultValidate = {
         }
       })
       .matches(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/)
-      .withMessage(
-       '비밀번호는 최소 8자 이상 16자 이하입니다.'
-      ),
+      .withMessage('비밀번호는 최소 8자 이상 16자 이하입니다.'),
     validate,
   ],
 };
