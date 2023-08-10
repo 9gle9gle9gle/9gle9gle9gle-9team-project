@@ -1,5 +1,6 @@
 import Cards from '../db/models/cards';
 import Columns from '../db/models/columns';
+import sequelize from '../db/sequelize';
 
 class CardsRepository {
   // 컬럼 조회
@@ -44,6 +45,46 @@ class CardsRepository {
   static async deleteCard(cardId) {
     const deleteCard = await Cards.destroy({ where: { cardId } });
     return deleteCard;
+  }
+
+  // 카드 순서 UP
+  static async cardUp(cardId) {
+    try {
+      const transaction = await sequelize.transaction();
+      const card = await Cards.findByPk(cardId, { transaction });
+      const cardOrder = card.cardOrder;
+      const newCardOrder = cardOrder + 1;
+
+      await Cards.update(
+        { cardOrder: newCardOrder },
+        { where: { cardId } },
+        { transaction },
+      );
+
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+    }
+  }
+
+  // 카드 순서 DOWN
+  static async cardDown(cardId) {
+    try {
+      const transaction = await sequelize.transaction();
+      const card = await Cards.findByPk(cardId, { transaction });
+      const cardOrder = card.cardOrder;
+      const newCardOrder = cardOrder - 1;
+
+      await Cards.update(
+        { cardOrder: newCardOrder },
+        { where: { cardId } },
+        { transaction },
+      );
+
+      await transaction.commit();
+    } catch (error) {
+      await transaction.rollback();
+    }
   }
 }
 

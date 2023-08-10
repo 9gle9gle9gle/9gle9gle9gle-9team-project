@@ -100,6 +100,28 @@ class CardsService {
       return { status: 400, message: '카드 삭제에 실패하였습니다.' };
     }
   }
+
+  // 카드 순서 UP
+  static async cardUp(cardId, userId) {
+    try {
+      await CardsRepository.cardUp(cardId);
+
+      return { status: 200, message: '카드 순서 수정에 성공하였습니다.' };
+    } catch (error) {
+      return { status: 400, message: '카드 순서 수정에 실패하였습니다.' };
+    }
+  }
+
+  // 카드 순서 DOWN
+  static async cardDown(cardId, userId) {
+    try {
+      await CardsRepository.cardDown(cardId);
+
+      return { status: 200, message: '카드 순서 수정에 성공하였습니다.' };
+    } catch (error) {
+      return { status: 400, message: '카드 순서 수정에 실패하였습니다.' };
+    }
+  }
 }
 
 export default CardsService;

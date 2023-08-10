@@ -14,4 +14,10 @@ router.patch('/cards/:cardId', CardsController.updateCard);
 // 카드 삭제
 router.delete('/cards/:cardId', CardsController.deleteCard);
 
+// 카드 순서 UP
+router.patch('/cards/:cardId/up', CardsController.cardUp);
+
+// 카드 순서 DOWN
+router.patch('/cards/:cardId/down', CardsController.cardDown);
+
 export default router;
