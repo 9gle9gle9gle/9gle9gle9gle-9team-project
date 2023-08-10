@@ -1,10 +1,7 @@
 import Cards from '../db/models/cards';
 import Columns from '../db/models/columns';
-<<<<<<< HEAD
-import sequelize from '../db/sequelize';
-=======
 import Access from '../db/models/access';
->>>>>>> d65347de46496d975ee8a70f064d4d305f530930
+import sequelize from '../db/sequelize';
 
 class CardsRepository {
   // 보드 권한 확인
@@ -20,14 +17,20 @@ class CardsRepository {
   }
 
   // 카드 생성
-  static async createCard(userId, cardData) {
-    const card = await Cards.create({ userId, ...cardData });
+  static async createCard(userId, cardData, cardOrder) {
+    const card = await Cards.create({ userId, ...cardData, cardOrder });
     return card;
   }
 
   // 카드 개별 조회
   static async getCard(cardId) {
     const card = await Cards.findOne({ where: { cardId, deletedAt: null } });
+    return card;
+  }
+
+  // 카드 전체 조회
+  static async getAllCard(columnId) {
+    const card = await Cards.findAll({ where: { columnId, deletedAt: null } });
     return card;
   }
 

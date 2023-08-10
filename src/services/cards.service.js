@@ -20,7 +20,10 @@ class CardsService {
       if (!isAccessable)
         return { status: 400, message: '접근 권한이 없습니다.' };
 
-      await CardsRepository.createCard(userId, cardData);
+      const getAllCard = await CardsRepository.getAllCard(cardData.columnId);
+      const cardOrder = getAllCard.length + 1;
+
+      await CardsRepository.createCard(userId, cardData, cardOrder);
       return { status: 201, message: '카드 작성에 성공하였습니다.' };
     } catch (error) {
       console.log(error);
