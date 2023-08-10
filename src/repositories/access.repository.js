@@ -1,5 +1,7 @@
 import Boards from '../db/models/boards';
 import Access from '../db/models/access';
+import Users from '../db/models/users';
+
 class AccessRepository {
   // =====보드 소유 확인=====
   isMyBoard = async (userId, boardId) => {
@@ -11,6 +13,12 @@ class AccessRepository {
   isAccessable = async (userId, boardId) => {
     const isAccessable = await Access.findOne({ where: { userId, boardId } });
     return isAccessable;
+  };
+
+  // =====이메일 검색=====
+  searchEmail = async email => {
+    const searchEmail = await Users.findOne({ email });
+    return searchEmail;
   };
 
   // =====초대=====

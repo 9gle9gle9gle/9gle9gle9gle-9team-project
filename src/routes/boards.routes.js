@@ -1,13 +1,14 @@
 import { Router } from 'express';
 import BoardsController from '../controllers/boards.controller';
+import authmiddleware from '../middlewares/authmiddlewares';
 
 const router = Router();
 const boardsController = new BoardsController();
 
-router.post('/boards', boardsController.makeBoard);
-router.get('/boards', boardsController.getBoards);
-router.get('/boards/:boardId', boardsController.showABoard);
-router.patch('/boards/:boardId', boardsController.updateBoard);
-router.delete('/boards/:boardId', boardsController.removeBoard);
+router.post('/boards', authmiddleware, boardsController.makeBoard);
+router.get('/boards', authmiddleware, boardsController.getBoards);
+router.get('/boards/:boardId', authmiddleware, boardsController.showABoard);
+router.patch('/boards/:boardId', authmiddleware, boardsController.updateBoard);
+router.delete('/boards/:boardId', authmiddleware, boardsController.removeBoard);
 
 export default router;

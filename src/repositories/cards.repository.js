@@ -1,8 +1,18 @@
 import Cards from '../db/models/cards';
 import Columns from '../db/models/columns';
+<<<<<<< HEAD
 import sequelize from '../db/sequelize';
+=======
+import Access from '../db/models/access';
+>>>>>>> d65347de46496d975ee8a70f064d4d305f530930
 
 class CardsRepository {
+  // 보드 권한 확인
+  static async isAccessable(userId, boardId) {
+    const isAccessable = await Access.findOne({ where: { userId, boardId } });
+    return isAccessable;
+  }
+
   // 컬럼 조회
   static async findColumn(columnId) {
     const existColumn = await Columns.findOne({ where: { columnId } });
@@ -15,10 +25,10 @@ class CardsRepository {
     return card;
   }
 
-  // 카드 전체 조회
-  static async getCards() {
-    const cards = await Cards.findAll({});
-    return cards;
+  // 카드 개별 조회
+  static async getCard(cardId) {
+    const card = await Cards.findOne({ where: { cardId, deletedAt: null } });
+    return card;
   }
 
   // 카드 유무 조회
@@ -42,8 +52,8 @@ class CardsRepository {
   }
 
   // 카드 삭제
-  static async deleteCard(cardId) {
-    const deleteCard = await Cards.destroy({ where: { cardId } });
+  static async deleteCard(cardId, deletedAt) {
+    const deleteCard = await Cards.update({ deletedAt }, { where: { cardId } });
     return deleteCard;
   }
 

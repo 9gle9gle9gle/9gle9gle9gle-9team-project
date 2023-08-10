@@ -42,8 +42,8 @@ class BoardsRepository {
   showABoard = async boardId => {
     const getBoards = await sequelize.query(
       `SELECT * 
-          FROM Cards 
-              LEFT JOIN Columns on Columns.columnId = Cards.columnId
+          FROM Columns
+              LEFT JOIN Cards on Columns.columnId = Cards.columnId
               LEFT JOIN Boards on Boards.boardId = Columns.boardId
           WHERE Boards.boardId = :boardId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL`,
       { replacements: { boardId }, type: QueryTypes.SELECT },
