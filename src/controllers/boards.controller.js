@@ -24,15 +24,18 @@ class BoardsController {
     return res.status(status).json({ message, getBoards });
   };
 
-  // =====보드 개별 조회=====
-  showABoard = async (req, res) => {
+  // =====보드 불러오기 시 사용=====
+  // =====컬럼 별 카드 개별 조회=====
+  showCards = async (req, res) => {
     const userId = res.locals.user;
     const { boardId } = req.params;
-    const { status, message, showABoard } = await this.boardsService.showABoard(
+    const { columnId } = req.query;
+    const { status, message, showCards } = await this.boardsService.showCards(
       userId,
       boardId,
+      columnId,
     );
-    return res.status(status).json({ message, showABoard });
+    return res.status(status).json({ message, showCards });
   };
 
   // =====보드 수정=====

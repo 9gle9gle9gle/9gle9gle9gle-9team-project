@@ -39,16 +39,16 @@ class BoardsRepository {
   };
 
   // =====보드 개별 조회=====
-  showABoard = async boardId => {
-    const getBoards = await sequelize.query(
+  showCards = async columnId => {
+    const showCards = await sequelize.query(
       `SELECT * 
-          FROM Columns
-              LEFT JOIN Cards on Columns.columnId = Cards.columnId
+          FROM Cards
+              LEFT JOIN Columns on Columns.columnId = Cards.columnId
               LEFT JOIN Boards on Boards.boardId = Columns.boardId
-          WHERE Boards.boardId = :boardId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL`,
-      { replacements: { boardId }, type: QueryTypes.SELECT },
+          WHERE Columns.columnId = :columnId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL`,
+      { replacements: { columnId }, type: QueryTypes.SELECT },
     );
-    return getBoards;
+    return showCards;
   };
 
   // =====보드 수정=====

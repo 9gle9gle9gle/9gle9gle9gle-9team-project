@@ -4,7 +4,6 @@ class CardsController {
   // 카드 생성
   static async createCard(req, res) {
     const userId = res.locals.user;
-    //   const userId = req.locals.user;
     const {
       cardName,
       cardColor,

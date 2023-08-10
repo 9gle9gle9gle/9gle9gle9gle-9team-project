@@ -5,6 +5,7 @@ import cardsRouter from './routes/cards.routes.js';
 import userRouter from './routes/users.routes.js';
 import commentsRouter from './routes/comments.routes.js';
 import accessRouter from './routes/access.routes.js';
+import cors from 'cors';
 
 export class ExpressApp {
   app = express();
@@ -16,6 +17,12 @@ export class ExpressApp {
   setAppSettings = async () => {
     this.app.use(express.json());
     this.app.use(express.static('public'));
+    this.app.use(
+      cors({
+        origin: '*',
+        credentials: true,
+      }),
+    );
   };
   setAppRouter = () => {
     this.app.use(

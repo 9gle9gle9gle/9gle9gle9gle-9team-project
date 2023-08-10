@@ -54,38 +54,41 @@ class BoardsService {
   };
 
   // =====보드 개별 조회=====
-  showABoard = async (userId, boardId) => {
+  showCards = async (userId, boardId, columnId) => {
     const isAccessable = await this.accessRepository.isAccessable(
       userId,
       boardId,
     );
-    if (!isAccessable)
+    if (!isAccessable) {
+      console.log('계정 문제');
       return {
         status: 400,
         message: '보드 조회에 실패하였습니다.',
-        showABoard: null,
+        showCards: null,
       };
+    }
 
     try {
-      const showABoard = await this.boardsRepository.showABoard(boardId);
-      if (!showABoard)
+      const showCards = await this.boardsRepository.showCards(columnId);
+      if (!showCards) {
+        console.log('레포지토리 문제');
         return {
           status: 400,
           message: '보드 조회에 실패하였습니다.',
-          showABoard: null,
+          showCards: null,
         };
-      else
+      } else
         return {
           status: 200,
           message: '보드 조회에 성공하였습니다.',
-          showABoard,
+          showCards,
         };
     } catch (err) {
       console.log(err);
       return {
         status: 400,
         message: '보드 조회에 실패하였습니다.',
-        showABoard: null,
+        showCards: null,
       };
     }
   };
