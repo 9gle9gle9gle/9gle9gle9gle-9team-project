@@ -27,13 +27,13 @@ async function viewABoard() {
                       <input type="hidden" value="1" id="columnId"></input>
 
                       <label>카드 제목</label>
-                        <input type="text" id="cardName"/>
+                        <input type="text" id="cardName${column.columnId}"/>
 
                       <label>카드 내용</label>
-                        <input type="text" id="cardContent" />
+                        <input type="text" id="cardContent${column.columnId}" />
 
                       <label>카드 색상</label>
-                      <select id = "cardColor">
+                      <select id = "cardColor${column.columnId}">
                         <option selected>-- 선택해 주세요 --</option>
                           <option value="0">red</option>
                           <option value="1">orange</option>
@@ -44,9 +44,9 @@ async function viewABoard() {
                       </select>
 
                       <label>마감 날짜</label>
-                        <input type="date" id="endAt" />
+                        <input type="date" id="endAt${column.columnId}" />
                       
-                      <button type ="button" onclick="makeCard()">생성</button>
+                      <button type ="button" onclick="makeCard(${boardId}, ${column.columnId})">생성</button>
                     </div>
                 <div>`;
     })
@@ -56,13 +56,11 @@ async function viewABoard() {
   return;
 }
 
-async function makeCard() {
-  const boardId = document.querySelector('#boardId').value;
-  const columnId = document.querySelector('#columnId').value;
-  const cardName = document.querySelector('#cardName').value;
-  const cardContent = document.querySelector('#cardContent').value;
-  const cardColor = document.querySelector('#cardColor').value;
-  const endAt = document.querySelector('#endAt').value;
+async function makeCard(boardId, columnId) {
+  const cardName = document.querySelector(`#cardName${columnId}`).value;
+  const cardContent = document.querySelector(`#cardContent${columnId}`).value;
+  const cardColor = document.querySelector(`#cardColor${columnId}`).value;
+  const endAt = document.querySelector(`#endAt${columnId}`).value;
   const response = await fetch(`http://localhost:3000/api/cards`, {
     method: 'POST',
     headers: {
@@ -124,4 +122,29 @@ async function showCards(boardId, columnId) {
 
   console.log(result.message);
   return;
+}
+
+async function createColumn() {
+  try {
+    const columnName = document.querySelector('#createColumn').value;
+    const response = await fetch('http://localhost:3000/api/columns', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+      body: JSON.stringify({
+        boardId: '1',
+        columnName,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error('API 요청이 실패했습니다.');
+    }
+    const data = await response.json();
+    console.log('컬럼이 생성되었습니다.', data.column);
+    getAndDisplayColumns();
+  } catch (error) {
+    console.error('컬럼 생성 중 오류 발생:', error);
+  }
 }
