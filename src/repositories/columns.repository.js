@@ -45,14 +45,18 @@ class ColumnsRepository {
       });
       const currentOrder = currentColumn.columnOrder;
 
-      const targetColumn = await Columns.findOne(
+      const targetColumn = await Columns.findAll(
         {
-          where: { [Op.gt]: currentOrder },
+          where: {
+            columnOrder: { [Op.gt]: currentOrder },
+          },
+          order: [['columnOrder']],
+          limit: 1,
         },
         { transaction: t },
       );
-      const targetOrder = targetColumn.columnOrder;
-      const targetId = targetColumn.columnId;
+      const targetOrder = targetColumn[0].columnOrder;
+      const targetId = targetColumn[0].columnId;
 
       await Columns.update(
         { columnOrder: targetOrder },
@@ -81,14 +85,19 @@ class ColumnsRepository {
         transaction: t,
       });
       const currentOrder = currentColumn.columnOrder;
-      const columnOrder = currentOrder - 1;
-      const targetColumn = await Columns.findOne(
+
+      const targetColumn = await Columns.findAll(
         {
-          where: { columnOrder },
+          where: {
+            columnOrder: { [Op.lt]: currentOrder },
+          },
+          order: [['columnOrder', 'DESC']],
+          limit: 1,
         },
         { transaction: t },
       );
-      const targetId = targetColumn.columnId;
+      const columnOrder = targetColumn[0].columnOrder;
+      const targetId = targetColumn[0].columnId;
 
       await Columns.update(
         { columnOrder: columnOrder },
