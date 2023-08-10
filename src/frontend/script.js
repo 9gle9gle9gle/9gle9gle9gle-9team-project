@@ -133,12 +133,24 @@ class Card {
       }
     });
 
+    this.commentsInput.addEventListener('keyup', e => {
+      if (e.key === 'Enter' && this.commentsInput.value.trim() !== '') {
+        this.state.comments.push(this.commentsInput.value);
+        this.renderComments();
+        this.commentsInput.value = '';
+      }
+    });
+
     //Append
+
+    const commentsInputContainer = document.createElement('div'); // Create a new div container
+    commentsInputContainer.append(this.commentsInput);
+    commentsInputContainer.append(this.commentsButton);
+    commentsInputContainer.classList.add('commentsInputContainer');
     this.menu.append(this.menuTitle);
     this.menu.append(this.menuDescription);
-    this.menu.append(this.commentsInput);
-    this.menu.append(this.commentsButton);
-    this.menu.append(this.menuComments);
+    this.menu.append(this.menuComments); // Move this line below the comments input container
+    this.menu.append(commentsInputContainer); // Append the new div container
     this.menuContainer.append(this.menu);
     root.append(this.menuContainer);
 
@@ -161,13 +173,15 @@ class Card {
   }
 
   renderComments() {
+    const reversedComments = this.state.comments.slice().reverse();
+
     let currentCommentsDOM = Array.from(this.menuComments.childNodes);
 
     currentCommentsDOM.forEach(commentDOM => {
       commentDOM.remove();
     });
 
-    this.state.comments.forEach(comment => {
+    reversedComments.forEach(comment => {
       new Comment(comment, this.menuComments, this);
     });
   }
@@ -256,9 +270,29 @@ class Comment {
   render() {
     this.div = document.createElement('div');
     this.div.className = 'comment';
-    this.div.innerText = this.text;
+
+    this.commentText = document.createElement('span');
+    this.commentText.innerText = this.text;
+
+    this.deleteButton = document.createElement('button');
+    this.deleteButton.innerText = 'Delete';
+    this.deleteButton.className = 'delete-comment-btn';
+    this.deleteButton.addEventListener('click', () => {
+      this.deleteComment.call(this);
+    });
+
+    this.div.append(this.commentText);
+    this.div.append(this.deleteButton);
 
     this.place.append(this.div);
+  }
+
+  deleteComment() {
+    const index = this.card.state.comments.indexOf(this.text);
+    if (index !== -1) {
+      this.card.state.comments.splice(index, 1);
+      this.card.renderComments();
+    }
   }
 }
 
