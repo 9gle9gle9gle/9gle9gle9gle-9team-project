@@ -79,6 +79,7 @@ async function makeCard(boardId, columnId) {
 
   const result = await response.json();
   console.log(result.message);
+  location.reload();
   return alert(result.message);
 }
 
@@ -143,6 +144,7 @@ async function createColumn() {
     }
     const data = await response.json();
     console.log('컬럼이 생성되었습니다.', data.column);
+    location.reload();
   } catch (error) {
     console.error('컬럼 생성 중 오류 발생:', error);
   }
