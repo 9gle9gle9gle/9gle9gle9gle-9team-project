@@ -98,7 +98,7 @@ class CardsService {
         return { status: 400, message: ' 삭제 권한이 존재하지 않습니다.' };
       }
 
-      await CardsRepository.deleteCard(cardId);
+      await CardsRepository.deleteCard(cardId, deletedAt);
 
       return { status: 200, message: '카드 삭제에 성공하였습니다.' };
     } catch (error) {

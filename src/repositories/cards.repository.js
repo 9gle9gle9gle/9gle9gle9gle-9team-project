@@ -23,7 +23,7 @@ class CardsRepository {
 
   // 카드 개별 조회
   static async getCard(cardId) {
-    const card = await Cards.findByPk(cardId);
+    const card = await Cards.findOne({ where: { cardId, deletedAt: null } });
     return card;
   }
 
@@ -48,8 +48,8 @@ class CardsRepository {
   }
 
   // 카드 삭제
-  static async deleteCard(cardId) {
-    const deleteCard = await Cards.destroy({ where: { cardId } });
+  static async deleteCard(cardId, deletedAt) {
+    const deleteCard = await Cards.update({ deletedAt }, { where: { cardId } });
     return deleteCard;
   }
 }
