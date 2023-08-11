@@ -14,6 +14,7 @@ class ColumnsRepository {
   async getColumns(boardId) {
     return Columns.findAll({
       where: { boardId, deletedAt: null },
+      order: [['columnOrder']],
     });
   }
 
@@ -38,85 +39,48 @@ class ColumnsRepository {
   }
 
   async moveColumnUp(columnId) {
-    const t = await sequelize.transaction();
-    try {
-      const currentColumn = await Columns.findByPk(columnId, {
-        transaction: t,
-      });
-      const currentOrder = currentColumn.columnOrder;
+    const currentColumn = await Columns.findByPk(columnId);
+    const currentOrder = currentColumn.columnOrder;
 
-      const targetColumn = await Columns.findAll(
-        {
-          where: {
-            columnOrder: { [Op.gt]: currentOrder },
-          },
-          order: [['columnOrder']],
-          limit: 1,
-        },
-        { transaction: t },
-      );
-      const targetOrder = targetColumn[0].columnOrder;
-      const targetId = targetColumn[0].columnId;
+    const targetColumn = await Columns.findAll({
+      where: {
+        columnOrder: { [Op.gt]: currentOrder },
+      },
+      order: [['columnOrder']],
+      limit: 1,
+    });
+    const targetOrder = targetColumn[0].columnOrder;
+    const targetId = targetColumn[0].columnId;
 
-      await Columns.update(
-        { columnOrder: targetOrder },
-        { where: { columnId } },
-        { transaction: t },
-      );
-      await Columns.update(
-        { columnOrder: currentOrder },
-        { where: { columnId: targetId } },
-        { transaction: t },
-      );
-
-      await t.commit();
-      return 1;
-    } catch (err) {
-      console.log(err);
-      await t.rollback();
-      return 0;
-    }
+    await Columns.update({ columnOrder: targetOrder }, { where: { columnId } });
+    const result = await Columns.update(
+      { columnOrder: currentOrder },
+      { where: { columnId: targetId } },
+    );
+    return result;
   }
 
   async moveColumnDown(columnId) {
-    const t = await sequelize.transaction();
-    try {
-      const currentColumn = await Columns.findByPk(columnId, {
-        transaction: t,
-      });
-      const currentOrder = currentColumn.columnOrder;
+    const currentColumn = await Columns.findByPk(columnId);
+    const currentOrder = currentColumn.columnOrder;
 
-      const targetColumn = await Columns.findAll(
-        {
-          where: {
-            columnOrder: { [Op.lt]: currentOrder },
-          },
-          order: [['columnOrder', 'DESC']],
-          limit: 1,
-        },
-        { transaction: t },
-      );
-      const columnOrder = targetColumn[0].columnOrder;
-      const targetId = targetColumn[0].columnId;
+    const targetColumn = await Columns.findAll({
+      where: {
+        columnOrder: { [Op.lt]: currentOrder },
+      },
+      order: [['columnOrder', 'DESC']],
+      limit: 1,
+    });
+    const columnOrder = targetColumn[0].columnOrder;
+    const targetId = targetColumn[0].columnId;
 
-      await Columns.update(
-        { columnOrder: columnOrder },
-        { where: { columnId } },
-        { transaction: t },
-      );
-      await Columns.update(
-        { columnOrder: currentOrder },
-        { where: { columnId: targetId } },
-        { transaction: t },
-      );
+    await Columns.update({ columnOrder: columnOrder }, { where: { columnId } });
+    const result = await Columns.update(
+      { columnOrder: currentOrder },
+      { where: { columnId: targetId } },
+    );
 
-      await t.commit();
-      return 1;
-    } catch (err) {
-      console.log(err);
-      await t.rollback();
-      return 0;
-    }
+    return result;
   }
 
   async getUserId(userId, boardId) {

@@ -4,24 +4,18 @@ class CardsController {
   // 카드 생성
   static async createCard(req, res) {
     const userId = res.locals.user;
-    //   const userId = req.locals.user;
-    const {
-      cardName,
-      cardColor,
-      cardContent,
-      endAt,
-      columnId,
-      deletedAt,
-      boardId,
-    } = req.body;
+    const { cardName, cardColor, cardContent, endAt, columnId, boardId } =
+      req.body;
     const cardData = {
       cardName,
       cardColor,
       cardContent,
       endAt,
       columnId,
-      deletedAt,
+      boardId,
     };
+
+    console.log(cardName, cardColor, cardContent, endAt, columnId, boardId);
 
     const { status, message } = await CardsService.createCard(
       userId,

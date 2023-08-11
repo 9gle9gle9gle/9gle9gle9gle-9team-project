@@ -19,14 +19,11 @@ class UserController {
   loginUser = async (req, res) => {
     try {
       const { email, password } = req.body;
-      const { token, nickname } = await this.userService.loginUser(
-        email,
-        password,
-      );
+      const token = await this.userService.loginUser(email, password);
       res.header('Authorization', `Bearer ${token}`);
-      res.status(200).json({ message: '로그인에 성공하였습니다.', nickname });
+      res.status(200).json({ message: '로그인에 성공하였습니다.' });
     } catch (error) {
-      res.status(401).json({ message: '로그인에 실패하였습니다.', nickname });
+      res.status(401).json({ message: '로그인에 실패하였습니다.' });
     }
   };
 

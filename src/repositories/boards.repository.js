@@ -6,49 +6,44 @@ import { QueryTypes } from 'sequelize';
 class BoardsRepository {
   // =====보드 생성=====
   makeBoard = async (userId, boardName, boardColor, boardContent) => {
-    const t = await sequelize.transaction();
-    try {
-      const makeBoard = await Boards.create(
-        {
-          userId,
-          boardName,
-          boardColor,
-          boardContent,
-        },
-        { transaction: t },
-      );
+    const makeBoard = await Boards.create({
+      userId,
+      boardName,
+      boardColor,
+      boardContent,
+    });
 
-      const boardId = makeBoard.boardId;
+    const boardId = makeBoard.boardId;
 
-      await Access.create({ userId, boardId }, { transaction: t });
-      await t.commit();
-      return 1;
-    } catch (err) {
-      console.log(err);
-      await t.rollback();
-      return 0;
-    }
+    await Access.create({ userId, boardId });
+    return makeBoard;
   };
 
   // =====보드 전체 조회=====
   getBoards = async userId => {
-    const getBoards = await Boards.findAll({
-      where: { userId, deletedAt: null },
-    });
+    const getBoards = await sequelize.query(
+      `SELECT * 
+          FROM Boards
+              LEFT JOIN Accesses on Accesses.boardId = Boards.boardId
+          WHERE Accesses.userId = :userId AND Boards.deletedAt IS NULL 
+        `,
+      { replacements: { userId }, type: QueryTypes.SELECT },
+    );
     return getBoards;
   };
 
   // =====보드 개별 조회=====
-  showABoard = async boardId => {
-    const getBoards = await sequelize.query(
+  showCards = async columnId => {
+    const showCards = await sequelize.query(
       `SELECT * 
-          FROM Columns
-              LEFT JOIN Cards on Columns.columnId = Cards.columnId
+          FROM Cards
+              LEFT JOIN Columns on Columns.columnId = Cards.columnId
               LEFT JOIN Boards on Boards.boardId = Columns.boardId
-          WHERE Boards.boardId = :boardId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL`,
-      { replacements: { boardId }, type: QueryTypes.SELECT },
+          WHERE Columns.columnId = :columnId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL
+          ORDER BY Cards.cardOrder DESC`,
+      { replacements: { columnId }, type: QueryTypes.SELECT },
     );
-    return getBoards;
+    return showCards;
   };
 
   // =====보드 수정=====

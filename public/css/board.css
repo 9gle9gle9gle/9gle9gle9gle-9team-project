@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: 'Gamja Flower', cursive;
 }
 
 header {
@@ -24,7 +25,7 @@ header h1 {
   gap: 1rem;
 }
 
-button {
+header button {
   background-color: transparent;
   border: 2px solid white;
   color: white;
@@ -40,48 +41,345 @@ button:hover {
 body {
   background-color: #f1e0e4;
 }
-.container {
-  padding: 20px;
-  border-radius: 5px;
-  border: 3px solid #fff;
-  width: 300px;
-  margin: 0 auto;
-  margin-top: 130px;
-}
-.container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  letter-spacing: -0.1rem;
-}
-.form-group {
-  margin-bottom: 15px;
-}
-label {
-  display: block;
-  margin-bottom: 5px;
-  letter-spacing: -0.1rem;
-  font-size: 15px;
-  font-weight: bold;
-}
-input[type='text'],
-input[type='password'] {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  box-sizing: border-box;
-}
-.container button {
-  background-color: #ffa3a7;
-  color: #fff;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 3px;
+
+button {
+  outline: none;
   cursor: pointer;
+}
+
+#addTodoListDiv {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+#addTodoListButton {
+  background-color: #ffa3a7;
+  margin-left: 0.5em;
+}
+
+#addTodoListButton:hover {
+  background-color: white;
+}
+
+#root {
+  justify-content: center;
+  align-items: center;
+  margin-top: 3em;
+  margin: 1em;
+  min-width: 1200px;
+}
+
+.todoList {
+  /*border: 1px solid red;*/
+  border-radius: 4px;
+  min-height: 100px;
+  background: rgb(235, 235, 235);
+  background-color: #f2f1f4;
+  padding: 0.7em;
+  margin: 1em 0 1em 1em;
+  float: left;
+}
+
+.todoList h2 {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
+
+#to-do-list-button {
+  margin-left: 0.5em;
+  background-color: #ffa3a7;
+}
+
+#to-do-list-button:hover {
+  background-color: white;
+}
+
+.card {
+  border-radius: 4px;
+  border-bottom: rgb(180, 180, 180) 1px solid;
+  background: white;
+  margin: 0.5em 0 0 0;
+  padding: 0.5em;
+  font-size: 0.9em;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.card button {
+  border: none;
+  padding: 0.3em;
+}
+
+.card button:hover {
+  cursor: pointer;
+}
+.menuContainer {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  height: 100%;
+}
+
+.menu {
+  top: 0;
+  left: 0;
+  background-color: #f1e0e4;
+  width: 500px;
+  min-height: 300px;
+  margin: auto;
+  padding: 1em;
+  border-radius: 4px;
+  height: 80%;
+  position: relative;
+}
+
+.menuTitle {
+  font-weight: bold;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #000;
+}
+
+.menuDescription {
+  margin-bottom: 2em;
+  line-height: 1.5em;
+  height: 330px;
+  overflow-y: auto;
+  word-wrap: break-word; /* Automatically wrap long words onto the next line */
+  overflow-wrap: break-word;
+}
+
+.menuDescription textarea {
+  width: 95%;
+  height: 5em;
+  padding: 0.5em;
+  font-size: 1.1em;
+  height: 300px;
+  resize: none;
+  background-color: #f2f1f4;
+  overflow-y: auto;
+}
+
+.comment {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 0.5em;
+  padding: 0.5em;
+  font-size: 0.8em;
+}
+
+.commentsInput {
+  margin-right: 0.5em;
+  width: 420px;
+}
+
+.commentsButton.btn-save {
+  width: 78px;
+}
+
+.btn-save {
+  background-color: #ffa3a7;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5em;
+  margin-top: 0.5em;
+}
+
+.commentsInputContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-top: 1px solid #ccc;
+  padding: 8px;
+  box-sizing: border-box;
+  background-color: #f1e0e4;
+}
+
+.menuComments {
+  position: absolute;
+  bottom: 53px;
+  left: 0;
+  width: 100%;
+  flex: 1;
+  box-sizing: border-box;
+  overflow-y: auto; /* Add scroll when needed */
+  max-height: 200px; /* Set a maximum height for the comment area */
+  border-top: 1px solid #ffa3a7;
+  height: 200px;
+}
+
+.menuComments .comment {
+  height: 25px;
+  position: relative;
+}
+
+.innerCardButtons {
+  text-align: right;
+  margin-top: 10px;
+  width: 80px;
+  margin-left: 500px;
+}
+
+.innerCard {
+  padding: 20px auto;
+}
+
+.innercardtext h2 {
+  padding-top: 10px;
+  width: 95%;
+  border-bottom: 1px solid #000;
+}
+
+.endAt {
+  position: absolute;
+  width: 70%;
+  top: 80px;
+}
+
+.cardcontent {
+  width: 134%;
+  margin-top: 30px;
+  height: 300px;
+  min-height: min-content;
+  overflow-y: auto;
+  border-bottom: 1px solid #000;
+}
+
+.comments {
+  height: 180px;
+  overflow: auto;
+
+  color: #2d2d2d;
+  margin-top: 330px;
+  min-height: min-content;
+  overflow-y: auto;
   width: 100%;
 }
 
-.container button:hover {
-  background-color: #fff;
-  color: #000;
+.commentBtns {
+  text-align: right;
 }
+.commentBtn {
+  background-color: #ffa3a7;
+  border-radius: 5%;
+  height: 36px;
+  width: 60px;
+  font-size: 13px;
+}
+#commentbox {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 10px 10px 10px;
+}
+
+.commentcontent {
+  width: 360px;
+}
+.commentEditInput {
+  margin-right: 20px;
+  width: 395px;
+  height: 30px;
+  text-align: center;
+}
+.endDate {
+  font-weight: 600;
+  display: flex;
+}
+
+.leftalert {
+  color: #2d2d2d;
+  margin-left: 30px;
+}
+/* 카드부분 */
+.cardbox {
+  display: flex;
+  flex-direction: row;
+  width: 260px;
+  position: relative;
+}
+
+.cardbox h2 {
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  min-height: 50px;
+  overflow-y: auto;
+}
+
+.cardboxBtn {
+  text-align: center;
+  width: 30px;
+}
+
+.cardboxBtn button {
+  border: 1px solid #000;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: none;
+  width: 30px;
+  height: 30px;
+}
+
+.cardboxBtn button:hover {
+  background-color: #f1e0e4;
+}
+/* 카드부분 */
+
+/* 컬럼부분 */
+
+.columnheader p {
+  color: #fff;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bolder;
+  letter-spacing: -0.2rem;
+  position: relative;
+}
+
+.columnheaderBtn button {
+  color: #000;
+  border: none;
+  width: 20px;
+  background: none;
+}
+
+.columnheaderBtn button:hover {
+  color: #fff;
+}
+
+.columnheaderBtn {
+  text-align: center;
+}
+
+.deleteColumnButton {
+  background: none;
+  width: 30px;
+  position: relative;
+  left: 220px;
+  bottom: 32px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.deleteColumnButton:hover {
+  color: red;
+  background: none;
+}
+/* 컬럼부분 */

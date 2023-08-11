@@ -1,7 +1,6 @@
 async function login() {
   const password = document.querySelector('#password').value;
   const email = document.querySelector('#email').value;
-  console.log(email);
   const response = await fetch(`http://localhost:3000/api/login`, {
     method: 'POST',
     headers: {

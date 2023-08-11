@@ -47,8 +47,7 @@ class UserService {
         expiresIn: '1h',
       },
     );
-    const nickname = user.nickname;
-    return { token, nickname };
+    return token;
   };
 
   // 회원정보 수정

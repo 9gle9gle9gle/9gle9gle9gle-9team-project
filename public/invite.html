@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Rakkas&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./css/invite.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h1>9글9글9글</h1>
+      <div class="header-buttons">
+        <button id="loginButton">로그인</button>
+        <button id="signupButton">회원가입</button>
+      </div>
+    </header>
+    <div class="container">
+      <div>
+        <input type="text" id="email" placeholder="bbobbi@9gle.com" />
+        <button onclick="invite()">초대</button>
+      </div>
+      <div class="invitebox">
+        <div class="upperinvite">닉네임</div>
+        <div class="upperinvite">email</div>
+      </div>
+      <div class="invitelist"></div>
+    </div>
+    <script src="./js/invite.js"></script>
+  </body>
+</html>
