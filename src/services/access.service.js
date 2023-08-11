@@ -17,17 +17,17 @@ class AccessService {
       loginuserId,
       boardId,
     );
-    if (!isMyBoard.boardId) {
+    if (!isMyBoard) {
       return messages.status400();
     }
-
     const targetUser = await this.accessRepository.searchEmail(email);
-
-    const userId = targetUser.userId;
-
+    if (!targetUser) {
+      return messages.status400();
+    }
+    const targetUserId = targetUser.userId;
     // 이미 초대한 회원 확인
     const isAccessable = await this.accessRepository.isAccessable(
-      userId,
+      targetUserId,
       boardId,
     );
     if (isAccessable) {
@@ -40,7 +40,7 @@ class AccessService {
     try {
       // 초대
       const giveAccess = await this.accessRepository.giveAccess(
-        userId,
+        targetUserId,
         boardId,
       );
       if (!giveAccess.userId) return messages.status400();

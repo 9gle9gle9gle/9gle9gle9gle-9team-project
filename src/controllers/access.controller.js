@@ -18,7 +18,7 @@ class AccessController {
   // =====권한 조회=====
   showAccess = async (req, res) => {
     const loginuserId = res.locals.user;
-    const { boardId } = req.body;
+    const { boardId } = req.query;
     const { status, message, showAccess } = await this.accessService.showAccess(
       loginuserId,
       boardId,
