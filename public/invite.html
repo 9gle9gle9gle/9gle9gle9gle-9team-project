@@ -14,11 +14,17 @@
         <button id="signupButton">회원가입</button>
       </div>
     </header>
-    <div>
-      <input type="text" id="email" />
-      <button onclick="invite()">초대</button>
+    <div class="container">
+      <div>
+        <input type="text" id="email" placeholder="bbobbi@9gle.com" />
+        <button onclick="invite()">초대</button>
+      </div>
+      <div class="invitebox">
+        <div class="upperinvite">닉네임</div>
+        <div class="upperinvite">email</div>
+      </div>
+      <div class="invitelist"></div>
     </div>
-    <div class="invitelist"></div>
     <script src="./js/invite.js"></script>
   </body>
 </html>

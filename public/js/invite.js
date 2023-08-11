@@ -36,10 +36,10 @@ async function invitelist() {
   const tempHtml = result.showAccess
     .map(access => {
       console.log(access);
-      return `    <div>
-                    ${access.User.nickname}
-                    ${access.User.email}
-                    <button onclick="uninvite(${access.userId},${access.boardId})">초대 삭제</button>
+      return `    <div class = "invitebox">
+                    <div class = "innerinvite">${access.User.nickname}</div>
+                    <div class = "innerinvite">${access.User.email}</div>
+                    <button onclick="uninvite(${access.userId},${access.boardId})">삭제</button>
                 </div>`;
     })
     .join('');
