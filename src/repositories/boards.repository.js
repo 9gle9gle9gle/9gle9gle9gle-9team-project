@@ -21,9 +21,14 @@ class BoardsRepository {
 
   // =====보드 전체 조회=====
   getBoards = async userId => {
-    const getBoards = await Boards.findAll({
-      where: { userId, deletedAt: null },
-    });
+    const getBoards = await sequelize.query(
+      `SELECT * 
+          FROM Boards
+              LEFT JOIN Accesses on Accesses.boardId = Boards.boardId
+          WHERE Accesses.userId = :userId AND Boards.deletedAt IS NULL 
+        `,
+      { replacements: { userId }, type: QueryTypes.SELECT },
+    );
     return getBoards;
   };
 
