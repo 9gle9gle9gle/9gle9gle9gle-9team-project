@@ -1,58 +1,56 @@
 <!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Rakkas&display=swap"
+      rel="stylesheet"
+    />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/boardlist.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <link rel="stylesheet" href="./css/boardlist.css" />
-</head>
+  <body>
+    <header>
+      <h1 onclick="location.href=`index.html`">9글9글9글</h1>
+    </header>
+    <button class="createBoardBtn" onclick="openModalmakeBoard()">
+      보드 생성
+    </button>
+    <div class="makeboardmodal" id="modal">
+      <div class="modal-content">
+        <div class="closemakeboardmodal">
+          <button class="close" onclick="closeModalmakeBoard()">X</button>
+        </div>
+        <div>
+          <label>보드 제목</label>
+          <input id="boardName" />
+          <label>보드 색상</label>
+          <select class="boardColor" id="boardColor">
+            <option selected>-- 카드 색상 --</option>
+            <option value="0">red</option>
+            <option value="1">orange</option>
+            <option value="2">yellow</option>
+            <option value="3">green</option>
+            <option value="4">blue</option>
+            <option value="5">purple</option>
+          </select>
 
-<body>
-  <header>
-    <h1>9글9글9글</h1>
-    <div class="header-buttons">
-      <button id="loginButton">로그인</button>
-      <button id="signupButton">회원가입</button>
-    </div>
-  </header>
-  <button class="createBoardBtn" onclick="openModalmakeBoard()">보드 생성</button>
-  <div class="makeboardmodal" id="modal">
-    <div class="modal-content">
-      <div class="closemakeboardmodal">
-        <button class="close" onclick="closeModalmakeBoard()">X</button>
+          <label>보드 내용</label>
+
+          <input id="boardContent" />
+
+          <button class="createBoardBtn" onclick="createBoard()">
+            보드 생성
+          </button>
+        </div>
       </div>
-      <div>
-        <br />
-        <label>보드 제목</label>
-        <br />
-        <input id="boardName" />
-        <br />
-        <br />
-        <label>보드 색상</label>
-        <br />
-        <select class="boardColor" id="boardColor">
-          <option selected>-- 카드 색상 --</option>
-          <option value="0">red</option>
-          <option value="1">orange</option>
-          <option value="2">yellow</option>
-          <option value="3">green</option>
-          <option value="4">blue</option>
-          <option value="5">purple</option>
-        </select>
-        <br />
-        <br />
-        <label>보드 내용</label>
-        <br />
-        <input id="boardContent" />
-        <br /><br />
-        <button onclick="createBoard()">보드 생성</button>
-      </div>
     </div>
-  </div>
 
-  <div id="boardlist"></div>
-  <script src="./js/boardlist.js"></script>
-</body>
-
+    <div id="boardlist"></div>
+    <script src="./js/boardlist.js"></script>
+  </body>
 </html>

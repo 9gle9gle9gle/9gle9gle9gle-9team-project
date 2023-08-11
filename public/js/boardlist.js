@@ -29,7 +29,7 @@ async function boardlist() {
         boardColor = 'purple';
       }
 
-      return `<div class="boardBox" style = "border : 2px solid ${boardColor}" >
+      return `<div class="boardBox" style = "background-color : ${boardColor}" >
       <p onclick= "moveToBoard(${board.boardId})">${board.boardName}</p>
       <button class= "updateBtn"onclick = "openModal(${board.boardId})">수정</button>   
       <div class = "boardmodal${board.boardId}" id = "modal">   

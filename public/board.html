@@ -15,11 +15,7 @@
   </head>
   <body>
     <header>
-      <h1>9글9글9글</h1>
-      <div class="header-buttons">
-        <button id="loginButton">로그인</button>
-        <button id="signupButton">회원가입</button>
-      </div>
+      <h1 onclick="location.href=`index.html`">9글9글9글</h1>
     </header>
     <div class="createColumns">
       <input type="text" id="createColumn" /><button onclick="createColumn()">
@@ -48,8 +44,9 @@
   }
 
   .inputcard button {
-    background: red;
-    border: none;
+    border: none !important;
+    background-color: #f1e0e4;
+    height: 20px;
   }
   .card button {
     border: 2px solid white;
@@ -151,11 +148,14 @@
     border: none;
     border-radius: 4px;
     padding: 0em 1em;
-    font-size: 8px;
+    font-size: 15px;
+    margin-top: 2px;
+    color: #fff;
   }
 
   .createColumns button:hover {
     background-color: #fff;
+    color: #000;
   }
 
   .cardModal .cardmodal-content {
@@ -174,7 +174,7 @@
   .commentSection {
     margin-top: 20px;
     box-sizing: border-box;
-    overflow-y: auto; /* Add scroll when needed */
+    overflow-y: auto;
     max-height: 150px;
   }
 

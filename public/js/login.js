@@ -12,10 +12,15 @@ async function login() {
 
   const result = await response.json();
   console.log(result.message);
-  sessionStorage.setItem(
-    'Authorization',
-    response.headers.get('Authorization'),
-  );
-  sessionStorage.setItem('loginId', result.nickname);
-  return alert(result.message);
+  if (response.ok) {
+    sessionStorage.setItem(
+      'Authorization',
+      response.headers.get('Authorization'),
+    );
+    sessionStorage.setItem('loginId', result.nickname);
+
+    window.location.href = 'http://localhost:3000/boardlist.html';
+  } else {
+    alert(result.message);
+  }
 }
