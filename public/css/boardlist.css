@@ -47,6 +47,44 @@ button {
   outline: none;
   cursor: pointer;
 }
+
+p {
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid black;
+}
+
+.createBoardBtn {
+  float: right;
+  margin-top: 15px;
+  margin-right: 100px;
+}
+
+.boardBox {
+  border-radius: 15px;
+  margin: 60px 400px 0px 400px;
+}
+
+.updateBtn {
+  margin-left: 965px;
+}
+
+.deleteBtn {
+  float: right;
+  margin-right: 8px;
+}
+
+.inviteBtn {
+  float: right;
+  margin-right: 10px;
+}
+
 /* 모달 스타일 */
 #modal {
   display: none;
@@ -71,7 +109,63 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  border-radius: 25px;
 }
+
+.boardColor {
+  width: 200px;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 12px 13px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  appearance: none;
+  text-align: left;
+}
+
+.boardColor:focus {
+  border: 1px solid #f1e0e4;
+  border-radius: 10px;
+  outline: 3px solid #f1e0e4;
+  border-radius: 10px;
+}
+
+/* .boardColorList {
+  width: 200px;
+  list-style: none;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  margin-top: 9px;
+}
+
+.colorList {
+  border: none;
+  background-color: #ffffff;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 7px 10px;
+  margin: 5px 7px;
+  box-sizing: border-box;
+}
+
+.colorList:focus {
+  background: #f8e4ff;
+  width: 184px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  text-align: left;
+} */
+
 .closeboardmodal,
 .closemakeboardmodal {
   text-align: right;

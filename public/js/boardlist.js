@@ -29,10 +29,9 @@ async function boardlist() {
         boardColor = 'purple';
       }
 
-      return `<div style = "border : 2px solid ${boardColor}" >
+      return `<div class="boardBox" style = "border : 2px solid ${boardColor}" >
       <p onclick= "moveToBoard(${board.boardId})">${board.boardName}</p>
-      <p>${board.boardContent}</p>
-      <button onclick = "openModal(${board.boardId})">수정</button>   
+      <button class= "updateBtn"onclick = "openModal(${board.boardId})">수정</button>   
       <div class = "boardmodal${board.boardId}" id = "modal">   
       <div class = "modal-content">
       <div class = "closeboardmodal">
@@ -67,8 +66,9 @@ async function boardlist() {
       </div>
       </div>
       </div>
-      <button onclick="deleteBoard(${board.boardId})">삭제</button>
-      <button onclick="moveToInvite(${board.boardId})">초대</button></div>`;
+      <button class= "deleteBtn" onclick="deleteBoard(${board.boardId})">삭제</button>
+      <button class= "inviteBtn" onclick="moveToInvite(${board.boardId})">초대</button></div>
+      `;
     })
     .join('');
 
@@ -172,6 +172,6 @@ async function invite() {
 }
 
 function moveToInvite(boardId) {
-  sessionStorage.setItem('inviteboardId', boardId);
+  sessionStorage.setItem('boardId', boardId);
   location.href = './invite.html';
 }
