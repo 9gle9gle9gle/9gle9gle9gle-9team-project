@@ -2,8 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
   invitelist();
 });
 
-const boardId = sessionStorage.getItem('inviteboardId');
 async function invite() {
+  const boardId = sessionStorage.getItem('inviteboardId');
   const email = document.querySelector('#email').value;
   const response = await fetch(`http://localhost:3000/api/accesses`, {
     method: 'POST',
@@ -20,6 +20,7 @@ async function invite() {
   return alert(result.message);
 }
 async function invitelist() {
+  const boardId = sessionStorage.getItem('inviteboardId');
   const response = await fetch(
     `http://localhost:3000/api/accesses?boardId=${boardId}`,
     {
@@ -33,6 +34,7 @@ async function invitelist() {
 
   const result = await response.json();
   console.log(result.message);
+  console.log(result.showAccess);
   const tempHtml = result.showAccess
     .map(access => {
       console.log(access);

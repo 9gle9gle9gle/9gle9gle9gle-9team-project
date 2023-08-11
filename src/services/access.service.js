@@ -67,7 +67,7 @@ class AccessService {
       loginuserId,
       boardId,
     );
-    if (!isMyBoard.boardId) {
+    if (!isMyBoard) {
       return {
         status: 400,
         message: '권한 조회에 실패했습니다. ',
