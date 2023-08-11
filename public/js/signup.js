@@ -14,7 +14,15 @@ async function signup() {
 
   const result = await response.json();
 
-  console.log(result);
-  console.log(result.message);
-  return alert(result.message);
+  if (response.ok) {
+    console.log(result);
+    console.log(result.message);
+    alert(result.message);
+
+    window.location.href = 'http://localhost:3000/login.html';
+  } else {
+    console.log(result);
+    console.log(result.message);
+    alert(result.message);
+  }
 }

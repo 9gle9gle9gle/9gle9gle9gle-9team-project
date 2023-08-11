@@ -111,7 +111,7 @@ class CardsService {
   }
 
   // 카드 순서 UP
-  static async cardUp(cardId, userId) {
+  static async cardUp(cardId) {
     try {
       await CardsRepository.cardUp(cardId);
 
@@ -123,12 +123,13 @@ class CardsService {
   }
 
   // 카드 순서 DOWN
-  static async cardDown(cardId, userId) {
+  static async cardDown(cardId) {
     try {
       await CardsRepository.cardDown(cardId);
 
       return { status: 200, message: '카드 순서 수정에 성공하였습니다.' };
     } catch (error) {
+      console.log(error);
       return { status: 400, message: '카드 순서 수정에 실패하였습니다.' };
     }
   }

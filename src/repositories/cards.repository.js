@@ -63,75 +63,48 @@ class CardsRepository {
 
   // 카드 순서 UP
   static async cardUp(cardId) {
-    const t = await sequelize.transaction();
-    try {
-      const card = await Cards.findByPk(cardId, { transaction: t });
-      const currentOrder = card.cardOrder;
-      const targetCard = await Cards.findAll(
-        {
-          where: { cardOrder: { [Op.gt]: currentOrder } },
-          order: [['cardOrder']],
-          limit: 1,
-        },
-        { transaction: t },
-      );
+    const card = await Cards.findByPk(cardId);
+    const currentOrder = card.cardOrder;
+    const targetCard = await Cards.findAll({
+      where: { cardOrder: { [Op.gt]: currentOrder } },
+      order: [['cardOrder']],
+      limit: 1,
+    });
 
-      const targetOrder = targetCard[0].cardOrder;
-      const targetId = targetCard[0].cardId;
+    const targetOrder = targetCard[0].cardOrder;
+    const targetId = targetCard[0].cardId;
 
-      await Cards.update(
-        { cardOrder: targetOrder },
-        { where: { cardId } },
-        { transaction: t },
-      );
-      await Cards.update(
-        { cardOrder: currentOrder },
-        { where: { cardId: targetId } },
-        { transaction: t },
-      );
-
-      await t.commit();
-    } catch (error) {
-      await t.rollback();
-    }
+    await Cards.update({ cardOrder: targetOrder }, { where: { cardId } });
+    const result = await Cards.update(
+      { cardOrder: currentOrder },
+      { where: { cardId: targetId } },
+    );
+    return result;
   }
 
   // 카드 순서 DOWN
   static async cardDown(cardId) {
-    const t = await sequelize.transaction();
-    try {
-      const card = await Cards.findByPk(cardId, { transaction: t });
-      const cardOrder = card.cardOrder;
-      const targetCard = await Cards.findAll(
-        {
-          where: {
-            cardOrder: { [Op.lt]: cardOrder },
-          },
-          order: [['cardOrder', 'DESC']],
-          limit: 1,
-        },
-        { transaction: t },
-      );
+    const card = await Cards.findByPk(cardId);
+    console.log(card);
+    const cardOrder = card.cardOrder;
+    const targetCard = await Cards.findAll({
+      where: {
+        cardOrder: { [Op.lt]: cardOrder },
+      },
+      order: [['cardOrder', 'DESC']],
+      limit: 1,
+    });
+    console.log(targetCard);
+    const targetOrder = targetCard[0].cardOrder;
+    const targetId = targetCard[0].cardId;
 
-      const targetOrder = targetCard[0].cardOrder;
-      const targetId = targetCard[0].cardId;
+    await Cards.update({ cardOrder }, { where: { cardId: targetId } });
 
-      await Cards.update(
-        { cardOrder },
-        { where: { cardId: targetId } },
-        { transaction: t },
-      );
-
-      await Cards.update(
-        { cardOrder: targetOrder },
-        { where: { cardId } },
-        { transaction: t },
-      );
-
-      await t.commit();
-    } catch (error) {
-      await t.rollback();
-    }
+    const result = await Cards.update(
+      { cardOrder: targetOrder },
+      { where: { cardId } },
+    );
+    return result;
   }
 }
 

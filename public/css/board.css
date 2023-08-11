@@ -49,9 +49,9 @@ button {
 
 #addTodoListDiv {
   margin-top: 30px;
-  flex-wrap: wrap;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 #addTodoListButton {

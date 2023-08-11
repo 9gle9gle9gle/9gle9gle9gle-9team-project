@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
   viewABoard();
 });
-
+const boardId = sessionStorage.getItem('boardId');
 async function viewABoard() {
-  const boardId = '1';
   const response = await fetch(
     `http://localhost:3000/api/boards/${boardId}/columns`,
     {
@@ -147,7 +146,7 @@ async function createColumn() {
         Authorization: sessionStorage.getItem('Authorization'),
       },
       body: JSON.stringify({
-        boardId: '1',
+        boardId,
         columnName,
       }),
     });
@@ -252,6 +251,27 @@ async function cardDown(cardId) {
         'Content-Type': 'application/json',
         Authorization: sessionStorage.getItem('Authorization'),
       },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
+  return;
+}
+
+async function deleteColumn(columnId) {
+  const response = await fetch(
+    `http://localhost:3000/api/columns/${columnId}`,
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+      body: JSON.stringify({
+        deletedAt: new Date(),
+        boardId,
+      }),
     },
   );
   const result = await response.json();
