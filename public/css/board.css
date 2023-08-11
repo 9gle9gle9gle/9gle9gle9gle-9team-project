@@ -1,6 +1,7 @@
 * {
   padding: 0;
   margin: 0;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 header {
@@ -191,17 +192,6 @@ button {
   margin-top: 0.5em;
 }
 
-.delete-comment-btn {
-  background-color: red;
-  right: 5px;
-  width: 55px;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 0.5em;
-  position: absolute;
-}
-
 .commentsInputContainer {
   position: absolute;
   bottom: 0;
@@ -232,4 +222,81 @@ button {
 .menuComments .comment {
   height: 25px;
   position: relative;
+}
+
+.innerCardButtons {
+  text-align: right;
+}
+
+.innerCard {
+  padding: 20px 20px 20px 20px;
+}
+
+.innerCard > h2 {
+  font-size: 40px;
+  padding-top: 30px;
+}
+
+.endAt {
+  padding-top: 30px;
+}
+
+.cardcontent {
+  padding-bottom: 40px;
+}
+
+.comments {
+  padding: 20px 20px 20px 20px;
+  height: 150px;
+  overflow: auto;
+  background-color: #fae3e4;
+  color: #2d2d2d;
+}
+
+.commentBtns {
+  text-align: right;
+}
+.commentBtn {
+  background-color: #ffa3a7;
+  border-radius: 5%;
+  height: 36px;
+  width: 60px;
+  font-size: 13px;
+}
+#commentbox {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 10px 10px 10px;
+}
+
+.commentcontent {
+  width: 360px;
+}
+.commentEditInput {
+  margin-right: 20px;
+  width: 395px;
+  height: 30px;
+  text-align: center;
+}
+.endDate {
+  padding: 5px 5px 5px 5px;
+  background-color: #ff5b63;
+  color: white;
+  font-weight: 600;
+}
+
+.leftalert {
+  padding: 5px 5px 5px 5px;
+  background-color: #fbbabd;
+  color: #2d2d2d;
+}
+
+.cardbox {
+  display: flex;
+  flex-direction: row;
+}
+
+.columnheader {
+  display: flex;
+  flex-direction: row;
 }

@@ -45,7 +45,8 @@ class BoardsRepository {
           FROM Cards
               LEFT JOIN Columns on Columns.columnId = Cards.columnId
               LEFT JOIN Boards on Boards.boardId = Columns.boardId
-          WHERE Columns.columnId = :columnId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL`,
+          WHERE Columns.columnId = :columnId AND Cards.deletedAt IS NULL AND Boards.deletedAt IS NULL AND Columns.deletedAt IS NULL
+          ORDER BY Cards.cardOrder DESC`,
       { replacements: { columnId }, type: QueryTypes.SELECT },
     );
     return showCards;

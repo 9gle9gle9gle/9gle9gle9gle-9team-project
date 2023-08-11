@@ -106,8 +106,15 @@ const columnsService = {
     }
   },
 
-  async moveColumnDown(columnId) {
+  async moveColumnDown(userId, boardId, columnId) {
     try {
+      if (!columnId) {
+        throw new Error('잘못된 접근입니다.');
+      }
+      const getUserId = await ColumnsRepository.getUserId(userId, boardId);
+      if (!getUserId) {
+        throw new Error('잘못된 접근입니다=>.'); // 수정
+      }
       const updatedColumn = await ColumnsRepository.moveColumnDown(columnId);
       if (!updatedColumn) {
         throw new Error('컬럼을 찾을 수 없습니다.');

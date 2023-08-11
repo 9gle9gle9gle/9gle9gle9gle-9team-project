@@ -94,7 +94,12 @@ const ColumnsController = {
     try {
       const { columnId } = req.params;
       const userId = res.locals.user;
-      const updatedColumn = await ColumnsService.moveColumnDown(columnId);
+      const { boardId } = req.body;
+      const updatedColumn = await ColumnsService.moveColumnDown(
+        userId,
+        boardId,
+        columnId,
+      );
 
       res.status(200).json({
         message: '컬럼 순서가 성공적으로 변경되었습니다.',

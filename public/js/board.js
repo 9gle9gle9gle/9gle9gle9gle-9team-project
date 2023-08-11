@@ -20,12 +20,14 @@ async function viewABoard() {
     .map(column => {
       showCards(boardId, column.columnId);
       return `<div class="cardBox">
-      <div class="title1"><p>${column.columnName}</p>
-      <button class="deleteColumnButton" onclick="deleteColumn(${column.columnId})">삭제</button></div>
+      <div class = columnheader>
+      <button onclick="columnDown(${column.columnId},${boardId})">◀</button>
+      <p>${column.columnName}</p>
+      <button onclick="columnUp(${column.columnId},${boardId})">▶</button>
+      </div>
+      <button class="deleteColumnButton" onclick="deleteColumn(${column.columnId})">삭제</button>
       <div class="cardone">
         <div class="cardCreate">
-          <input type="hidden" value="1" id="boardId">
-          <input type="hidden" value="1" id="columnId">
           <div class="card">
             <input type="text" id="cardName${column.columnId}" />
             <button type="button" onclick="openModal(${boardId}, ${column.columnId})">생성</button>
@@ -45,7 +47,7 @@ async function viewABoard() {
                 
                 <textarea type="text" class ="cardContent" id="cardContent${column.columnId}" placeholder="내용을 입력해주세요"/></textarea>
                 <button type="button" class = "createBTN" onclick="makeCard(${boardId}, ${column.columnId})">카드 생성</button>
-              </div>
+                </div>
             </div>
           </div>
         </div>
@@ -59,7 +61,7 @@ async function viewABoard() {
   return;
 }
 
-async function makeCard(boardId, columnId) {
+async function makeCard(boardId, columnId, cardId) {
   const cardName = document.querySelector(`#cardName${columnId}`).value;
   const cardContent = document.querySelector(`#cardContent${columnId}`).value;
   const cardColor = document.querySelector(`#cardColor${columnId}`).value;
@@ -82,7 +84,6 @@ async function makeCard(boardId, columnId) {
 
   const result = await response.json();
   console.log(result.message);
-  location.reload();
   return alert(result.message);
 }
 
@@ -105,18 +106,20 @@ async function showCards(boardId, columnId) {
       if (item.cardColor == 0) {
         cardColor = 'tomato';
       } else if (item.cardColor == 1) {
-        cardColor = 'goldenrod';
+        cardColor = 'orange';
       } else if (item.cardColor == 2) {
-        cardColor = 'lemonchiffon';
+        cardColor = 'yellow';
       } else if (item.cardColor == 3) {
-        cardColor = 'green';
+        cardColor = 'mediumseagreen';
       } else if (item.cardColor == 4) {
-        cardColor = 'lightcyan';
+        cardColor = 'skyblue';
       } else if (item.cardColor == 5) {
-        cardColor = 'thistle';
+        cardColor = 'mediumpurple';
       }
-      return `<div style="background: ${cardColor}" onclick="openCardModal('${item.cardName}', '${item.cardContent}', '${item.endAt}')">
-              <h2>${item.cardName}</h2>
+      return `<div class = "cardbox" style="background: ${cardColor}">
+              <button onclick="cardUp(${item.cardId})">▲</button>
+              <h2 onclick="openCardModal('${item.cardId}','${item.boardId}')">${item.cardName}</h2>
+              <button onclick="cardDown(${item.cardId})">▼</button>
             </div>`;
     })
     .join('');
@@ -162,42 +165,11 @@ function openModal(boardId, columnId) {
   createButton.setAttribute('onclick', `makeCard(${boardId}, ${columnId})`);
 }
 
-function openCardModal(cardName, cardContent, endAt) {
+function openCardModal(cardId, boardId) {
   const modal = document.querySelector('.cardModal');
-  const modalContent = modal.querySelector('.cardmodal-content');
-
-  modalContent.innerHTML = `
-    <span class="close" onclick="closeModal()">&times;</span>
-    <h2>${cardName}</h2>
-    <p>마감 날짜: ${endAt}</p>
-    <div class = "cardcontent"><p>${cardContent}</p></div>
-    <div class="commentSection">
-      <div class="comments">
-        <!-- 댓글이 여기에 동적으로 추가될 것입니다 -->
-      </div>
-      <textarea id="commentTextarea" placeholder="댓글을 입력하세요"></textarea>
-      <button onclick="addComment()">입력</button>
-    </div>
-  `;
-
+  showACard(cardId);
+  showComments(cardId, boardId);
   modal.style.display = 'block';
-}
-
-// 댓글 기능
-
-function addComment() {
-  const commentTextarea = document.getElementById('commentTextarea');
-  const comment = commentTextarea.value;
-
-  if (comment.trim() !== '') {
-    const commentsSection = document.querySelector('.comments');
-    const commentElement = document.createElement('div');
-    commentElement.classList.add('comment');
-    commentElement.textContent = comment;
-    commentsSection.appendChild(commentElement);
-
-    commentTextarea.value = ''; // 댓글 입력창 비우기
-  }
 }
 
 // 모달 창 닫기
@@ -208,4 +180,75 @@ function closeModal1() {
 function closeModal() {
   const modal = document.querySelector('.cardModal');
   modal.style.display = 'none';
+}
+
+async function columnUp(columnId, boardId) {
+  const response = await fetch(
+    `http://localhost:3000/api/columns/${columnId}/up`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+      body: JSON.stringify({
+        boardId,
+      }),
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
+  return;
+}
+
+async function columnDown(columnId, boardId) {
+  const response = await fetch(
+    `http://localhost:3000/api/columns/${columnId}/down`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+      body: JSON.stringify({
+        boardId,
+      }),
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
+  return;
+}
+
+async function cardUp(cardId) {
+  const response = await fetch(`http://localhost:3000/api/cards/${cardId}/up`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('Authorization'),
+    },
+  });
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
+  return;
+}
+
+async function cardDown(cardId) {
+  const response = await fetch(
+    `http://localhost:3000/api/cards/${cardId}/down`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
+  return;
 }

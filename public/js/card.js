@@ -1,5 +1,4 @@
-async function showACard() {
-  const cardId = 3;
+async function showACard(cardId) {
   const response = await fetch(`http://localhost:3000/api/cards/${cardId}`, {
     method: 'GET',
     headers: {
@@ -36,24 +35,31 @@ async function showACard() {
   const cardName = result.message.cardName;
   const cardContent = result.message.cardContent;
   const boardId = result.message.boardId;
-  console.log(typeof cardId);
-  const tempHtml = `<div style = "border : 2px solid ${cardColor}">
-                        <div id = "cardcontainer">
-                            <h2>${result.message.cardName}</h2>
-                            <div>${result.message.cardContent}</div>
-                            <div>${endDate.toString().substring(0, 10)}</div>
-                            <div>${leftalert}</div>
-                        </div>
-                        <button onclick = 'loadCardEditor(${cardId},"${cardName}","${cardContent}",${realcardColor})'>수정</button>
-                        <button onclick = "deleteCard(${cardId})">삭제</button>
-                        <div id = "commentCreator">
-                            <input type = "textarea" id = "commentcontent${cardId}"> 
-                            <button onclick="makeComment(${cardId},${boardId})">작성</button>
-                        </div>
-                        <div id = "commentlist"></div>
-                    </div>`;
+  const tempHtml = `
+  <div class = "innerCard">
+  <span class="close" onclick="closeModal()">&times;</span>
+    <h2 style = "color: ${cardColor}">${result.message.cardName}</h2>
+    <div class = "innerCardButtons">
+    <button style = "background-color: ${cardColor}" onclick = 'loadCardEditor(${cardId},"${cardName}","${cardContent}",${realcardColor})'>수정</button>
+    <button style = "background-color: ${cardColor}" onclick = "deleteCard(${cardId})">삭제</button>
+    </div>
+    <div class = "cardcontent"><p>${result.message.cardContent}</p></div>
+    <div class = "endAt">
+      <div class = "endDate">마감 날짜: ${endDate
+        .toString()
+        .substring(0, 10)}</div>
+      <div class = "leftalert">${leftalert}</div>
+    </div>
+   
+      <div class="comments">
+      </div>
+    <div class="commentSection">
+      <textarea class = "commentcontent${cardId}" id="commentTextarea" placeholder="댓글을 입력하세요"></textarea>
+      <button onclick="makeComment(${cardId},${boardId})">작성</button>
+    </div>
+    </div>`;
 
-  const card = document.querySelector('#card');
+  const card = document.querySelector('.cardmodal-content');
   card.innerHTML = tempHtml;
 }
 
@@ -72,23 +78,34 @@ async function loadCardEditor(cardId, cardName, cardContent, cardColor) {
   } else if (cardColor == 5) {
     cardColor = 'purple';
   }
-  const tempHtml = `<div style = "border : 2px solid ${cardColor}">
-                        <input type = "text" id ="editcardName${cardId}" value = "${cardName}"></input>
-                        <input type = "textarea" id ="editcardContent${cardId}" value="${cardContent}"></input>
-                        <input type = "date" id ="editendAt${cardId}"></input>
-                        <select id = "editcardColor${cardId}">
-                            <option selected>-- 선택해 주세요 --</option>
-                            <option value="0">red</option>
-                            <option value="1">orange</option>
-                            <option value="2">yellow</option>
-                            <option value="3">green</option>
-                            <option value="4">blue</option>
-                            <option value="5">purple</option>
-                        </select>
-                        <button onclick="editCard(${cardId})">수정 완료</button>
-                    </div>`;
+  const tempHtml = `
+  <label>카드 제목</label></br>
+  <input type = "text" id ="editcardName${cardId}" value = "${cardName}"></input>
+  </br>
+  </br>
+  <label>카드 내용</label></br>
+  <input type = "textarea" id ="editcardContent${cardId}" value="${cardContent}"></input>
+  </br>
+  </br>
+  <label>카드 색상</label></br>
+    <select id = "editcardColor${cardId}">
+      <option selected>-- 선택해 주세요 --</option>
+      <option value="0">red</option>
+      <option value="1">orange</option>
+      <option value="2">yellow</option>
+      <option value="3">green</option>
+      <option value="4">blue</option>
+      <option value="5">purple</option>
+    </select>
+    </br>
+    </br>
+    <label>마감 날짜</label></br>
+    <input type = "date" id ="editendAt${cardId}"></input>
+   </br>
+   </br>
+    <button class = "btn-save" onclick="editCard(${cardId})">수정 완료</button>`;
 
-  const cardcontainer = document.querySelector('#cardcontainer');
+  const cardcontainer = document.querySelector('.innerCard');
   cardcontainer.innerHTML = tempHtml;
 }
 
@@ -127,9 +144,7 @@ async function deleteCard(cardId) {
   return alert(result.message);
 }
 
-async function showComments() {
-  const cardId = 3;
-  const boardId = 1;
+async function showComments(cardId, boardId) {
   const response = await fetch(
     `http://localhost:3000/api/boards/${boardId}/cards/${cardId}/comments`,
     {
@@ -142,34 +157,36 @@ async function showComments() {
   );
 
   const result = await response.json();
-  console.log(result);
   const tempHtml = result.message
     .map(comment => {
-      return `<div>
-                  <div>${comment.content}</div>   
-                  <button onclick="loadCommentEditor('${comment.content}',${comment.commentId},${cardId})">수정</button>
-                  <button onclick="deleteComment(${comment.commentId},${cardId})">삭제</button>
+      return `<div class = "comment${comment.commentId}" id="commentbox">
+                <div class = "commentcontent">
+                  ${comment.content} 
+                </div>
+                  <div class = "commentBtns">
+                  <button class = "commentBtn" onclick=" loadCommentEditor('${comment.content}',${comment.commentId},${cardId},${boardId})">수정</button>
+                  <button class = "commentBtn" onclick=" deleteComment(${comment.commentId},${cardId},${boardId})">삭제</button>
+                  </div>
               </div>`;
     })
     .join('');
 
-  const commentlist = document.querySelector('#commentlist');
+  const commentlist = document.querySelector('.comments');
   commentlist.innerHTML = tempHtml;
 }
 
-async function loadCommentEditor(content, commentId, cardId) {
+async function loadCommentEditor(content, commentId, cardId, boardId) {
   const tempHtml = `<div>
-    <input type = "textarea" id = "editcomment${commentId}" value = "${content}"></input>   
-    <button onclick="editComment(${commentId},${cardId})">수정 완료</button>
+    <input type = "textarea" class = "commentEditInput" id = "editcomment${commentId}" value = "${content}"></input>   
+    <button class = "commentBtn" onclick="editComment(${commentId},${cardId},${boardId})">완료</button>
   </div>`;
 
-  const commentCreator = document.querySelector('#commentCreator');
-  commentCreator.innerHTML = tempHtml;
+  const commentcontent = document.querySelector(`.comment${commentId}`);
+  commentcontent.innerHTML = tempHtml;
 }
 
 async function makeComment(cardId, boardId) {
-  console.log('함수 진입');
-  const content = document.querySelector(`#commentcontent${cardId}`).value;
+  const content = document.querySelector(`.commentcontent${cardId}`).value;
   const response = await fetch(
     `http://localhost:3000/api/cards/${cardId}/comments`,
     {
@@ -186,11 +203,10 @@ async function makeComment(cardId, boardId) {
   );
   const result = await response.json();
   console.log(result.message);
-  location.reload();
-  return alert(result.message);
+  showComments(cardId, boardId);
 }
 
-async function editComment(commentId, cardId) {
+async function editComment(commentId, cardId, boardId) {
   const content = document.querySelector(`#editcomment${commentId}`).value;
 
   const response = await fetch(
@@ -206,11 +222,11 @@ async function editComment(commentId, cardId) {
   );
   const result = await response.json();
   console.log(result.message);
-  location.reload();
+  showComments(cardId, boardId);
   return alert(result.message);
 }
 
-async function deleteComment(commentId, cardId) {
+async function deleteComment(commentId, cardId, boardId) {
   const response = await fetch(
     `http://localhost:3000/api/cards/${cardId}/comments/${commentId}`,
     {
@@ -224,6 +240,6 @@ async function deleteComment(commentId, cardId) {
   );
   const result = await response.json();
   console.log(result.message);
-  location.reload();
+  showComments(cardId, boardId);
   return alert(result.message);
 }

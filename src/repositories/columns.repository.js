@@ -14,6 +14,7 @@ class ColumnsRepository {
   async getColumns(boardId) {
     return Columns.findAll({
       where: { boardId, deletedAt: null },
+      order: [['columnOrder']],
     });
   }
 
