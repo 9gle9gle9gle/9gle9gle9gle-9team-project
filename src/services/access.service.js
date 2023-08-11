@@ -21,16 +21,16 @@ class AccessService {
       return messages.status400();
     }
     const targetUser = await this.accessRepository.searchEmail(email);
-
-    const userId = targetUser.userId;
+    if (!targetUser) {
+      return messages.status400();
+    }
+    const targetUserId = targetUser.userId;
     // 이미 초대한 회원 확인
-    console.log(userId);
     const isAccessable = await this.accessRepository.isAccessable(
-      userId,
+      targetUserId,
       boardId,
     );
-    console.log(isAccessable);
-    if (isAccessable.userId) {
+    if (isAccessable) {
       return {
         status: 400,
         message: '이미 초대한 회원입니다.',
@@ -40,7 +40,7 @@ class AccessService {
     try {
       // 초대
       const giveAccess = await this.accessRepository.giveAccess(
-        userId,
+        targetUserId,
         boardId,
       );
       if (!giveAccess.userId) return messages.status400();
