@@ -46,4 +46,36 @@ body {
 button {
   outline: none;
   cursor: pointer;
+  width: 100px;
+  height: 50px;
+  font-size: 20px;
+}
+
+input {
+  width: 500px;
+  height: 50px;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+.invitebox {
+  display: flex;
+  flex-direction: row;
+}
+.innerinvite {
+  margin-top: 30px;
+  width: 260px;
+  height: 50px;
+  font-size: 20px;
+}
+.upperinvite {
+  width: 260px;
+  height: 50px;
+  font-size: 20px;
+  font-weight: 900;
+  border-bottom: dotted 3px rgb(251, 153, 169);
+}
+
+.container {
+  margin-left: 400px;
 }

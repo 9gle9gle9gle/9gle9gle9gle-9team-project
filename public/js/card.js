@@ -27,7 +27,7 @@ async function showACard(cardId) {
   const leftDate = Math.floor((endDate.getTime() - today.getTime()) / 86400000);
   let leftalert;
   if (leftDate > 0) {
-    leftalert = `마감일까지 ${leftDate}일 남았습니다.`;
+    leftalert = `/ 마감(${leftDate})일 전`;
   } else {
     leftalert = '마감일이 지났습니다.';
   }
@@ -38,17 +38,15 @@ async function showACard(cardId) {
   const tempHtml = `
   <div class = "innerCard">
   <span class="close" onclick="closeModal()">&times;</span>
-    <h2 style = "color: ${cardColor}">${result.message.cardName}</h2>
+   <div class = "innercardtext"> <h2>${result.message.cardName}</h2></div>
     <div class = "innerCardButtons">
-    <button style = "background-color: ${cardColor}" onclick = 'loadCardEditor(${cardId},"${cardName}","${cardContent}",${realcardColor})'>수정</button>
-    <button style = "background-color: ${cardColor}" onclick = "deleteCard(${cardId})">삭제</button>
+    <button onclick = 'loadCardEditor(${cardId},"${cardName}","${cardContent}",${realcardColor})'>수정</button>
+    <button onclick = "deleteCard(${cardId})">삭제</button>
     </div>
-    <div class = "cardcontent"><p>${result.message.cardContent}</p></div>
     <div class = "endAt">
-      <div class = "endDate">마감 날짜: ${endDate
-        .toString()
-        .substring(0, 10)}</div>
-      <div class = "leftalert">${leftalert}</div>
+      <div class = "endDate">마감 일 ${endDate.toString().substring(0, 10)}
+        <div class = "leftalert">${leftalert}</div></div>
+    <div class = "cardcontent"><p>${result.message.cardContent}</p></div>
     </div>
    
       <div class="comments">
@@ -97,12 +95,8 @@ async function loadCardEditor(cardId, cardName, cardContent, cardColor) {
       <option value="4">blue</option>
       <option value="5">purple</option>
     </select>
-    </br>
-    </br>
-    <label>마감 날짜</label></br>
+    <label>마감 날짜</label>
     <input type = "date" id ="editendAt${cardId}"></input>
-   </br>
-   </br>
     <button class = "btn-save" onclick="editCard(${cardId})">수정 완료</button>`;
 
   const cardcontainer = document.querySelector('.innerCard');

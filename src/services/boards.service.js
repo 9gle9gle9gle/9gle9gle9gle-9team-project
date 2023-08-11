@@ -18,7 +18,7 @@ class BoardsService {
         boardColor,
         boardContent,
       );
-      if (makeBoard == 1) {
+      if (makeBoard) {
         return messages.status200();
       } else return messages.status400();
     } catch (err) {

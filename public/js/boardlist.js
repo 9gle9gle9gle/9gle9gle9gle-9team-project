@@ -31,6 +31,7 @@ async function boardlist() {
 
       return `<div style = "border : 2px solid ${boardColor}" >
       <p onclick= "moveToBoard(${board.boardId})">${board.boardName}</p>
+      <p>${board.boardContent}</p>
       <button onclick = "openModal(${board.boardId})">수정</button>   
       <div class = "boardmodal${board.boardId}" id = "modal">   
       <div class = "modal-content">
@@ -171,6 +172,6 @@ async function invite() {
 }
 
 function moveToInvite(boardId) {
-  sessionStorage.setItem('boardId', boardId);
+  sessionStorage.setItem('inviteboardId', boardId);
   location.href = './invite.html';
 }

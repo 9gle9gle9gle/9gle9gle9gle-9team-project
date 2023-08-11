@@ -20,16 +20,20 @@ async function viewABoard() {
       showCards(boardId, column.columnId);
       return `<div class="cardBox">
       <div class = columnheader>
-      <button onclick="columnDown(${column.columnId},${boardId})">◀</button>
       <p>${column.columnName}</p>
+      <button class="deleteColumnButton" onclick="deleteColumn(${column.columnId})">&times;</button>
+      <div class ="columnheaderBtn">
+      <button onclick="columnDown(${column.columnId},${boardId})">◀</button>
       <button onclick="columnUp(${column.columnId},${boardId})">▶</button>
       </div>
-      <button class="deleteColumnButton" onclick="deleteColumn(${column.columnId})">삭제</button>
+      </div>
+      
       <div class="cardone">
         <div class="cardCreate">
           <div class="card">
+          <div class = "inputcard">
             <input type="text" id="cardName${column.columnId}" />
-            <button type="button" onclick="openModal(${boardId}, ${column.columnId})">생성</button>
+            <button type="button" onclick="openModal(${boardId}, ${column.columnId})">생성</button></div>
             <div id="myModal${column.columnId}" class="modal">
               <div class="modal-content">
                 <span class="close" onclick="closeModal1(${column.columnId})">&times;</span>
@@ -117,9 +121,11 @@ async function showCards(boardId, columnId) {
         cardColor = 'mediumpurple';
       }
       return `<div class = "cardbox" style="background: ${cardColor}">
-              <button onclick="cardUp(${item.cardId})">▲</button>
               <h2 onclick="openCardModal('${item.cardId}','${item.boardId}')">${item.cardName}</h2>
+             <div class = "cardboxBtn"> 
+              <button onclick="cardUp(${item.cardId})">▲</button>
               <button onclick="cardDown(${item.cardId})">▼</button>
+              </div>
             </div>`;
     })
     .join('');
