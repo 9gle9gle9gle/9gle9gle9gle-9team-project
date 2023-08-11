@@ -17,20 +17,20 @@ class AccessService {
       loginuserId,
       boardId,
     );
-    if (!isMyBoard.boardId) {
+    if (!isMyBoard) {
       return messages.status400();
     }
-
     const targetUser = await this.accessRepository.searchEmail(email);
 
     const userId = targetUser.userId;
-
     // 이미 초대한 회원 확인
+    console.log(userId);
     const isAccessable = await this.accessRepository.isAccessable(
       userId,
       boardId,
     );
-    if (isAccessable) {
+    console.log(isAccessable);
+    if (isAccessable.userId) {
       return {
         status: 400,
         message: '이미 초대한 회원입니다.',
