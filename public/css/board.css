@@ -25,7 +25,7 @@ header h1 {
   gap: 1rem;
 }
 
-button {
+header button {
   background-color: transparent;
   border: 2px solid white;
   color: white;
@@ -49,6 +49,9 @@ button {
 
 #addTodoListDiv {
   margin-top: 30px;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
 }
 
 #addTodoListButton {
@@ -112,7 +115,6 @@ button {
 }
 
 .card button:hover {
-  border-radius: 4px;
   cursor: pointer;
 }
 .menuContainer {
@@ -226,31 +228,45 @@ button {
 
 .innerCardButtons {
   text-align: right;
+  margin-top: 10px;
+  width: 80px;
+  margin-left: 500px;
 }
 
 .innerCard {
-  padding: 20px 20px 20px 20px;
+  padding: 20px auto;
 }
 
-.innerCard > h2 {
-  font-size: 40px;
-  padding-top: 30px;
+.innercardtext h2 {
+  padding-top: 10px;
+  width: 95%;
+  border-bottom: 1px solid #000;
 }
 
 .endAt {
-  padding-top: 30px;
+  position: absolute;
+  width: 70%;
+  top: 80px;
 }
 
 .cardcontent {
-  padding-bottom: 40px;
+  width: 134%;
+  margin-top: 30px;
+  height: 300px;
+  min-height: min-content;
+  overflow-y: auto;
+  border-bottom: 1px solid #000;
 }
 
 .comments {
-  padding: 20px 20px 20px 20px;
-  height: 150px;
+  height: 180px;
   overflow: auto;
-  background-color: #fae3e4;
+
   color: #2d2d2d;
+  margin-top: 330px;
+  min-height: min-content;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .commentBtns {
@@ -279,24 +295,91 @@ button {
   text-align: center;
 }
 .endDate {
-  padding: 5px 5px 5px 5px;
-  background-color: #ff5b63;
-  color: white;
   font-weight: 600;
+  display: flex;
 }
 
 .leftalert {
-  padding: 5px 5px 5px 5px;
-  background-color: #fbbabd;
   color: #2d2d2d;
+  margin-left: 30px;
 }
-
+/* 카드부분 */
 .cardbox {
   display: flex;
   flex-direction: row;
+  width: 260px;
+  position: relative;
 }
 
-.columnheader {
-  display: flex;
-  flex-direction: row;
+.cardbox h2 {
+  width: 100%;
+  height: 80px;
+  text-align: center;
+  min-height: 50px;
+  overflow-y: auto;
 }
+
+.cardboxBtn {
+  text-align: center;
+  width: 30px;
+}
+
+.cardboxBtn button {
+  border: 1px solid #000;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background: none;
+  width: 30px;
+  height: 30px;
+}
+
+.cardboxBtn button:hover {
+  background-color: #f1e0e4;
+}
+/* 카드부분 */
+
+/* 컬럼부분 */
+
+.columnheader p {
+  color: #fff;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bolder;
+  letter-spacing: -0.2rem;
+  position: relative;
+}
+
+.columnheaderBtn button {
+  color: #000;
+  border: none;
+  width: 20px;
+  background: none;
+}
+
+.columnheaderBtn button:hover {
+  color: #fff;
+}
+
+.columnheaderBtn {
+  text-align: center;
+}
+
+.deleteColumnButton {
+  background: none;
+  width: 30px;
+  position: relative;
+  left: 220px;
+  bottom: 32px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.deleteColumnButton:hover {
+  color: red;
+  background: none;
+}
+/* 컬럼부분 */
