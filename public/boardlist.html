@@ -16,13 +16,13 @@
       <button id="signupButton">회원가입</button>
     </div>
   </header>
-  <button class="createBoardBtn" onclick="openModalmakeBoard()">보드 생성</button>
+  <button onclick="openModalmakeBoard()">보드 생성</button>
   <div class="makeboardmodal" id="modal">
     <div class="modal-content">
       <div class="closemakeboardmodal">
         <button class="close" onclick="closeModalmakeBoard()">X</button>
       </div>
-      <div class="modalBox">
+      <div>
         <br />
         <label>보드 제목</label>
         <br />
@@ -31,16 +31,14 @@
         <br />
         <label>보드 색상</label>
         <br />
-        <select class="boardColor" id="boardColor">
-          <ul class="boardColorList">
-            <option class="colorList"> 카드 색상 </option>
-            <option class="colorList" value="0">red</option>
-            <option class="colorList" value="1">orange</option>
-            <option class="colorList" value="2">yellow</option>
-            <option class="colorList" value="3">green</option>
-            <option class="colorList" value="4">blue</option>
-            <option class="colorList" value="5">purple</option>
-          </ul>
+        <select id="boardColor">
+          <option selected>-- 카드 색상 --</option>
+          <option value="0">red</option>
+          <option value="1">orange</option>
+          <option value="2">yellow</option>
+          <option value="3">green</option>
+          <option value="4">blue</option>
+          <option value="5">purple</option>
         </select>
         <br />
         <br />
