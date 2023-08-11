@@ -4,8 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <style>
+      /* 모달 스타일 */
+      #modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+        box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+        color: #000;
+        height: 80%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .closeboardmodal,
+      .closemakeboardmodal {
+        text-align: right;
+      }
+    </style>
   </head>
   <body>
+    <button onclick="openModalmakeBoard()">보드 생성</button>
+    <div class="makeboardmodal" id="modal">
+      <div class="modal-content">
+        <div class="closemakeboardmodal">
+          <button class="close" onclick="closeModalmakeBoard()">X</button>
+        </div>
+        <div>
+          <br />
+          <label>보드 제목</label>
+          <br />
+          <input id="boardName" />
+          <br />
+          <br />
+          <label>보드 색상</label>
+          <br />
+          <select id="boardColor">
+            <option selected>-- 카드 색상 --</option>
+            <option value="0">red</option>
+            <option value="1">orange</option>
+            <option value="2">yellow</option>
+            <option value="3">green</option>
+            <option value="4">blue</option>
+            <option value="5">purple</option>
+          </select>
+          <br />
+          <br />
+          <label>보드 내용</label>
+          <br />
+          <input id="boardContent" />
+          <br /><br />
+          <button onclick="createBoard()">보드 생성</button>
+        </div>
+      </div>
+    </div>
+
     <div id="boardlist"></div>
     <script src="./js/boardlist.js"></script>
   </body>
