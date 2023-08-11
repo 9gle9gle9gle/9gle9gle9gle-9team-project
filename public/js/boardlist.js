@@ -66,7 +66,8 @@ async function boardlist() {
       </div>
       </div>
       </div>
-      <button onclick="deleteBoard(${board.boardId})">삭제</button></div>`;
+      <button onclick="deleteBoard(${board.boardId})">삭제</button>
+      <button onclick="moveToInvite(${board.boardId})">초대</button></div>`;
     })
     .join('');
 
@@ -151,4 +152,25 @@ function openModalmakeBoard() {
 function closeModalmakeBoard() {
   const modalcontent = document.querySelector(`.makeboardmodal`);
   modalcontent.style.display = 'none';
+}
+
+async function invite() {
+  const response = await fetch(`http://localhost:3000/api/accesses`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: sessionStorage.getItem('Authorization'),
+    },
+    body: JSON.stringify({ boardName, boardColor, boardContent }),
+  });
+
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
+  return alert(result.message);
+}
+
+function moveToInvite(boardId) {
+  sessionStorage.setItem('boardId', boardId);
+  location.href = './invite.html';
 }
