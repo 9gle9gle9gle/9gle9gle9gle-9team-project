@@ -16,6 +16,12 @@
   <body>
     <header>
       <h1 onclick="location.href=`index.html`">9글9글9글</h1>
+      <div class="header-buttons">
+        <button id="profileButton" onclick="location.href=`profile.html`">
+          프로필
+        </button>
+        <button id="logoutButton" onclick="logout()">로그아웃</button>
+      </div>
     </header>
     <div class="createColumns">
       <input type="text" id="createColumn" /><button onclick="createColumn()">
@@ -28,6 +34,8 @@
     </div>
     <script src="./js/board.js"></script>
     <script src="./js/card.js"></script>
+    <script src="./js/user.js"></script>
+    <script src="./js/profile.js"></script>
   </body>
 </html>
 

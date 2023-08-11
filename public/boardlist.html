@@ -16,6 +16,12 @@
   <body>
     <header>
       <h1 onclick="location.href=`index.html`">9글9글9글</h1>
+      <div class="header-buttons">
+        <button id="profileButton" onclick="location.href=`profile.html`">
+          프로필
+        </button>
+        <button id="logoutButton" onclick="logout()">로그아웃</button>
+      </div>
     </header>
     <button class="createBoardBtn" onclick="openModalmakeBoard()">
       보드 생성
@@ -52,5 +58,6 @@
 
     <div id="boardlist"></div>
     <script src="./js/boardlist.js"></script>
+    <script src="./js/user.js"></script>
   </body>
 </html>

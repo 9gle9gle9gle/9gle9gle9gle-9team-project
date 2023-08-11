@@ -10,32 +10,23 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="./css/invite.css" />
+    <link rel="stylesheet" href="./css/board.css" />
     <title>Document</title>
   </head>
   <body>
     <header>
       <h1 onclick="location.href=`index.html`">9글9글9글</h1>
       <div class="header-buttons">
-        <button id="profileButton" onclick="location.href=`profile.html`">
-          프로필
-        </button>
+        <button id="profileButton" onclick="editprofile()">정보수정</button>
         <button id="logoutButton" onclick="logout()">로그아웃</button>
+        <button id="logoutButton" onclick="deleteUser()">회원탈퇴</button>
       </div>
     </header>
-    <div class="container">
-      <div>
-        <input type="text" id="email" placeholder="bbobbi@9gle.com" />
-        <button onclick="invite()">초대</button>
-      </div>
-      <div class="invitebox">
-        <div class="upperinvite">닉네임</div>
-        <div class="upperinvite">email</div>
-      </div>
-      <div class="invitelist"></div>
-    </div>
-    <script src="./js/invite.js"></script>
-    <script src="./js/profile.js"></script>
+    <main>
+      <div class="view profile"></div>
+    </main>
+
     <script src="./js/user.js"></script>
+    <script src="./js/profile.js"></script>
   </body>
 </html>
