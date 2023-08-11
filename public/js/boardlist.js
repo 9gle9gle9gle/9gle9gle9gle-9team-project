@@ -171,6 +171,6 @@ async function invite() {
 }
 
 function moveToInvite(boardId) {
-  sessionStorage.setItem('boardId', boardId);
+  sessionStorage.setItem('inviteboardId', boardId);
   location.href = './invite.html';
 }
