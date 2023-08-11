@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function viewABoard() {
-  const boardId = 1;
+  const boardId = sessionStorage.getItem('boardId');
   const response = await fetch(
     `http://localhost:3000/api/boards/${boardId}/columns`,
     {
@@ -31,9 +31,9 @@ async function viewABoard() {
           <div class="card">
             <input type="text" id="cardName${column.columnId}" />
             <button type="button" onclick="openModal(${boardId}, ${column.columnId})">생성</button>
-            <div id="myModal" class="modal">
+            <div id="myModal${column.columnId}" class="modal">
               <div class="modal-content">
-                <span class="close" onclick="closeModal1()">&times;</span>
+                <span class="close" onclick="closeModal1(${column.columnId})">&times;</span>
                 <select id="cardColor${column.columnId}">
                   <option selected>-- 카드 색상 --</option>
                   <option value="0">red</option>
@@ -61,7 +61,7 @@ async function viewABoard() {
   return;
 }
 
-async function makeCard(boardId, columnId, cardId) {
+async function makeCard(boardId, columnId) {
   const cardName = document.querySelector(`#cardName${columnId}`).value;
   const cardContent = document.querySelector(`#cardContent${columnId}`).value;
   const cardColor = document.querySelector(`#cardColor${columnId}`).value;
@@ -84,6 +84,7 @@ async function makeCard(boardId, columnId, cardId) {
 
   const result = await response.json();
   console.log(result.message);
+  location.reload();
   return alert(result.message);
 }
 
@@ -157,7 +158,7 @@ async function createColumn() {
 /////////////////////////////////////
 // 모달 창 열기
 function openModal(boardId, columnId) {
-  const modal = document.getElementById('myModal');
+  const modal = document.getElementById(`myModal${columnId}`);
   modal.style.display = 'block';
 
   // 생성 버튼에 boardId와 columnId 전달
@@ -173,8 +174,8 @@ function openCardModal(cardId, boardId) {
 }
 
 // 모달 창 닫기
-function closeModal1() {
-  const modal = document.getElementById('myModal');
+function closeModal1(columnId) {
+  const modal = document.getElementById(`myModal${columnId}`);
   modal.style.display = 'none';
 }
 function closeModal() {
