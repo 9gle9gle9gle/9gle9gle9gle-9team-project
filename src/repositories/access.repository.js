@@ -35,7 +35,13 @@ class AccessRepository {
 
   // =====권한 조회=====
   showAccess = async boardId => {
-    const showAccess = await Access.findAll({ where: { boardId } });
+    const showAccess = await Access.findAll({
+      where: { boardId },
+      include: {
+        model: Users,
+        attributes: ['email', 'nickname'],
+      },
+    });
     return showAccess;
   };
 
