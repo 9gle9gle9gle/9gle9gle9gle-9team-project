@@ -82,6 +82,7 @@ async function showACard(cardId) {
 }
 
 async function loadCardEditor(cardId, cardName, cardContent, cardColor, endAt) {
+  const boardId = sessionStorage.getItem('boardId');
   const response = await fetch(
     `http://localhost:3000/api/boards/${boardId}/columns`,
     {

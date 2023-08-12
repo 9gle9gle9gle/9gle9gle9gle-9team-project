@@ -73,10 +73,11 @@ class CardsService {
       if (!cardName || !cardContent) {
         return { status: 400, message: '카드 제목과 내용을 입력해주세요.' };
       }
-      if (userId !== existCard.userId) {
-        return { status: 400, message: '수정 권한이 존재하지 않습니다.' };
-      }
 
+      const getWorker = await CardsRepository.getOneWorker(userId, cardId);
+      if (!getWorker) {
+        return { status: 400, message: '권한이 없습니다.' };
+      }
       await CardsRepository.updateCard(
         cardId,
         cardName,
