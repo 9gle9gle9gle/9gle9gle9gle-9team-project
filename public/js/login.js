@@ -17,8 +17,6 @@ async function login() {
       'Authorization',
       response.headers.get('Authorization'),
     );
-    sessionStorage.setItem('loginId', result.nickname);
-
     window.location.href = 'http://localhost:3000/boardlist.html';
   } else {
     alert(result.message);

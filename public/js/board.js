@@ -112,7 +112,7 @@ async function showCards(boardId, columnId) {
       } else if (item.cardColor == 1) {
         cardColor = 'orange';
       } else if (item.cardColor == 2) {
-        cardColor = 'yellow';
+        cardColor = 'gold';
       } else if (item.cardColor == 3) {
         cardColor = 'mediumseagreen';
       } else if (item.cardColor == 4) {
@@ -183,7 +183,8 @@ function closeModal1(columnId) {
   const modal = document.getElementById(`myModal${columnId}`);
   modal.style.display = 'none';
 }
-function closeModal() {
+
+function closeModal2() {
   const modal = document.querySelector('.cardModal');
   modal.style.display = 'none';
 }

@@ -98,7 +98,7 @@ button {
 
 .card {
   border-radius: 4px;
-  border-bottom: rgb(180, 180, 180) 1px solid;
+  border-bottom: #fde5e7 3px solid;
   background: white;
   margin: 0.5em 0 0 0;
   padding: 0.5em;
@@ -343,13 +343,13 @@ button {
 /* 컬럼부분 */
 
 .columnheader p {
-  color: #fff;
+  color: white;
   text-align: center;
   display: flex;
   justify-content: center;
   font-size: 30px;
   font-weight: bolder;
-  letter-spacing: -0.2rem;
+  letter-spacing: -0.1rem;
   position: relative;
 }
 

@@ -37,7 +37,7 @@ async function showACard(cardId) {
   const boardId = result.message.boardId;
   const tempHtml = `
   <div class = "innerCard">
-  <span class="close" onclick="closeModal()">&times;</span>
+  <span class="close" onclick="closeModal2()">&times;</span>
    <div class = "innercardtext"> <h2>${result.message.cardName}</h2></div>
     <div class = "innerCardButtons">
     <button onclick = 'loadCardEditor(${cardId},"${cardName}","${cardContent}",${realcardColor})'>수정</button>

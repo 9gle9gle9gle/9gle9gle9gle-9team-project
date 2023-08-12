@@ -28,9 +28,6 @@
     </button>
     <div class="makeboardmodal" id="modal">
       <div class="modal-content">
-        <div class="closemakeboardmodal">
-          <button class="close" onclick="closeModalmakeBoard()">X</button>
-        </div>
         <div>
           <label>보드 제목</label>
           <input id="boardName" />
@@ -48,10 +45,8 @@
           <label>보드 내용</label>
 
           <input id="boardContent" />
-
-          <button class="createBoardBtn" onclick="createBoard()">
-            보드 생성
-          </button>
+          <button onclick="createBoard()">보드 생성</button>
+          <button onclick="closeModalmakeBoard()">X</button>
         </div>
       </div>
     </div>

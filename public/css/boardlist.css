@@ -64,13 +64,6 @@ input {
   border-bottom: 1px solid black;
 }
 
-.createBoardBtn {
-  float: left;
-  margin-top: 15px;
-
-  margin-left: 50px;
-}
-
 #boardlist {
   display: flex;
   flex-wrap: wrap;
@@ -85,7 +78,7 @@ input {
   position: relative;
   margin: 10px;
   margin-left: 30px;
-  margin-top: 50px;
+  margin-top: 150px;
   padding: 10px 10px 10px 10px;
   cursor: pointer;
 }
@@ -132,15 +125,15 @@ input {
   border-radius: 25px;
 }
 
-.modal-content button {
+.modal-content > button {
   position: absolute;
-  right: 110px;
+  right: 50px;
   bottom: 30px;
 }
 
-.modal-content span {
+.modal-content > span {
   position: absolute;
-  right: 70px;
+  right: 0px;
   bottom: 30px;
   font-size: 30px;
   color: gray;
@@ -166,4 +159,12 @@ input {
   border-radius: 10px;
   outline: 3px solid #f1e0e4;
   border-radius: 10px;
+}
+
+.createBoardBtn {
+  position: absolute;
+  left: 30px;
+  width: 150px;
+  font-size: 30px;
+  background-color: #fa7b82;
 }

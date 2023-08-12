@@ -16,11 +16,11 @@ async function editprofile() {
   return alert(result.message);
 }
 
-function openModal() {
+function openModal4() {
   const modal = document.getElementById(`modal`);
   modal.style.display = 'block';
 }
-function closeModal() {
+function closeModal4() {
   const modal = document.getElementById(`modal`);
   modal.style.display = 'none';
 }
