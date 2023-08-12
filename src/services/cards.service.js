@@ -56,6 +56,7 @@ class CardsService {
     cardColor,
     cardContent,
     cardOrder,
+    columnId,
   ) {
     try {
       // 카드 유무 조회
@@ -77,6 +78,7 @@ class CardsService {
         cardColor,
         cardContent,
         cardOrder,
+        columnId,
       );
 
       return { status: 200, message: '카드 수정에 성공하였습니다.' };

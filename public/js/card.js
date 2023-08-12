@@ -8,22 +8,9 @@ async function showACard(cardId) {
   });
 
   const result = await response.json();
-  let cardColor;
-  if (result.message.cardColor == 0) {
-    cardColor = 'red';
-  } else if (result.message.cardColor == 1) {
-    cardColor = 'orange';
-  } else if (result.message.cardColor == 2) {
-    cardColor = 'yellow';
-  } else if (result.message.cardColor == 3) {
-    cardColor = 'green';
-  } else if (result.message.cardColor == 4) {
-    cardColor = 'blue';
-  } else if (result.message.cardColor == 5) {
-    cardColor = 'purple';
-  }
   const today = new Date();
   const endDate = new Date(result.message.endAt);
+  const showEndDate = result.message.endAt;
   const leftDate = Math.floor((endDate.getTime() - today.getTime()) / 86400000);
   let leftalert;
   if (leftDate > 0) {
@@ -40,11 +27,11 @@ async function showACard(cardId) {
   <span class="close" onclick="closeModal2()">&times;</span>
    <div class = "innercardtext"> <h2>${result.message.cardName}</h2></div>
     <div class = "innerCardButtons">
-    <button onclick = 'loadCardEditor(${cardId},"${cardName}","${cardContent}",${realcardColor})'>수정</button>
+    <button onclick = 'loadCardEditor(${cardId},"${cardName}","${cardContent}",${realcardColor}, "${showEndDate}")'>수정</button>
     <button onclick = "deleteCard(${cardId})">삭제</button>
     </div>
     <div class = "endAt">
-      <div class = "endDate">마감 일 ${endDate.toString().substring(0, 10)}
+      <div class = "endDate">마감 일 ${showEndDate.substr(0, 10)}
         <div class = "leftalert">${leftalert}</div></div>
     <div class = "cardcontent"><p>${result.message.cardContent}</p></div>
     </div>
@@ -61,7 +48,27 @@ async function showACard(cardId) {
   card.innerHTML = tempHtml;
 }
 
-async function loadCardEditor(cardId, cardName, cardContent, cardColor) {
+async function loadCardEditor(cardId, cardName, cardContent, cardColor, endAt) {
+  const response = await fetch(
+    `http://localhost:3000/api/boards/${boardId}/columns`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+    },
+  );
+
+  const result = await response.json();
+  const options = result.columns
+    .map(column => {
+      return `
+    <option value="${column.columnId}">${column.columnName}</option>
+  `;
+    })
+    .join('');
+
   console.log('loadCardEditor실행');
   if (cardColor == 0) {
     cardColor = 'red';
@@ -95,8 +102,20 @@ async function loadCardEditor(cardId, cardName, cardContent, cardColor) {
       <option value="4">blue</option>
       <option value="5">purple</option>
     </select>
+    </br>
+  </br>
+  <label>컬럼 선택</label></br>
+    <select id = "editCoulumnId${cardId}">
+      <option selected>-- 선택해 주세요 --</option>
+      ${options}
+    </select>
+    </br>
+    </br>
     <label>마감 날짜</label>
-    <input type = "date" id ="editendAt${cardId}"></input>
+    <input type = "date" id ="editendAt${cardId}" value="${endAt.substr(
+      0,
+      10,
+    )}"></input>
     <button class = "btn-save" onclick="editCard(${cardId})">수정 완료</button>`;
 
   const cardcontainer = document.querySelector('.innerCard');
@@ -108,6 +127,7 @@ async function editCard(cardId) {
   const cardContent = document.querySelector(`#editcardContent${cardId}`).value;
   const endAt = document.querySelector(`#editendAt${cardId}`).value;
   const cardColor = document.querySelector(`#editcardColor${cardId}`).value;
+  const columnId = document.querySelector(`#editCoulumnId${cardId}`).value;
 
   const response = await fetch(`http://localhost:3000/api/cards/${cardId}`, {
     method: 'PATCH',
@@ -115,7 +135,7 @@ async function editCard(cardId) {
       'Content-Type': 'application/json',
       Authorization: sessionStorage.getItem('Authorization'),
     },
-    body: JSON.stringify({ cardName, cardColor, cardContent, endAt }),
+    body: JSON.stringify({ cardName, cardColor, cardContent, endAt, columnId }),
   });
   const result = await response.json();
   console.log(result.message);

@@ -1,7 +1,6 @@
 import Cards from '../db/models/cards';
 import Columns from '../db/models/columns';
 import Access from '../db/models/access';
-import sequelize from '../db/sequelize';
 import { Op } from 'sequelize';
 
 class CardsRepository {
@@ -42,13 +41,21 @@ class CardsRepository {
   }
 
   // 카드 수정
-  static async updateCard(cardId, cardName, cardColor, cardContent, cardOrder) {
+  static async updateCard(
+    cardId,
+    cardName,
+    cardColor,
+    cardContent,
+    cardOrder,
+    columnId,
+  ) {
     const updateCard = await Cards.update(
       {
         cardName,
         cardColor,
         cardContent,
         cardOrder,
+        columnId,
       },
       { where: { cardId } },
     );

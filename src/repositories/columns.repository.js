@@ -1,7 +1,7 @@
 import Columns from '../db/models/columns';
 import { Op } from 'sequelize';
 import Access from '../db/models/access';
-import sequelize from '../db/sequelize';
+import Cards from '../db/models/cards';
 
 class ColumnsRepository {
   async createColumn(boardId, columnName, columnOrder) {

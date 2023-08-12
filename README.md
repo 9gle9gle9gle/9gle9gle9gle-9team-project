@@ -140,7 +140,7 @@ service layer에는 넣도록 노력하기
 
 ## ERD
 
-![Alt text](./public/img/image.png)
+![Alt text](./public/img/erd.png)
 
 ## API
 
