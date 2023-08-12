@@ -21,7 +21,12 @@ class CardsService {
         return { status: 400, message: '접근 권한이 없습니다.' };
 
       const getAllCard = await CardsRepository.getAllCard(cardData.columnId);
-      const cardOrder = getAllCard.length + 1;
+      let cardOrder;
+      if (getAllCard.length == 0) {
+        cardOrder = 1;
+      } else {
+        cardOrder = getAllCard.reverse()[0].cardOrder + 1;
+      }
 
       const createdcard = await CardsRepository.createCard(
         userId,
@@ -74,7 +79,13 @@ class CardsService {
       }
 
       const cardOrderArray = await CardsRepository.getAllCard(columnId);
-      const cardOrder = cardOrderArray.length + 1;
+      let cardOrder;
+      if (cardOrderArray.length == 0) {
+        cardOrder = 1;
+      } else {
+        cardOrder = cardOrderArray.reverse()[0].cardOrder + 1;
+      }
+
       const getWorker = await CardsRepository.getOneWorker(userId, cardId);
       if (!getWorker) {
         return { status: 400, message: '권한이 없습니다.' };
