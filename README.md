@@ -26,6 +26,33 @@
 4. Board에 해당하는 userId를 가진 사람만 Access table에 해당 boardid를 넣은 데이터를 생성할 수있다.
 5. 즉, 권한을 가진 사람만 초대 가능.
 
+**보드 생성**
+
+1. 보드 생성 시 권한 동시 부여
+2. 트랜잭션 사용 최소화를 통한 성능 향상
+
+**컬럼, 카드 순서 변경**
+
+1. sequelize의 [Op.gt](http://Op.gt) 와 Op.lt를 이용하여 업 다운
+2. up 데이터와 down 데이터 서로 교체
+3. 트랜잭션 사용 최소화를 통한 성능 향상
+
+**카드의 컬럼 변경**
+
+1. 카드 수정 시 드롭다운을 통해 선택 가능
+2. 드롭다운의 항목들은 컬럼 이름을 전부 조회하여 표시
+3. 카드 수정 시 카드 순서는 최상단으로 재정렬
+4. 카드 수정 시 컬럼에 유효한 카드가 없는 경우 카드 순서 1을 부여
+
+**보드 전체, 개별 조회**
+
+1. raw query를 이용하여 프로세스 단순화
+
+**회원 관리**
+
+1. hashed password 사용을 위해 bcrypt 라이브러리 이용
+2. JWT 토큰 사용
+
 ## TEAM
 
 ### 팀 규칙
@@ -47,14 +74,29 @@
 - 20시 50분부터 21시 00분 까지 [9조 마무리 회의]
   (질문이 있는 분은 21시 00분 이후에 이어서 진행)
 
+### 팀원 소개
+
+| 이름   | Blog                             | Github                               |
+| ------ | -------------------------------- | ------------------------------------ |
+| 이다영 | https://verdantjuly.tistory.com/ | https://github.com/verdantjuly/zbase |
+| 오준석 | https://velog.io/@y21zzp         | https://github.com/KORjunseok        |
+| 장시훈 | https://velog.io/@sh_j225        | https://github.com/sihunjang225      |
+| 이연오 | https://velog.io/@yeono          | https://github.com/yeonoh0101        |
+
 ### 기능 역할 분담
 
-![Alt text](./public/img/image-1.png)
+| 이름   | Backend              | 기타 역할 (발표, 시연 영상) |
+| ------ | -------------------- | --------------------------- |
+| 이다영 | 보드, 권한, 뼈대     | S.A. ERD API 발표           |
+| 오준석 | 회원                 | API ERD 시연 영상           |
+| 장시훈 | 컬럼                 | Wireframe ERD               |
+| 이연오 | 카드 관리, 카드 상세 | Wireframe ERD               |
 
-역할 분담 먼저 완료한 인원
+    프론트엔드 : 역할 분담 먼저 완료한 인원
 
-1.  프론트엔드
-2.  CI/CD 시도하기
+### 개발 일정
+
+![Alt text](./public/img/plan.png)
 
 ## Coding Convention
 
@@ -110,37 +152,24 @@ service layer에는 넣도록 노력하기
 
 - Javascript
 - Express
-- AWS - S3, CodeDeploy, EC2
 
 ## Wireframe
 
 ![Alt text](./public/img/image-2.png)
-
-## 프로젝트 세팅
-
-      "dependencies": {
-      "@babel/cli": "^7.22.9",
-      "dotenv": "^16.3.1",
-      "express": "^4.18.2",
-      "mysql2": "^3.5.2",
-      "node-cache": "^5.1.2",
-      "readline": "^1.3.0",
-      "sequelize": "^6.32.1"
-      },
-      "devDependencies": {
-      "@babel/core": "^7.22.9",
-      "@babel/node": "^7.22.6",
-      "@babel/preset-env": "^7.22.9",
-      "jest": "^29.6.2",
-      "nodemon": "^3.0.1",
-      "prettier": "^3.0.0",
-      "sequelize-cli": "^6.6.1",
-      "supertest": "^6.3.3"
-      }
+![Alt text](./public/img/image-3.png)
+![Alt text](./public/img/image-4.png)
+![Alt text](./public/img/image-5.png)
+![Alt text](./public/img/image-6.png)
 
 ## ERD
 
+https://drawsql.app/teams/verdantjuly/diagrams/trello9
 ![Alt text](./public/img/erd.png)
+
+- Workers : 작업자 권한 테이블
+- Access : Board 접근 권한 테이블
+- Boards > Columns > Cards > Comments
+- Users : 회원 이름 등 정보를 불러와야 하는 경우가 많아서 대부분의 테이블에 외래키 설정
 
 ## API
 
@@ -150,12 +179,56 @@ https://verdantjuly.gitbook.io/trello9-api/
 
 ```
 9gle9gle9gle-9team-project
-─ src
+├─ .prettierrc.cjs
+├─ README.md
+├─ babel.config.json
+├─ package-lock.json
+├─ package.json
+├─ public
+│  ├─ board.html
+│  ├─ boardlist.html
+│  ├─ css
+│  │  ├─ board.css
+│  │  ├─ boardlist.css
+│  │  ├─ invite.css
+│  │  └─ profile.css
+│  ├─ img
+│  │  ├─ erd.png
+│  │  ├─ image-1.png
+│  │  ├─ image-2.png
+│  │  ├─ image-3.png
+│  │  ├─ image-4.png
+│  │  ├─ image-5.png
+│  │  ├─ image-6.png
+│  │  ├─ 로그인 배경.png
+│  │  ├─ 메인페이지 배경.png
+│  │  └─ 배경.png
+│  ├─ index.html
+│  ├─ invite.html
+│  ├─ js
+│  │  ├─ board.js
+│  │  ├─ boardlist.js
+│  │  ├─ card.js
+│  │  ├─ index.js
+│  │  ├─ invite.js
+│  │  ├─ login.js
+│  │  ├─ profile.js
+│  │  ├─ signup.js
+│  │  └─ user.js
+│  ├─ login.html
+│  ├─ profile.html
+│  └─ signup.html
+└─ src
    ├─ app.js
    ├─ cache.js
+   ├─ constants.js
    ├─ controllers
+   │  ├─ access.controller.js
    │  ├─ boards.controller.js
-   │  └─ columns.controller.js
+   │  ├─ cards.controller.js
+   │  ├─ columns.controller.js
+   │  ├─ comments.controller.js
+   │  └─ users.controller.js
    ├─ db
    │  ├─ index.js
    │  ├─ models
@@ -165,7 +238,8 @@ https://verdantjuly.gitbook.io/trello9-api/
    │  │  ├─ columns.js
    │  │  ├─ comments.js
    │  │  ├─ enum.js
-   │  │  └─ users.js
+   │  │  ├─ users.js
+   │  │  └─ workers.js
    │  ├─ relations
    │  │  ├─ access.relation.js
    │  │  ├─ boards.relation.js
@@ -173,19 +247,35 @@ https://verdantjuly.gitbook.io/trello9-api/
    │  │  ├─ columns.relation.js
    │  │  ├─ comments.relation.js
    │  │  ├─ index.js
-   │  │  └─ users.relation.js
+   │  │  ├─ users.relation.js
+   │  │  └─ workers.relation.js
    │  └─ sequelize.js
    ├─ env.js
    ├─ init.js
+   ├─ middlewares
+   │  ├─ authmiddlewares.js
+   │  └─ validation.js
    ├─ repositories
+   │  ├─ access.repository.js
    │  ├─ boards.repository.js
-   │  └─ columns.repository.js
+   │  ├─ cards.repository.js
+   │  ├─ columns.repository.js
+   │  ├─ comments.repository.js
+   │  └─ users.repository.js
    ├─ routes
+   │  ├─ access.routes.js
    │  ├─ boards.routes.js
-   │  └─ columns.routes.js
+   │  ├─ cards.routes.js
+   │  ├─ columns.routes.js
+   │  ├─ comments.routes.js
+   │  └─ users.routes.js
    └─ services
+      ├─ access.service.js
       ├─ boards.service.js
+      ├─ cards.service.js
       ├─ columns.service.js
-      └─ message.js
+      ├─ comments.service.js
+      ├─ message.js
+      └─ users.service.js
 
 ```
