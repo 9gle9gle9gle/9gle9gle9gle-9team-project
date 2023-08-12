@@ -10,20 +10,40 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="./css/board.css" />
+    <link rel="stylesheet" href="./css/profile.css" />
     <title>Document</title>
   </head>
   <body>
     <header>
       <h1 onclick="location.href=`index.html`">9글9글9글</h1>
       <div class="header-buttons">
-        <button id="profileButton" onclick="editprofile()">정보수정</button>
         <button id="logoutButton" onclick="logout()">로그아웃</button>
-        <button id="logoutButton" onclick="deleteUser()">회원탈퇴</button>
       </div>
     </header>
     <main>
-      <div class="view profile"></div>
+      <div class="profilebox">
+        <button class="profilebutton" id="profileButton" onclick="openModal()">
+          정보수정
+        </button>
+        <button class="profilebutton" id="logoutButton" onclick="deleteUser()">
+          회원탈퇴
+        </button>
+        <div id="modal">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="editprofile">
+              <label>닉네임</label>
+              <input type="text" id="nickname" />
+              <label>한마디</label>
+              <input type="text" id="sentence" />
+              <button onclick="editprofile()" id="editprofileconfirm">
+                수정
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="profileeditor"></div>
+      </div>
     </main>
 
     <script src="./js/user.js"></script>

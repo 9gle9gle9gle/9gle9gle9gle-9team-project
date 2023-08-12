@@ -39,7 +39,7 @@ class AccessRepository {
       where: { boardId },
       include: {
         model: Users,
-        attributes: ['email', 'nickname'],
+        attributes: ['email', 'nickname', 'sentence'],
       },
     });
     return showAccess;

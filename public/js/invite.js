@@ -41,6 +41,7 @@ async function invitelist() {
       return `    <div class = "invitebox">
                     <div class = "innerinvite">${access.User.nickname}</div>
                     <div class = "innerinvite">${access.User.email}</div>
+                    <div class = "innerinvite">${access.User.sentence}</div>
                     <button onclick="uninvite(${access.userId},${access.boardId})">삭제</button>
                 </div>`;
     })

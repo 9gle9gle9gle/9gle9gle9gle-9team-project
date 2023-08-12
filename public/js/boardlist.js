@@ -16,27 +16,25 @@ async function boardlist() {
     .map(board => {
       let boardColor;
       if (board.boardColor == 0) {
-        boardColor = 'red';
+        boardColor = 'tomato';
       } else if (board.boardColor == 1) {
         boardColor = 'orange';
       } else if (board.boardColor == 2) {
-        boardColor = 'yellow';
+        boardColor = 'gold';
       } else if (board.boardColor == 3) {
-        boardColor = 'green';
+        boardColor = 'mediumseagreen';
       } else if (board.boardColor == 4) {
-        boardColor = 'blue';
+        boardColor = 'skyblue';
       } else if (board.boardColor == 5) {
-        boardColor = 'purple';
+        boardColor = 'mediumpurple';
       }
 
-      return `<div class="boardBox" style = "background-color : ${boardColor}" >
+      return `<div class="boardBox" style = "background-color: ${boardColor}" >
       <p onclick= "moveToBoard(${board.boardId})">${board.boardName}</p>
-      <button class= "updateBtn"onclick = "openModal(${board.boardId})">수정</button>   
+      <button class= "updateBtn" onclick = "openModal(${board.boardId})" style = "background-color : ${boardColor}">수정</button>   
       <div class = "boardmodal${board.boardId}" id = "modal">   
       <div class = "modal-content">
-      <div class = "closeboardmodal">
-      <button class="close" onclick="closeModal(${board.boardId})">X</button>
-      </div>
+     
       <div>
       </br>
       <label>보드 제목</label>
@@ -63,11 +61,12 @@ async function boardlist() {
       </br>
       </br>
       <button onclick ="editBoard(${board.boardId})">수정</button>
+      <span class="close" onclick="closeModal(${board.boardId})">&times;</span>
       </div>
       </div>
       </div>
-      <button class= "deleteBtn" onclick="deleteBoard(${board.boardId})">삭제</button>
-      <button class= "inviteBtn" onclick="moveToInvite(${board.boardId})">초대</button></div>
+      <button class= "deleteBtn" onclick="deleteBoard(${board.boardId})" style = "background-color : ${boardColor}">삭제</button>
+      <button class= "inviteBtn" onclick="moveToInvite(${board.boardId})" style = "background-color : ${boardColor}">초대</button></div>
       `;
     })
     .join('');

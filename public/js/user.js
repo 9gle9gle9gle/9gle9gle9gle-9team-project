@@ -1,5 +1,6 @@
 // 로그아웃
 async function logout() {
+  sessionStorage.clear();
   const response = await fetch(`http://localhost:3000/api/logout`, {
     method: 'POST',
     headers: {
