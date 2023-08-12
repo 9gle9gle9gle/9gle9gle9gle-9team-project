@@ -10,8 +10,13 @@ const columnsService = {
       if (!getUserId) {
         throw new Error('잘못된 접근입니다=>.'); // 수정
       }
-      const getColumns = await ColumnsRepository.getColumns(boardId);
-      const columnOrder = getColumns.length + 1;
+      const getColumns = await ColumnsRepository.getColumnsOrder(boardId);
+      let columnOrder;
+      if (getColumns.length == 0) {
+        columnOrder = 1;
+      } else {
+        columnOrder = getColumns.reverse()[0].columnOrder + 1;
+      }
 
       const newColumn = await ColumnsRepository.createColumn(
         boardId,
@@ -78,7 +83,6 @@ const columnsService = {
         columnId,
         deletedAt,
       );
-      await ColumnsRepository.deleteCards(columnId, deletedAt);
       if (rowCount === 0) {
         throw new Error('컬럼을 찾을 수 없거나 이미 삭제되었습니다.');
       }

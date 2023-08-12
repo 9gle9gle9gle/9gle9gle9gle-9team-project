@@ -18,6 +18,13 @@ class ColumnsRepository {
     });
   }
 
+  async getColumnsOrder(boardId) {
+    return Columns.findAll({
+      where: { boardId, deletedAt: null },
+      order: [['columnOrder']],
+    });
+  }
+
   async updateColumn(columnId, columnName) {
     const updateColumn = await Columns.update(
       { columnName },
