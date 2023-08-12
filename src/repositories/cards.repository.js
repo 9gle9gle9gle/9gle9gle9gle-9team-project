@@ -1,6 +1,8 @@
 import Cards from '../db/models/cards';
 import Columns from '../db/models/columns';
 import Access from '../db/models/access';
+import Workers from '../db/models/workers';
+import Users from '../db/models/users';
 import { Op } from 'sequelize';
 
 class CardsRepository {
@@ -112,6 +114,31 @@ class CardsRepository {
       { where: { cardId } },
     );
     return result;
+  }
+  // 작업자 할당
+  static async addWorker(userId, cardId) {
+    const addWorker = await Workers.create({ userId, cardId });
+    return addWorker;
+  }
+
+  // 작업자 전체 조회
+  static async getWorker(cardId) {
+    const getWorker = await Workers.findAll({
+      where: { cardId },
+      include: {
+        model: Users,
+        attributes: ['email', 'nickname', 'sentence'],
+      },
+    });
+    return getWorker;
+  }
+
+  // 특정 작업자 조회
+  static async getOneWorker(userId, cardId) {
+    const getOneWorker = await Workers.findOne({
+      where: { cardId, userId },
+    });
+    return getOneWorker;
   }
 }
 

@@ -1,4 +1,5 @@
 async function showACard(cardId) {
+  const boardId = sessionStorage.getItem('boardId');
   const response = await fetch(`http://localhost:3000/api/cards/${cardId}`, {
     method: 'GET',
     headers: {
@@ -6,8 +7,29 @@ async function showACard(cardId) {
       Authorization: sessionStorage.getItem('Authorization'),
     },
   });
+  const response2 = await fetch(
+    `http://localhost:3000/api/boards/${boardId}/cards/${cardId}/workers`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+    },
+  );
 
   const result = await response.json();
+  const result2 = await response2.json();
+  let workers = result2.message
+    .map(worker => {
+      return `
+      <div class = "innerworkerlist">
+    <p>${worker.User.nickname}</p>
+    <p>${worker.User.email}</p>
+    <p>${worker.User.sentence}</p>
+  </div>`;
+    })
+    .join('');
   const today = new Date();
   const endDate = new Date(result.message.endAt);
   const showEndDate = result.message.endAt;
@@ -21,7 +43,7 @@ async function showACard(cardId) {
   const realcardColor = result.message.cardColor;
   const cardName = result.message.cardName;
   const cardContent = result.message.cardContent;
-  const boardId = result.message.boardId;
+  const inputboardId = result.message.boardId;
   const tempHtml = `
   <div class = "innerCard">
   <span class="close" onclick="closeModal2()">&times;</span>
@@ -33,14 +55,25 @@ async function showACard(cardId) {
     <div class = "endAt">
       <div class = "endDate">마감 일 ${showEndDate.substr(0, 10)}
         <div class = "leftalert">${leftalert}</div></div>
-    <div class = "cardcontent"><p>${result.message.cardContent}</p></div>
+    <div class = "cardcontent"><p>${result.message.cardContent}</p>
+    </br> </br>
+    <label> [ 작업자 명단 ] </label>
+    </br>
+    </br>
+    <div class ="workerlist">
+    ${workers}</div>
+    </br>
+    </br>
+    <button id = "addWorkerBtn" onclick = "addWorker(${cardId})">나도 참여하기</button>
+    </br>
+    </br>
     </div>
-   
+    </div>
+    <div class="commentSection">
       <div class="comments">
       </div>
-    <div class="commentSection">
       <textarea class = "commentcontent${cardId}" id="commentTextarea" placeholder="댓글을 입력하세요"></textarea>
-      <button onclick="makeComment(${cardId},${boardId})">작성</button>
+      <button onclick="makeComment(${cardId})">작성</button>
     </div>
     </div>`;
 
@@ -158,7 +191,8 @@ async function deleteCard(cardId) {
   return alert(result.message);
 }
 
-async function showComments(cardId, boardId) {
+async function showComments(cardId) {
+  const boardId = sessionStorage.getItem('boardId');
   const response = await fetch(
     `http://localhost:3000/api/boards/${boardId}/cards/${cardId}/comments`,
     {
@@ -178,8 +212,8 @@ async function showComments(cardId, boardId) {
                   ${comment.content} 
                 </div>
                   <div class = "commentBtns">
-                  <button class = "commentBtn" onclick=" loadCommentEditor('${comment.content}',${comment.commentId},${cardId},${boardId})">수정</button>
-                  <button class = "commentBtn" onclick=" deleteComment(${comment.commentId},${cardId},${boardId})">삭제</button>
+                  <button class = "commentBtn" onclick=" loadCommentEditor('${comment.content}',${comment.commentId},${cardId})">수정</button>
+                  <button class = "commentBtn" onclick=" deleteComment(${comment.commentId},${cardId})">삭제</button>
                   </div>
               </div>`;
     })
@@ -199,7 +233,8 @@ async function loadCommentEditor(content, commentId, cardId, boardId) {
   commentcontent.innerHTML = tempHtml;
 }
 
-async function makeComment(cardId, boardId) {
+async function makeComment(cardId) {
+  const boardId = sessionStorage.getItem('boardId');
   const content = document.querySelector(`.commentcontent${cardId}`).value;
   const response = await fetch(
     `http://localhost:3000/api/cards/${cardId}/comments`,
@@ -217,10 +252,11 @@ async function makeComment(cardId, boardId) {
   );
   const result = await response.json();
   console.log(result.message);
-  showComments(cardId, boardId);
+  showComments(cardId);
 }
 
-async function editComment(commentId, cardId, boardId) {
+async function editComment(commentId, cardId) {
+  const boardId = sessionStorage.getItem('boardId');
   const content = document.querySelector(`#editcomment${commentId}`).value;
 
   const response = await fetch(
@@ -236,11 +272,12 @@ async function editComment(commentId, cardId, boardId) {
   );
   const result = await response.json();
   console.log(result.message);
-  showComments(cardId, boardId);
+  showComments(cardId);
   return alert(result.message);
 }
 
-async function deleteComment(commentId, cardId, boardId) {
+async function deleteComment(commentId, cardId) {
+  const boardId = sessionStorage.getItem('boardId');
   const response = await fetch(
     `http://localhost:3000/api/cards/${cardId}/comments/${commentId}`,
     {
@@ -254,6 +291,24 @@ async function deleteComment(commentId, cardId, boardId) {
   );
   const result = await response.json();
   console.log(result.message);
-  showComments(cardId, boardId);
+  showComments(cardId);
+  return alert(result.message);
+}
+
+async function addWorker(cardId) {
+  const boardId = sessionStorage.getItem('boardId');
+  const response = await fetch(
+    `http://localhost:3000/api/boards/${boardId}/cards/${cardId}/workers`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
   return alert(result.message);
 }

@@ -2,6 +2,7 @@ import Cards from '../models/cards.js';
 import Comments from '../models/comments.js';
 import Users from '../models/users.js';
 import Columns from '../models/columns.js';
+import Workers from '../models/workers.js';
 
 export default () => {
   Cards.hasMany(Comments, {
@@ -15,5 +16,9 @@ export default () => {
   Cards.belongsTo(Columns, {
     targetKey: 'columnId',
     foreignKey: 'columnId',
+  });
+  Cards.hasMany(Workers, {
+    sourceKey: 'cardId',
+    foreignKey: 'cardId',
   });
 };

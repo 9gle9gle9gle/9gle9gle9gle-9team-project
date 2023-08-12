@@ -74,8 +74,7 @@ class CardsController {
   // 카드 순서 UP
   static async cardUp(req, res) {
     const { cardId } = req.params;
-    const userId = 1;
-    //   const userId = req.locals.user;
+    const userId = res.locals.user;
 
     const { status, message } = await CardsService.cardUp(cardId, userId);
 
@@ -85,10 +84,37 @@ class CardsController {
   // 카드 순서 DOWN
   static async cardDown(req, res) {
     const { cardId } = req.params;
-    const userId = 1;
-    //   const userId = req.locals.user;
+    const userId = res.locals.user;
 
     const { status, message } = await CardsService.cardDown(cardId, userId);
+
+    return res.status(status).json({ message });
+  }
+
+  // 작업자 추가
+  static async addWorker(req, res) {
+    const { cardId, boardId } = req.params;
+    const userId = res.locals.user;
+
+    const { status, message } = await CardsService.addWorker(
+      userId,
+      cardId,
+      boardId,
+    );
+
+    return res.status(status).json({ message });
+  }
+
+  // 작업자 조회
+  static async getWorker(req, res) {
+    const { cardId, boardId } = req.params;
+    const userId = res.locals.user;
+
+    const { status, message } = await CardsService.getWorker(
+      userId,
+      cardId,
+      boardId,
+    );
 
     return res.status(status).json({ message });
   }

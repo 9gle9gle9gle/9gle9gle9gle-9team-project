@@ -4,6 +4,7 @@ import BoardsRelation from './boards.relation.js';
 import CardsRealtaion from './cards.realtaion.js';
 import ColumnsRelation from './columns.relation.js';
 import CommentsRelation from './comments.relation.js';
+import WorkersRelation from './workers.relation.js';
 export default {
   UsersRelation,
   BoardsRelation,
@@ -11,4 +12,5 @@ export default {
   ColumnsRelation,
   CardsRealtaion,
   CommentsRelation,
+  WorkersRelation,
 };

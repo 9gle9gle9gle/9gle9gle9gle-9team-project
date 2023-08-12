@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   viewABoard();
 });
-const boardId = sessionStorage.getItem('boardId');
+
 async function viewABoard() {
+  const boardId = sessionStorage.getItem('boardId');
   const response = await fetch(
     `http://localhost:3000/api/boards/${boardId}/columns`,
     {
@@ -137,6 +138,7 @@ async function showCards(boardId, columnId) {
 }
 
 async function createColumn() {
+  const boardId = sessionStorage.getItem('boardId');
   try {
     const columnName = document.querySelector('#createColumn').value;
     const response = await fetch('http://localhost:3000/api/columns', {

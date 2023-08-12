@@ -383,4 +383,26 @@ button {
   color: red;
   background: none;
 }
-/* 컬럼부분 */
+
+.innerworkerlist > p {
+  margin: 5px 5px 5px 5px;
+}
+
+label {
+  font-size: 20px;
+}
+#addWorkerBtn {
+  background-color: #ff9298;
+  color: white;
+  border: 0px;
+  height: 30px;
+  width: 150px;
+  font-size: 20px;
+}
+
+.innerworkerlist {
+  margin: 10px 5px 10px 5px;
+  display: flex;
+  flex-direction: row;
+  background-color: #fde5e7;
+}

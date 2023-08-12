@@ -6,8 +6,9 @@ import Columns from './models/columns.js';
 import Comments from './models/comments.js';
 import Relations from './relations/index.js';
 import Users from './models/users.js';
+import Workers from './models/workers.js';
 Object.values(Relations).forEach(relationsFunction => {
   relationsFunction();
 });
 
-export { sequelize, Users, Boards, Access, Columns, Cards, Comments };
+export { sequelize, Users, Boards, Access, Columns, Cards, Comments, Workers };

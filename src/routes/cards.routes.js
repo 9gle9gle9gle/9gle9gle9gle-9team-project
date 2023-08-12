@@ -16,9 +16,22 @@ router.patch('/cards/:cardId', authmiddleware, CardsController.updateCard);
 router.delete('/cards/:cardId', authmiddleware, CardsController.deleteCard);
 
 // 카드 순서 UP
-router.patch('/cards/:cardId/up', CardsController.cardUp);
+router.patch('/cards/:cardId/up', authmiddleware, CardsController.cardUp);
 
 // 카드 순서 DOWN
-router.patch('/cards/:cardId/down', CardsController.cardDown);
+router.patch('/cards/:cardId/down', authmiddleware, CardsController.cardDown);
+
+// 카드 순서 DOWN
+router.post(
+  '/boards/:boardId/cards/:cardId/workers',
+  authmiddleware,
+  CardsController.addWorker,
+);
+// 카드 순서 DOWN
+router.get(
+  '/boards/:boardId/cards/:cardId/workers',
+  authmiddleware,
+  CardsController.getWorker,
+);
 
 export default router;
