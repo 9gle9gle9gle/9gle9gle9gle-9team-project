@@ -21,13 +21,13 @@ router.patch('/cards/:cardId/up', authmiddleware, CardsController.cardUp);
 // 카드 순서 DOWN
 router.patch('/cards/:cardId/down', authmiddleware, CardsController.cardDown);
 
-// 카드 순서 DOWN
+// 작업자 추가
 router.post(
   '/boards/:boardId/cards/:cardId/workers',
   authmiddleware,
   CardsController.addWorker,
 );
-// 카드 순서 DOWN
+// 작업자 조회
 router.get(
   '/boards/:boardId/cards/:cardId/workers',
   authmiddleware,
