@@ -1,6 +1,8 @@
 import Boards from '../db/models/boards.js';
 import Access from '../db/models/access.js';
 import sequelize from '../db/sequelize.js';
+import Columns from '../db/models/columns.js';
+import Cards from '../db/models/cards.js';
 import { QueryTypes } from 'sequelize';
 
 class BoardsRepository {
@@ -61,6 +63,8 @@ class BoardsRepository {
       { deletedAt },
       { where: { boardId } },
     );
+    await Columns.update({ deletedAt }, { where: { boardId } });
+    await Cards.update({ deletedAt }, { where: { boardId } });
     return removeBoard;
   };
 }

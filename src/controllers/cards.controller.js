@@ -40,7 +40,7 @@ class CardsController {
     const { cardId } = req.params;
     const userId = res.locals.user;
     //   const userId = req.locals.user;
-    const { cardName, cardColor, cardContent, cardOrder, columnId } = req.body;
+    const { cardName, cardColor, cardContent, columnId } = req.body;
 
     const { status, message } = await CardsService.updateCard(
       cardId,
@@ -48,7 +48,6 @@ class CardsController {
       cardName,
       cardColor,
       cardContent,
-      cardOrder,
       columnId,
     );
 

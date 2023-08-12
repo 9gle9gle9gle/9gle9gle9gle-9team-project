@@ -38,6 +38,17 @@ class ColumnsRepository {
     return rowCount;
   }
 
+  async deleteCards(columnId, deletedAt) {
+    const result = await Cards.update(
+      {
+        deletedAt,
+      },
+      { where: { columnId } },
+    );
+
+    return result;
+  }
+
   async moveColumnUp(columnId) {
     const currentColumn = await Columns.findByPk(columnId);
     const currentOrder = currentColumn.columnOrder;

@@ -78,6 +78,7 @@ const columnsService = {
         columnId,
         deletedAt,
       );
+      await ColumnsRepository.deleteCards(columnId, deletedAt);
       if (rowCount === 0) {
         throw new Error('컬럼을 찾을 수 없거나 이미 삭제되었습니다.');
       }
