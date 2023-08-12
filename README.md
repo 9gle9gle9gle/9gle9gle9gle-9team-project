@@ -49,7 +49,7 @@
 
 ### 기능 역할 분담
 
-![Alt text](image-1.png)
+![Alt text](./public/img/image-1.png)
 
 역할 분담 먼저 완료한 인원
 
@@ -114,7 +114,7 @@ service layer에는 넣도록 노력하기
 
 ## Wireframe
 
-![Alt text](image-2.png)
+![Alt text](./public/img/image-2.png)
 
 ## 프로젝트 세팅
 
@@ -140,7 +140,7 @@ service layer에는 넣도록 노력하기
 
 ## ERD
 
-![Alt text](image.png)
+![Alt text](./public/img/image.png)
 
 ## API
 
