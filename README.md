@@ -153,14 +153,6 @@ service layer에는 넣도록 노력하기
 - Javascript
 - Express
 
-## Wireframe
-
-![Alt text](./public/img/image-2.png)
-![Alt text](./public/img/image-3.png)
-![Alt text](./public/img/image-4.png)
-![Alt text](./public/img/image-5.png)
-![Alt text](./public/img/image-6.png)
-
 ## ERD
 
 https://drawsql.app/teams/verdantjuly/diagrams/trello9
@@ -170,10 +162,6 @@ https://drawsql.app/teams/verdantjuly/diagrams/trello9
 - Access : Board 접근 권한 테이블
 - Boards > Columns > Cards > Comments
 - Users : 회원 이름 등 정보를 불러와야 하는 경우가 많아서 대부분의 테이블에 외래키 설정
-
-## API
-
-https://verdantjuly.gitbook.io/trello9-api/
 
 ## 파일구조
 
@@ -279,3 +267,21 @@ https://verdantjuly.gitbook.io/trello9-api/
       └─ users.service.js
 
 ```
+
+## 초기 자료
+
+### 초기 S.A.
+
+https://gleaming-harp-2af.notion.site/9-9-9-S-A-9a4778aee3d64bbc9c522458eeb75d60?pvs=4
+
+### 초기 Wireframe
+
+![Alt text](./public/img/image-2.png)
+![Alt text](./public/img/image-3.png)
+![Alt text](./public/img/image-4.png)
+![Alt text](./public/img/image-5.png)
+![Alt text](./public/img/image-6.png)
+
+### 초기 API
+
+https://verdantjuly.gitbook.io/trello9-api/
