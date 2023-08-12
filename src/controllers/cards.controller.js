@@ -76,7 +76,7 @@ class CardsController {
     const { cardId } = req.params;
     const userId = res.locals.user;
 
-    const { status, message } = await CardsService.cardUp(cardId, userId);
+    const { status, message } = await CardsService.cardUp(userId, cardId);
 
     return res.status(status).json({ message });
   }
@@ -86,7 +86,7 @@ class CardsController {
     const { cardId } = req.params;
     const userId = res.locals.user;
 
-    const { status, message } = await CardsService.cardDown(cardId, userId);
+    const { status, message } = await CardsService.cardDown(userId, cardId);
 
     return res.status(status).json({ message });
   }

@@ -232,6 +232,7 @@ async function columnDown(columnId, boardId) {
 }
 
 async function cardUp(cardId) {
+  console.log('cardId---', cardId);
   const response = await fetch(`http://localhost:3000/api/cards/${cardId}/up`, {
     method: 'PATCH',
     headers: {
@@ -263,6 +264,7 @@ async function cardDown(cardId) {
 }
 
 async function deleteColumn(columnId) {
+  const boardId = sessionStorage.getItem('boardId');
   const response = await fetch(
     `http://localhost:3000/api/columns/${columnId}`,
     {
