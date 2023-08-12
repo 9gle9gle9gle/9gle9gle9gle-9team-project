@@ -32,7 +32,7 @@ class CardsRepository {
 
   // 카드 전체 조회
   static async getAllCard(columnId) {
-    const card = await Cards.findAll({ where: { columnId, deletedAt: null } });
+    const card = await Cards.findAll({ where: { columnId } });
     return card;
   }
 

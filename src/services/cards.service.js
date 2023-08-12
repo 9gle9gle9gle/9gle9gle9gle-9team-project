@@ -60,7 +60,6 @@ class CardsService {
     cardName,
     cardColor,
     cardContent,
-    cardOrder,
     columnId,
   ) {
     try {
@@ -74,6 +73,8 @@ class CardsService {
         return { status: 400, message: '카드 제목과 내용을 입력해주세요.' };
       }
 
+      const cardOrderArray = await CardsRepository.getAllCard(columnId);
+      const cardOrder = cardOrderArray.length + 1;
       const getWorker = await CardsRepository.getOneWorker(userId, cardId);
       if (!getWorker) {
         return { status: 400, message: '권한이 없습니다.' };
