@@ -259,9 +259,8 @@ button {
 }
 
 .comments {
-  height: 250px;
+  height: 180px;
   overflow: auto;
-  background-color: #f1e0e4;
   color: #2d2d2d;
   margin-top: 360px;
   min-height: min-content;
