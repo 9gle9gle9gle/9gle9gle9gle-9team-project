@@ -32,7 +32,10 @@ class CardsRepository {
 
   // 카드 전체 조회
   static async getAllCard(columnId) {
-    const card = await Cards.findAll({ where: { columnId } });
+    const card = await Cards.findAll({
+      where: { columnId, deletedAt: null },
+      order: [['cardOrder']],
+    });
     return card;
   }
 
@@ -76,8 +79,13 @@ class CardsRepository {
     const card = await Cards.findByPk(cardId);
     console.log(card);
     const currentOrder = card.cardOrder;
+    const columnId = card.columnId;
     const targetCard = await Cards.findAll({
-      where: { cardOrder: { [Op.gt]: currentOrder } },
+      where: {
+        columnId,
+        cardOrder: { [Op.gt]: currentOrder },
+        deletedAt: null,
+      },
       order: [['cardOrder']],
       limit: 1,
     });
@@ -98,10 +106,9 @@ class CardsRepository {
     console.log('test : cardId', cardId);
     const card = await Cards.findByPk(cardId);
     const cardOrder = card.cardOrder;
+    const columnId = card.columnId;
     const targetCard = await Cards.findAll({
-      where: {
-        cardOrder: { [Op.lt]: cardOrder },
-      },
+      where: { columnId, cardOrder: { [Op.lt]: cardOrder }, deletedAt: null },
       order: [['cardOrder', 'DESC']],
       limit: 1,
     });

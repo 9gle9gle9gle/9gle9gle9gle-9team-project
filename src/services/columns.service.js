@@ -15,7 +15,7 @@ const columnsService = {
       if (getColumns.length == 0) {
         columnOrder = 1;
       } else {
-        columnOrder = getColumns.reverse()[0].columnOrder + 1;
+        columnOrder = getColumns.length + 1;
       }
 
       const newColumn = await ColumnsRepository.createColumn(

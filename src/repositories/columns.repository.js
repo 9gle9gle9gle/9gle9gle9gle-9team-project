@@ -20,7 +20,7 @@ class ColumnsRepository {
 
   async getColumnsOrder(boardId) {
     return Columns.findAll({
-      where: { boardId, deletedAt: null },
+      where: { boardId },
       order: [['columnOrder']],
     });
   }
@@ -63,6 +63,7 @@ class ColumnsRepository {
     const targetColumn = await Columns.findAll({
       where: {
         columnOrder: { [Op.gt]: currentOrder },
+        deletedAt: null,
       },
       order: [['columnOrder']],
       limit: 1,
@@ -85,6 +86,7 @@ class ColumnsRepository {
     const targetColumn = await Columns.findAll({
       where: {
         columnOrder: { [Op.lt]: currentOrder },
+        deletedAt: null,
       },
       order: [['columnOrder', 'DESC']],
       limit: 1,
