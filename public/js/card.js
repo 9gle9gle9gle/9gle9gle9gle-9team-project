@@ -118,6 +118,7 @@ async function loadCardEditor(cardId, cardName, cardContent, cardColor, endAt) {
     cardColor = 'purple';
   }
   const tempHtml = `
+  <span class="close" onclick="closeModal2()">&times;</span>
   <label>카드 제목</label></br>
   <input type = "text" id ="editcardName${cardId}" value = "${cardName}"></input>
   </br>
