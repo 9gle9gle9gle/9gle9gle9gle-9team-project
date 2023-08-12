@@ -119,8 +119,12 @@ class CardsService {
   }
 
   // 카드 순서 UP
-  static async cardUp(cardId) {
+  static async cardUp(userId, cardId) {
     try {
+      const getWorker = await CardsRepository.getOneWorker(userId, cardId);
+      if (!getWorker) {
+        return { status: 400, message: '카드 접근 권한이 없습니다.' };
+      }
       await CardsRepository.cardUp(cardId);
 
       return { status: 200, message: '카드 순서 수정에 성공하였습니다.' };
@@ -131,8 +135,12 @@ class CardsService {
   }
 
   // 카드 순서 DOWN
-  static async cardDown(cardId) {
+  static async cardDown(userId, cardId) {
     try {
+      const getWorker = await CardsRepository.getOneWorker(userId, cardId);
+      if (!getWorker) {
+        return { status: 400, message: '권한이 없습니다.' };
+      }
       await CardsRepository.cardDown(cardId);
 
       return { status: 200, message: '카드 순서 수정에 성공하였습니다.' };

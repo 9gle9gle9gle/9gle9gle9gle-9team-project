@@ -72,7 +72,9 @@ class CardsRepository {
 
   // 카드 순서 UP
   static async cardUp(cardId) {
+    console.log('test : cardId', cardId);
     const card = await Cards.findByPk(cardId);
+    console.log(card);
     const currentOrder = card.cardOrder;
     const targetCard = await Cards.findAll({
       where: { cardOrder: { [Op.gt]: currentOrder } },
@@ -93,8 +95,8 @@ class CardsRepository {
 
   // 카드 순서 DOWN
   static async cardDown(cardId) {
+    console.log('test : cardId', cardId);
     const card = await Cards.findByPk(cardId);
-    console.log(card);
     const cardOrder = card.cardOrder;
     const targetCard = await Cards.findAll({
       where: {
@@ -103,7 +105,6 @@ class CardsRepository {
       order: [['cardOrder', 'DESC']],
       limit: 1,
     });
-    console.log(targetCard);
     const targetOrder = targetCard[0].cardOrder;
     const targetId = targetCard[0].cardId;
 
