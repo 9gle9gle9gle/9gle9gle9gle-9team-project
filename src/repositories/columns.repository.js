@@ -20,6 +20,7 @@ class ColumnsRepository {
 
   async getColumnsOrder(boardId) {
     return Columns.findAll({
+      deletedAt: null,
       where: { boardId },
       order: [['columnOrder']],
     });
@@ -56,12 +57,13 @@ class ColumnsRepository {
     return result;
   }
 
-  async moveColumnUp(columnId) {
+  async moveColumnUp(columnId, boardId) {
     const currentColumn = await Columns.findByPk(columnId);
     const currentOrder = currentColumn.columnOrder;
 
     const targetColumn = await Columns.findAll({
       where: {
+        boardId,
         columnOrder: { [Op.gt]: currentOrder },
         deletedAt: null,
       },
@@ -79,12 +81,13 @@ class ColumnsRepository {
     return result;
   }
 
-  async moveColumnDown(columnId) {
+  async moveColumnDown(columnId, boardId) {
     const currentColumn = await Columns.findByPk(columnId);
     const currentOrder = currentColumn.columnOrder;
 
     const targetColumn = await Columns.findAll({
       where: {
+        boardId,
         columnOrder: { [Op.lt]: currentOrder },
         deletedAt: null,
       },

@@ -101,7 +101,10 @@ const columnsService = {
       if (!getUserId) {
         throw new Error('잘못된 접근입니다=>.'); // 수정
       }
-      const updatedColumn = await ColumnsRepository.moveColumnUp(columnId);
+      const updatedColumn = await ColumnsRepository.moveColumnUp(
+        columnId,
+        boardId,
+      );
       if (!updatedColumn) {
         throw new Error('컬럼 순서 변경 중 오류가 발생했습니다.');
       }
@@ -120,7 +123,10 @@ const columnsService = {
       if (!getUserId) {
         throw new Error('잘못된 접근입니다=>.'); // 수정
       }
-      const updatedColumn = await ColumnsRepository.moveColumnDown(columnId);
+      const updatedColumn = await ColumnsRepository.moveColumnDown(
+        columnId,
+        boardId,
+      );
       if (!updatedColumn) {
         throw new Error('컬럼을 찾을 수 없습니다.');
       }
