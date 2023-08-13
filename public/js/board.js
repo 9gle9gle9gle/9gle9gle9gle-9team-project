@@ -184,7 +184,7 @@ function openModal(boardId, columnId) {
 function openCardModal(cardId, boardId) {
   const modal = document.querySelector('.cardModal');
   showACard(cardId);
-  showComments(cardId, boardId);
+
   modal.style.display = 'block';
 }
 

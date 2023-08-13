@@ -70,6 +70,7 @@ async function showACard(cardId) {
     </div>
     </div>
     <div class="commentSection">
+    테스트
       <div class="comments">
       </div>
       <textarea class = "commentcontent${cardId}" id="commentTextarea" placeholder="댓글을 입력하세요"></textarea>
@@ -79,6 +80,7 @@ async function showACard(cardId) {
 
   const card = document.querySelector('.cardmodal-content');
   card.innerHTML = tempHtml;
+  showComments(cardId);
 }
 
 async function loadCardEditor(cardId, cardName, cardContent, cardColor, endAt) {
