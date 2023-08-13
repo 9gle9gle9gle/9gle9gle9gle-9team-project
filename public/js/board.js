@@ -22,13 +22,21 @@ async function viewABoard() {
       return `<div class="cardBox">
       <div class = columnheader>
       <p>${column.columnName}</p>
-      <button class="deleteColumnButton" onclick="deleteColumn(${column.columnId})">&times;</button>
+      <button class="editColumnButton" onclick="openModalColumn(${column.columnId})">수정</button>
+      <button class="deleteColumnButton" onclick="deleteColumn(${column.columnId})" >&times;</button>
       <div class ="columnheaderBtn">
       <button onclick="columnDown(${column.columnId},${boardId})">◀</button>
       <button onclick="columnUp(${column.columnId},${boardId})">▶</button>
       </div>
       </div>
-      
+      <div id="modalColumn${column.columnId}" class="modal">
+              <div class="modal-content">
+                <span class="close" onclick="closeModalColumn(${column.columnId})">&times;</span>
+                
+                <input type="text" class ="columnName" id="columnName${column.columnId}" placeholder="컬럼 제목"/></input>
+                <button type="button" onclick="editColumnName(${boardId}, ${column.columnId})">수정</button>
+                </div>
+            </div>
       <div class="cardone">
         <div class="cardCreate">
           <div class="card">
@@ -180,6 +188,11 @@ function openCardModal(cardId, boardId) {
   modal.style.display = 'block';
 }
 
+function openModalColumn(columnId) {
+  const modal = document.querySelector(`#modalColumn${columnId}`);
+  modal.style.display = 'block';
+}
+
 // 모달 창 닫기
 function closeModal1(columnId) {
   const modal = document.getElementById(`myModal${columnId}`);
@@ -188,6 +201,11 @@ function closeModal1(columnId) {
 
 function closeModal2() {
   const modal = document.querySelector('.cardModal');
+  modal.style.display = 'none';
+}
+
+function closeModalColumn(columnId) {
+  const modal = document.getElementById(`modalColumn${columnId}`);
   modal.style.display = 'none';
 }
 
@@ -232,7 +250,6 @@ async function columnDown(columnId, boardId) {
 }
 
 async function cardUp(cardId) {
-  console.log('cardId---', cardId);
   const response = await fetch(`http://localhost:3000/api/cards/${cardId}/up`, {
     method: 'PATCH',
     headers: {
@@ -283,4 +300,26 @@ async function deleteColumn(columnId) {
   console.log(result.message);
   location.reload();
   return;
+}
+
+async function editColumnName(boardId, columnId) {
+  const columnName = document.querySelector(`#columnName${columnId}`).value;
+  const response = await fetch(
+    `http://localhost:3000/api/columns/${columnId}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: sessionStorage.getItem('Authorization'),
+      },
+      body: JSON.stringify({
+        boardId,
+        columnName,
+      }),
+    },
+  );
+  const result = await response.json();
+  console.log(result.message);
+  location.reload();
+  return alert(result.message);
 }

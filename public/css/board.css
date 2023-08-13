@@ -308,7 +308,7 @@ button {
 .cardbox {
   display: flex;
   flex-direction: row;
-  width: 210px;
+  width: 330px;
   position: relative;
 }
 
@@ -371,7 +371,7 @@ button {
   background: none;
   width: 30px;
   position: relative;
-  left: 180px;
+  left: 240px;
   bottom: 32px;
   border: none;
   font-size: 20px;
@@ -380,6 +380,23 @@ button {
 }
 
 .deleteColumnButton:hover {
+  color: red;
+  background: none;
+}
+
+.editColumnButton {
+  background-color: #fa6269;
+  width: 60px;
+  position: relative;
+  left: 250px;
+  bottom: 32px;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff !important;
+}
+
+.editColumnButton:hover {
   color: red;
   background: none;
 }
